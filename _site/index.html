@@ -116,18 +116,18 @@
 
         <div class="page clearfix" index>
     <div class="left">
-        <h1>Welcome to HyG's Blog!</h1>
-        <small>这里记录着我的前端学习之路</small>
+        <h1>Welcome to Roc's Blog!</h1>
+        <small>Here records pieces of my experience.Hope you enjoy it.</small>
         <hr>
         <ul>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/01/25/how-to-write-a-count-down/"></a>
+                  <a class="post-link" href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-01-25
+                        <i class="fa fa-calendar"></i>2016-07-01
                     </div>
                     <div class="label-card">
                         <i class="fa fa-user"></i>Roc
@@ -141,6 +141,18 @@
                     
 
 
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#javascript" title="Category: javascript" rel="category">javascript</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
 
                     </div>
 
@@ -151,6 +163,8 @@
   <i class="fa fa-tags"></i>
   
     
+        <a href="/tag/#issues" title="Tag: issues" rel="tag">issues</a>
+    
   
 
 </span>
@@ -158,15 +172,67 @@
                     </div>
                 </div>
                 <div class="excerpt">
-                    
-<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
+                    <ul id="markdown-toc">
+  <li><a href="#代码" id="markdown-toc-代码">代码</a></li>
+</ul>
 
-<p><img src="https://img.alicdn.com/tfs/TB18QnlOpXXXXcVXpXXXXXXXXXX-388-256.png" alt="" /></p>
+<p>There are 2 ways for count down in javascript</p>
 
+<ul>
+  <li>setTimeout</li>
+  <li>setInterval</li>
+</ul>
+
+<p>But them are not accurate for long time count down and sometimes not works well if the user update their PC time.</p>
+
+<p>Below is the accurate implementation which from author <code class="highlighter-rouge">Gaohaoyang</code> the guy works at T-mall.</p>
+
+<h2 id="代码">代码</h2>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * @param  {Number} endTime
+ * @param  {Number} deviceTime
+ * @param  {Number} serverTime
+ * @return {Object}
+ */</span>
+<span class="kd">let</span> <span class="nx">getRemainTime</span> <span class="o">=</span> <span class="p">(</span><span class="nx">endTime</span><span class="p">,</span> <span class="nx">deviceTime</span><span class="p">,</span> <span class="nx">serverTime</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">endTime</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">-</span> <span class="nx">serverTime</span> <span class="o">+</span> <span class="nx">deviceTime</span>
+    <span class="kd">let</span> <span class="nx">seconds</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">minutes</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">hours</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">))</span> <span class="o">%</span> <span class="mi">24</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">days</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">t</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">'total'</span><span class="p">:</span> <span class="nx">t</span><span class="p">,</span>
+        <span class="s1">'days'</span><span class="p">:</span> <span class="nx">days</span><span class="p">,</span>
+        <span class="s1">'hours'</span><span class="p">:</span> <span class="nx">hours</span><span class="p">,</span>
+        <span class="s1">'minutes'</span><span class="p">:</span> <span class="nx">minutes</span><span class="p">,</span>
+        <span class="s1">'seconds'</span><span class="p">:</span> <span class="nx">seconds</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">getServerTime</span><span class="p">((</span><span class="nx">serverTime</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+    <span class="kd">let</span> <span class="nx">intervalTimer</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+        <span class="kd">let</span> <span class="nx">remainTime</span> <span class="o">=</span> <span class="nx">getRemainTime</span><span class="p">(</span><span class="nx">endTime</span><span class="p">,</span> <span class="nx">deviceTime</span><span class="p">,</span> <span class="nx">serverTime</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&lt;=</span> <span class="mi">7200000</span> <span class="o">&amp;&amp;</span> <span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// do something</span>
+
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalTimer</span><span class="p">);</span>
+            <span class="c1">// do something</span>
+        <span class="p">}</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+</div>
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/01/25/how-to-write-a-count-down/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2016/07/01/how-to-write-a-count-down/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -198,7 +264,7 @@
                 </div>
                 <ul class="content-ul" recent>
                     
-                        <li><a href="/2017/01/25/how-to-write-a-count-down/"></a></li>
+                        <li><a href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a></li>
                     
                 </ul>
             </div>
@@ -210,6 +276,15 @@
                     Categories
                 </div>
                 <ul class="content-ul" cate>
+                    
+                    <li>
+                        <a href="/category/#javascript" class="categories-list-item" cate="javascript">
+                            <span class="name">
+                                javascript
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
                     
                 </ul>
             </div>
@@ -227,6 +302,13 @@
 
                     
 
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#issues" style="font-size: 9pt; color: #999;">issues</a>
                     
                 </div>
             </div>
