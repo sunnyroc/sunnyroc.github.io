@@ -48,8 +48,8 @@ type: page
 ## 联系我
 
 * GitHub：[sunnyroc](https://github.com/sunnyroc)
-* email: bien.sun@hotmail.com
-* office:	roc.sun@fabricgroup.com.au
+* Email: bien.sun@hotmail.com
+* Office:	roc.sun@fabricgroup.com.au
 
 ## Comments
 
