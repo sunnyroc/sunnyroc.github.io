@@ -7,7 +7,7 @@
 
 # Site settings
 title: Roc
-brief-intro: Java Dev Engineer
+brief-intro: Java Ops
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://sunnyroc.github.io" # the base hostname & protocol for your site
 
