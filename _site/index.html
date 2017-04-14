@@ -184,7 +184,7 @@
                 </div>
                 <div class="excerpt">
                     <ul id="markdown-toc">
-  <li><a href="#代码" id="markdown-toc-代码">代码</a></li>
+  <li><a href="#code" id="markdown-toc-code">Code</a></li>
 </ul>
 
 <p>There are 2 ways for count down in javascript</p>
@@ -198,7 +198,7 @@
 
 <p>Below is the accurate implementation which from author <code class="highlighter-rouge">Gaohaoyang</code> the guy works at T-mall.</p>
 
-<h2 id="代码">代码</h2>
+<h2 id="code">Code</h2>
 
 <div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
  * @param  {Number} endTime
@@ -248,6 +248,148 @@
                 <hr>
               </li>
             
+              <li>
+                <h2>
+                  <a class="post-link" href="/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2016-05-05
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>Roc
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Ubuntu" title="Category: Ubuntu" rel="category">Ubuntu</a>&nbsp;
+    
+        <a href="/category/#java" title="Category: java" rel="category">java</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#Guide" title="Tag: Guide" rel="tag">Guide</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <ul id="markdown-toc">
+  <li><a href="#ubuntu安装openjdk-或-oralcejdk" id="markdown-toc-ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</a>    <ul>
+      <li><a href="#安装openjdk" id="markdown-toc-安装openjdk">安装OpenJDK</a></li>
+      <li><a href="#安装oracle-jdk" id="markdown-toc-安装oracle-jdk">安装Oracle JDK</a></li>
+      <li><a href="#通过bin包安装" id="markdown-toc-通过bin包安装">通过bin包安装</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</h1>
+
+<blockquote>
+  <p>打开终端后查看是否安装
+java -version</p>
+</blockquote>
+
+<h5 id="安装openjdk">安装OpenJDK</h5>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-get install default-jre
+sudo apt-get install default-jdk
+</code></pre>
+</div>
+<blockquote>
+  <p>更多软件版本用下列查询命令</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-cache search jre
+sudo apt-cache search jdk
+</code></pre>
+</div>
+
+<h5 id="安装oracle-jdk">安装Oracle JDK</h5>
+
+<blockquote>
+  <p>如果想安装java7,替换掉命令中java8即可
+命令行安装依赖网络环境</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-set-default
+</code></pre>
+</div>
+
+<h5 id="通过bin包安装">通过bin包安装</h5>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">从官网下载对应tar包</a></p>
+
+<p>如下载后文件为<code class="highlighter-rouge">jdk-8u101-linux-x64.tar.gz</code>
+使用如下命令解压:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
+</code></pre>
+</div>
+<p>为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
+例如:<code class="highlighter-rouge">/usr/java/jdk1.8/</code></p>
+
+<p>编辑文件 <code class="highlighter-rouge">~/.bashrc</code> 配置java环境变量</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/jdk1.8/
+<span class="nv">JRE_HOME</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/jre
+<span class="nv">JAVA_BIN</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin
+<span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib/dt.jar:<span class="nv">$JAVA_HOME</span>/lib/tools.jar:<span class="nv">$JRE_HOME</span>/lib
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$JRE_HOME</span>/bin
+<span class="nb">export </span>JAVA_HOME JRE_HOME PATH CLASSPATH
+</code></pre>
+</div>
+
+<p>如果使用命令行源安装,默认安装路径为<code class="highlighter-rouge">/usr/lib/jvm/xxxxx</code>
+修改JAVA_HOME路径为对应路径即可</p>
+
+<p>使用下面命令使配置及时生效</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc
+</code></pre>
+</div>
+<p>最后再次使用下面命令验证配置是否生效</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>java -version
+</code></pre>
+</div>
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2016/05/05/Ubuntu-install-JDK/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
         </ul>
 
 
@@ -277,6 +419,8 @@
                     
                         <li><a href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a></li>
                     
+                        <li><a href="/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK</a></li>
+                    
                 </ul>
             </div>
 
@@ -287,6 +431,24 @@
                     Categories
                 </div>
                 <ul class="content-ul" cate>
+                    
+                    <li>
+                        <a href="/category/#Ubuntu" class="categories-list-item" cate="Ubuntu">
+                            <span class="name">
+                                Ubuntu
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#java" class="categories-list-item" cate="java">
+                            <span class="name">
+                                java
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
                     
                     <li>
                         <a href="/category/#javascript" class="categories-list-item" cate="javascript">
@@ -313,6 +475,13 @@
 
                     
 
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Guide" style="font-size: 9pt; color: #999;">Guide</a>
                     
                       
                       

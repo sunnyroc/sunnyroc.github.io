@@ -5,14 +5,14 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 10 Apr 2017 17:54:30 +0800</pubDate>
-    <lastBuildDate>Mon, 10 Apr 2017 17:54:30 +0800</lastBuildDate>
+    <pubDate>Fri, 14 Apr 2017 10:26:21 +0800</pubDate>
+    <lastBuildDate>Fri, 14 Apr 2017 10:26:21 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
         <title>How to write a count down</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#代码&quot; id=&quot;markdown-toc-代码&quot;&gt;代码&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 There are 2 ways for count down in javascript
@@ -26,7 +26,7 @@ But them are not accurate for long time count down and sometimes not works well 
 
 Below is the accurate implementation which from author &lt;code class=&quot;highlighter-rouge&quot;&gt;Gaohaoyang&lt;/code&gt; the guy works at T-mall.
 
-&lt;h2 id=&quot;代码&quot;&gt;代码&lt;/h2&gt;
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
 
 &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
  * @param  {Number} endTime
@@ -77,6 +77,103 @@ Below is the accurate implementation which from author &lt;code class=&quot;high
         
         
         <category>javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu安装JDK</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ubuntu安装openjdk-或-oralcejdk&quot; id=&quot;markdown-toc-ubuntu安装openjdk-或-oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#安装openjdk&quot; id=&quot;markdown-toc-安装openjdk&quot;&gt;安装OpenJDK&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#安装oracle-jdk&quot; id=&quot;markdown-toc-安装oracle-jdk&quot;&gt;安装Oracle JDK&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#通过bin包安装&quot; id=&quot;markdown-toc-通过bin包安装&quot;&gt;通过bin包安装&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ubuntu安装openjdk-或-oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  打开终端后查看是否安装
+java -version
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;安装openjdk&quot;&gt;安装OpenJDK&lt;/h5&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install default-jre
+sudo apt-get install default-jdk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  更多软件版本用下列查询命令
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-cache search jre
+sudo apt-cache search jdk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;安装oracle-jdk&quot;&gt;安装Oracle JDK&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  如果想安装java7,替换掉命令中java8即可
+命令行安装依赖网络环境
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-set-default
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;通过bin包安装&quot;&gt;通过bin包安装&lt;/h5&gt;
+&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;从官网下载对应tar包&lt;/a&gt;
+
+如下载后文件为&lt;code class=&quot;highlighter-rouge&quot;&gt;jdk-8u101-linux-x64.tar.gz&lt;/code&gt;
+使用如下命令解压:
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
+例如:&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/java/jdk1.8/&lt;/code&gt;
+
+编辑文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; 配置java环境变量
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;JAVA_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/java/jdk1.8/
+&lt;span class=&quot;nv&quot;&gt;JRE_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/jre
+&lt;span class=&quot;nv&quot;&gt;JAVA_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin
+&lt;span class=&quot;nv&quot;&gt;CLASSPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;.:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/dt.jar:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/tools.jar:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/lib
+&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/bin
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;JAVA_HOME JRE_HOME PATH CLASSPATH
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+如果使用命令行源安装,默认安装路径为&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/lib/jvm/xxxxx&lt;/code&gt;
+修改JAVA_HOME路径为对应路径即可
+
+使用下面命令使配置及时生效
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+最后再次使用下面命令验证配置是否生效
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 05 May 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/05/05/Ubuntu-install-JDK/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/05/05/Ubuntu-install-JDK/</guid>
+        
+        <category>Guide</category>
+        
+        
+        <category>Ubuntu</category>
+        
+        <category>java</category>
         
       </item>
     

@@ -18,7 +18,7 @@ But them are not accurate for long time count down and sometimes not works well 
 
 Below is the accurate implementation which from author `Gaohaoyang` the guy works at T-mall.
 
-## 代码
+## Code
 
 ```js
 /**
