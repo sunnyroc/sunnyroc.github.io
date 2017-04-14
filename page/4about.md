@@ -5,12 +5,25 @@ permalink: /about/
 icon: heart
 type: page
 ---
+<style>
+.profile{
+  height: 200px;
+}
+.avatar{
+  text-align: center;
+}
+</style>
 
 * content
 {:toc}
 
 ## 关于我
- ![图片](../img/bg.png)
+
+<div class="avatar">
+<img title="Roc" src="../img/profile.jpeg" alt="Roc" class="profile">
+<hr>
+</div>
+
 就职于澳洲软件公司Fabricgroup 主要从事java项目的开发和技术支持
 
 凡是和互联网有关的技术我都感兴趣,前后端开发的分离趋势,让我这样一个一直藏在后端的人有机会接触和实施前端的技术,自从国内有了全栈工程师的概念,我就狂奔在这条路上，裤衩都已经跟不上我的速度.

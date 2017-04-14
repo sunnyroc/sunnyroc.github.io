@@ -39,6 +39,7 @@
 
     <header id="top">
     <div class="wrapper">
+        <!-- <img title="Roc" src="../img/pp.jpg" alt="Roc" class="profile"> -->
         <a href="/" class="brand">Roc</a>
         <small>Java Ops</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
@@ -89,16 +90,6 @@
                         <a href="/collection/">
                         
                             <i class="fa fa-bookmark"></i>Collections
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/demo/">
-                        
-                            <i class="fa fa-play"></i>Demo
                         </a>
                     </li>
                     
@@ -489,11 +480,7 @@ java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/l
 <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
      org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
-<span class="k">else
-</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
-     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
-     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
-
+<span class="k">else</span>
 <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
      org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
