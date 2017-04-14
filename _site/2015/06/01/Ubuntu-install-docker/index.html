@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Ubuntu安装Docker</title>
-    <meta name="description" content="  Ubuntu安装Docker          安装最新稳定版      开机启动      常用命令      Ubuntu安装Docker容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说,非常吸引人.安装最新稳定版#安装依赖包su...">
+    <meta name="description" content="  Ubuntu安装Docker          安装最新稳定版      开机启动      常用命令      安装Docker Compose      Ubuntu安装Docker容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -188,6 +188,7 @@
       <li><a href="#安装最新稳定版" id="markdown-toc-安装最新稳定版">安装最新稳定版</a></li>
       <li><a href="#开机启动" id="markdown-toc-开机启动">开机启动</a></li>
       <li><a href="#常用命令" id="markdown-toc-常用命令">常用命令</a></li>
+      <li><a href="#安装docker-compose" id="markdown-toc-安装docker-compose">安装Docker Compose</a></li>
     </ul>
   </li>
 </ul>
@@ -197,21 +198,49 @@
 
 <h4 id="安装最新稳定版">安装最新稳定版</h4>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#安装依赖包</span>
-sudo apt-get -y install apt-transport-https  ca-certificates curl
+<span class="gp">$ </span>sudo apt-get install <span class="se">\</span>
+    apt-transport-https <span class="se">\</span>
+    ca-certificates <span class="se">\</span>
+    curl <span class="se">\</span>
+    software-properties-common
 
-<span class="c">#下面两行为一个命令</span>
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+<span class="gp">$ </span>sudo apt-get install <span class="se">\</span>
+    linux-image-extra-<span class="k">$(</span>uname -r<span class="k">)</span> <span class="se">\</span>
+    linux-image-extra-virtual
 
-sudo add-apt-repository <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable"</span>
+<span class="gp">$ </span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+<span class="c">#Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88.</span>
+<span class="gp">$ </span>sudo apt-key fingerprint 0EBFCD88
 
-sudo apt-get update
-
-sudo apt-get -y install docker-ce
-
-<span class="c">#测试是否安装成功</span>
-sudo docker run hello-world
+pub   4096R/0EBFCD88 2017-02-22
+      Key fingerprint <span class="o">=</span> 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release <span class="o">(</span>CE deb<span class="o">)</span> &lt;docker@docker.com&gt;
+sub   4096R/F273FCD8 2017-02-22
 </code></pre>
 </div>
+<p><code class="highlighter-rouge">amd64:</code></p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo add-apt-repository <span class="se">\</span>
+   <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+   </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+   stable"</span>
+</code></pre>
+</div>
+<p><code class="highlighter-rouge">armhf:</code></p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo add-apt-repository <span class="se">\</span>
+   <span class="s2">"deb [arch=armhf] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+   </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+   stable"</span>
+</code></pre>
+</div>
+<p>卸载Docker</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-get purge docker-ce
+
+<span class="c">#Images, containers, volumes, or customized configuration files on your host are not automatically removed. To delete all images, containers, and volumes:</span>
+<span class="gp">$ </span>sudo rm -rf /var/lib/docker
+</code></pre>
+</div>
+
 <p>如果上面命令无效,请参考<a href="https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description">官网最新命令</a>安装CE版本</p>
 
 <h4 id="开机启动">开机启动</h4>
@@ -251,6 +280,31 @@ docker pull &lt;镜像名:tag&gt;
 docker save busybox-1 &gt; /home/save.tar
 <span class="c">#机器B</span>
 docker load &lt; /home/save.tar
+</code></pre>
+</div>
+
+<h4 id="安装docker-compose">安装Docker Compose</h4>
+<p><a href="https://docs.docker.com/compose/install/">官网地址</a></p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo curl -L <span class="s2">"https://github.com/docker/compose/releases/download/1.11.2/docker-compose-</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname -m<span class="k">)</span><span class="s2">"</span> -o /usr/local/bin/docker-compose
+
+<span class="gp">$ </span>sudo chmod +x /usr/local/bin/docker-compose
+
+<span class="gp">$ </span>docker-compose --version
+
+docker-compose version 1.11.2, build dfed245
+
+<span class="c">#移除</span>
+<span class="gp">$ </span>rm /usr/local/bin/docker-compose
+
+<span class="c">#升级到指定版本替换下面migrate-to-labels</span>
+<span class="gp">$ </span>docker-compose migrate-to-labels
+</code></pre>
+</div>
+
+<p>pip方式安装</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo pip install -U docker-compose
 </code></pre>
 </div>
 

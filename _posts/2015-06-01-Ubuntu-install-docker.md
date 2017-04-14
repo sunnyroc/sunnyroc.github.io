@@ -16,20 +16,48 @@ author: Roc
 #### 安装最新稳定版
 ```shell
 #安装依赖包
-sudo apt-get -y install apt-transport-https  ca-certificates curl
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
 
-#下面两行为一个命令
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo apt-get install \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual
 
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88.
+$ sudo apt-key fingerprint 0EBFCD88
 
-sudo apt-get update
-
-sudo apt-get -y install docker-ce
-
-#测试是否安装成功
-sudo docker run hello-world
+pub   4096R/0EBFCD88 2017-02-22
+      Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release (CE deb) <docker@docker.com>
+sub   4096R/F273FCD8 2017-02-22
 ```
+`amd64:`
+```shell
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+```
+`armhf:`
+```shell
+$ sudo add-apt-repository \
+   "deb [arch=armhf] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+```
+卸载Docker
+
+```shell
+sudo apt-get purge docker-ce
+
+#Images, containers, volumes, or customized configuration files on your host are not automatically removed. To delete all images, containers, and volumes:
+$ sudo rm -rf /var/lib/docker
+```
+
 如果上面命令无效,请参考[官网最新命令](https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description)安装CE版本
 
 #### 开机启动
@@ -70,4 +98,29 @@ docker pull <镜像名:tag>
 docker save busybox-1 > /home/save.tar
 #机器B
 docker load < /home/save.tar
+```
+
+#### 安装Docker Compose
+[官网地址](https://docs.docker.com/compose/install/)
+
+```shell
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+$ sudo chmod +x /usr/local/bin/docker-compose
+
+$ docker-compose --version
+
+docker-compose version 1.11.2, build dfed245
+
+#移除
+$ rm /usr/local/bin/docker-compose
+
+#升级到指定版本替换下面migrate-to-labels
+$ docker-compose migrate-to-labels
+```
+
+pip方式安装
+
+```shell
+$ sudo pip install -U docker-compose
 ```

@@ -205,9 +205,9 @@
 <p><a href="http://apache.01link.hk/zookeeper/stable/">打开最新稳定版本包下载地址</a>
 选中需要下载的包右键获取连接地址,通过命令行下载并解压如下:</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
 
-tar -zxvf zookeeper-3.4.10.tar.gz
+<span class="gp">$ </span>tar -zxvf zookeeper-3.4.10.tar.gz
 
 <span class="nb">pwd</span>
 
@@ -216,21 +216,21 @@ tar -zxvf zookeeper-3.4.10.tar.gz
 
 <h5 id="创建data和log目录">创建data和log目录</h5>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>mkdir zkdata
-mkdir zkdataLog
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mkdir zkdata
+<span class="gp">$ </span>mkdir zkdataLog
 </code></pre>
 </div>
 <p>进入配置文件夹</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">cd </span>zookeeper-3.4.10/conf
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd </span>zookeeper-3.4.10/conf
 </code></pre>
 </div>
 <h5 id="修改配置文件">修改配置文件</h5>
 <p>拷贝并从新命名官方提供的样本文件zoo_sample.cfg为zoo.cfg</p>
 
 <h6 id="从命名配置文件">从命名配置文件</h6>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>cp zoo_sample.cfg zoo.cfg
-vi zoo.cfg
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp zoo_sample.cfg zoo.cfg
+<span class="gp">$ </span>vi zoo.cfg
 </code></pre>
 </div>
 
@@ -276,15 +276,15 @@ vi zoo.cfg
 </code></pre>
     </div>
     <h6 id="添加集群通信配置项">添加集群通信配置项</h6>
-    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#机器标识为1的ip地址,通信端口默认2888:选举端口3888</span>
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#机器标识为1的ip地址,跟随者端口默认2888:选举端口3888</span>
 server.1<span class="o">=</span>192.168.186.40:2888:3888
 server.2<span class="o">=</span>192.168.186.41:2888:3888
 server.3<span class="o">=</span>192.168.186.42:2888:3888
 </code></pre>
     </div>
     <p>在对应服务器中,转到<code class="highlighter-rouge">dataDir</code>目录,创建一个<strong>对应的</strong>标识文件<code class="highlighter-rouge">myid</code>,内容为“1”(可以命名其他标识，为了便于记忆我们用数字编号作为标识)</p>
-    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> /home/roc/fabric/zkdata
-<span class="nb">echo</span> <span class="s2">"1"</span> &gt; myid
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd</span> /home/roc/fabric/zkdata
+<span class="gp">$ </span><span class="nb">echo</span> <span class="s2">"1"</span> &gt; myid
 </code></pre>
     </div>
     <blockquote>
@@ -320,7 +320,129 @@ Starting zookeeper ... STARTED
 </blockquote>
 
 <h1 id="zookeeper环境安装docker">Zookeeper环境安装(Docker)</h1>
-<p><a href="&quot;https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/&quot;">安装docker</a></p>
+<p><a href="https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/">安装docker</a>
+<a href="https://hub.docker.com/r/library/zookeeper/">Zookeeper</a></p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo docker pull zookeeper
+<span class="c">#进入zookeeper安装目录，创建docker-compose.yml配置文件</span>
+<span class="gp">$ </span><span class="nb">cd</span> /home/roc/fabric/zookeeper-3.4.10
+<span class="gp">$ </span>touch docker-compose.yml
+<span class="gp">$ </span>vim docker-compose.yml
+</code></pre>
+</div>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>version: <span class="s1">'2'</span>
+services:
+    zoo1:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2181:2181
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+    zoo2:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2182:2181
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+    zoo3:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2183:2181
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+</code></pre>
+</div>
+<blockquote>
+  <p>上面配置了3个服务器,客户端端口为2888，追谁者端口为3888</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#后台执行compose,为了避免与其他项目混淆,我们可以使用COMPOSE_PROJECT_NAME=project_name作为命令行前缀来区分不同的compose服务</span>
+<span class="c">#例如:COMPOSE_PROJECT_NAME=project_name docker-compose up -d</span>
+<span class="gp">$ </span>docker-compose up -d
+<span class="c">#查看启动容器列表</span>
+<span class="c">#例如:COMPOSE_PROJECT_NAME=project_name docker-compose ps</span>
+<span class="gp">$ </span>docker-compose ps
+
+Name                   Command               State                     Ports
+---------------------------------------------------------------------------------------------------
+zktest_zoo1_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2181-&gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo2_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2182-&gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo3_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2183-&gt;2181/tcp, 2888/tcp, 3888/tcp
+</code></pre>
+</div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>
+<span class="gp">$ </span>docker run -it -d --rm <span class="se">\</span>
+        --link zoo1:zk1 <span class="se">\</span>
+        --link zoo2:zk2 <span class="se">\</span>
+        --link zoo3:zk3 <span class="se">\</span>
+        --net zktest_default <span class="se">\</span>
+        zookeeper zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
+
+<span class="gp">$ </span>zkCLI -server localhost:2181,localhost:2182,localhost:2183
+
+<span class="c">#hostname -i查询服务器ip</span>
+<span class="gp">$ </span>hostname -i
+192.168.186.40
+
+</code></pre>
+</div>
+
+<p>切换到客户端,查看集群状态</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2181
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53356[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/6/53
+Received: 26
+Sent: 25
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000a
+Mode: follower
+Node count: 4
+
+<span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2182
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /172.18.0.5:40178[1]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>47,sent<span class="o">=</span>47<span class="o">)</span>
+ /192.168.186.27:53364[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/0/8
+Received: 49
+Sent: 48
+Connections: 2
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: leader
+Node count: 4
+
+<span class="gp">$ </span><span class="nb">echo </span>stat | nc 192.168.186.40 2183
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53365[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/2/14
+Received: 8
+Sent: 7
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: follower
+Node count: 4
+</code></pre>
+</div>
 
         </article>
         <hr>
