@@ -195,7 +195,11 @@
       <li><a href="#启动服务" id="markdown-toc-启动服务">启动服务</a></li>
     </ul>
   </li>
-  <li><a href="#zookeeper环境安装docker" id="markdown-toc-zookeeper环境安装docker">Zookeeper环境安装(Docker)</a></li>
+  <li><a href="#zookeeper环境安装docker" id="markdown-toc-zookeeper环境安装docker">Zookeeper环境安装(Docker)</a>    <ul>
+      <li><a href="#leader的作用" id="markdown-toc-leader的作用">Leader的作用</a></li>
+      <li><a href="#重要的配置文件和配置项" id="markdown-toc-重要的配置文件和配置项">重要的配置文件和配置项</a></li>
+    </ul>
+  </li>
 </ul>
 
 <h1 id="zookeeper环境安装">Zookeeper环境安装</h1>
@@ -238,9 +242,11 @@
 <span class="nv">tickTime</span><span class="o">=</span>2000
 <span class="c"># The number of ticks that the initial</span>
 <span class="c"># synchronization phase can take</span>
+<span class="c"># 总花费时间为2000*10</span>
 <span class="nv">initLimit</span><span class="o">=</span>10
 <span class="c"># The number of ticks that can pass between</span>
 <span class="c"># sending a request and getting an acknowledgement</span>
+<span class="c"># 总花费时间为2000*5</span>
 <span class="nv">syncLimit</span><span class="o">=</span>5
 <span class="c"># the directory where the snapshot is stored.</span>
 <span class="c"># do not use /tmp for storage, /tmp here is just</span>
@@ -441,6 +447,77 @@ Outstanding: 0
 Zxid: 0x40000000b
 Mode: follower
 Node count: 4
+</code></pre>
+</div>
+
+<h5 id="leader的作用">Leader的作用</h5>
+<p>leader响应客户端的读写请求，想follower发送数据,follower从leader中同步数据,如果失败则从新选择一个leader, leader停机后会从follower中重新选择一个服务器作为新的leader
+通过<code class="highlighter-rouge">jps</code>命令查看主进程</p>
+
+<h5 id="重要的配置文件和配置项">重要的配置文件和配置项</h5>
+
+<ul>
+  <li>myid文件和server.myid 服务标识,用来注册和发现服务</li>
+  <li>zoo.cfg文件 主配置文件</li>
+  <li>log4j.properties文件 日志配置文件</li>
+  <li><code class="highlighter-rouge">zkEnv.sh</code> 启动时设置的环境变量</li>
+  <li><code class="highlighter-rouge">zkCleanup.sh</code> <strong>对于事务日志要定期清理</strong></li>
+</ul>
+
+<blockquote>
+  <p>官方提供的清理脚本
+java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog <code class="highlighter-rouge">&lt;dataDir&gt;</code> <code class="highlighter-rouge">&lt;snapDir&gt;</code> -n <code class="highlighter-rouge">&lt;count&gt;</code>
+也可以直接使用自带的<code class="highlighter-rouge">zkCleanup.sh</code>脚本,将<code class="highlighter-rouge">$*</code> 改成指定数字<code class="highlighter-rouge">-n 5</code>(保留多少个快照日志,官方建议是3个,为了安全我们改成5)</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># use POSTIX interface, symlink is followed automatically</span>
+<span class="nv">ZOOBIN</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">-</span><span class="nv">$0</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">ZOOBIN</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>dirname <span class="s2">"</span><span class="k">${</span><span class="nv">ZOOBIN</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span><span class="s2">"</span>
+<span class="nv">ZOOBINDIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="k">${</span><span class="nv">ZOOBIN</span><span class="k">}</span><span class="s2">"</span>; <span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>
+
+<span class="k">if</span> <span class="o">[</span> -e <span class="s2">"</span><span class="nv">$ZOOBIN</span><span class="s2">/../libexec/zkEnv.sh"</span> <span class="o">]</span>; <span class="k">then</span>
+  . <span class="s2">"</span><span class="nv">$ZOOBINDIR</span><span class="s2">"</span>/../libexec/zkEnv.sh
+<span class="k">else</span>
+  . <span class="s2">"</span><span class="nv">$ZOOBINDIR</span><span class="s2">"</span>/zkEnv.sh
+<span class="k">fi
+
+</span><span class="nv">ZOODATADIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>grep <span class="s2">"^[[:space:]]*dataDir="</span> <span class="s2">"</span><span class="nv">$ZOOCFG</span><span class="s2">"</span> | sed -e <span class="s1">'s/.*=//'</span><span class="k">)</span><span class="s2">"</span>
+<span class="nv">ZOODATALOGDIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>grep <span class="s2">"^[[:space:]]*dataLogDir="</span> <span class="s2">"</span><span class="nv">$ZOOCFG</span><span class="s2">"</span> | sed -e <span class="s1">'s/.*=//'</span><span class="k">)</span><span class="s2">"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"x</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"x"</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+<span class="k">else
+</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+
+<span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+<span class="k">fi</span>
+
+</code></pre>
+</div>
+<blockquote>
+  <p>创建定时任务自动执行脚本清理工作
+minute hour day month dayofweek command
+  minute - 从0到59的整数
+  hour - 从0到23的整数
+  day - 从1到31的整数 (必须是指定月份的有效日期)
+  month - 从1到12的整数 (或如Jan或Feb简写的月份)
+  dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示)
+  command - 需要执行的命令(可用as ls /proc » /tmp/proc或 执行自定义脚本的命令)</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#查看以后的定时任务</span>
+<span class="gp">$ </span>crontab -l
+<span class="c">#编辑一个定时任务</span>
+<span class="gp">$ </span>crontab -e
+<span class="c">#每周日0点执行</span>
+0 0 <span class="k">*</span> <span class="k">*</span> 0 sh /home/roc/fabric/zookeeper-3.4.10/bin/zkCleanup.sh
 </code></pre>
 </div>
 

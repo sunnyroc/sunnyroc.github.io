@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Apr 2017 16:36:55 +0800</pubDate>
-    <lastBuildDate>Fri, 14 Apr 2017 16:36:55 +0800</lastBuildDate>
+    <pubDate>Fri, 14 Apr 2017 17:47:46 +0800</pubDate>
+    <lastBuildDate>Fri, 14 Apr 2017 17:47:46 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -23,7 +23,11 @@
       &lt;li&gt;&lt;a href=&quot;#启动服务&quot; id=&quot;markdown-toc-启动服务&quot;&gt;启动服务&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#zookeeper环境安装docker&quot; id=&quot;markdown-toc-zookeeper环境安装docker&quot;&gt;Zookeeper环境安装(Docker)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#zookeeper环境安装docker&quot; id=&quot;markdown-toc-zookeeper环境安装docker&quot;&gt;Zookeeper环境安装(Docker)&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#leader的作用&quot; id=&quot;markdown-toc-leader的作用&quot;&gt;Leader的作用&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#重要的配置文件和配置项&quot; id=&quot;markdown-toc-重要的配置文件和配置项&quot;&gt;重要的配置文件和配置项&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;zookeeper环境安装&quot;&gt;Zookeeper环境安装&lt;/h1&gt;
@@ -66,9 +70,11 @@ Zookeeper配置服务器集群遵循2N+1的原则,即奇数台服务器原则(�
 &lt;span class=&quot;nv&quot;&gt;tickTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2000
 &lt;span class=&quot;c&quot;&gt;# The number of ticks that the initial&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# synchronization phase can take&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 总花费时间为2000*10&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;initLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
 &lt;span class=&quot;c&quot;&gt;# The number of ticks that can pass between&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# sending a request and getting an acknowledgement&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 总花费时间为2000*5&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;syncLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
 &lt;span class=&quot;c&quot;&gt;# the directory where the snapshot is stored.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# do not use /tmp for storage, /tmp here is just&lt;/span&gt;
@@ -269,6 +275,77 @@ Outstanding: 0
 Zxid: 0x40000000b
 Mode: follower
 Node count: 4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;leader的作用&quot;&gt;Leader的作用&lt;/h5&gt;
+leader响应客户端的读写请求，想follower发送数据,follower从leader中同步数据,如果失败则从新选择一个leader, leader停机后会从follower中重新选择一个服务器作为新的leader
+通过&lt;code class=&quot;highlighter-rouge&quot;&gt;jps&lt;/code&gt;命令查看主进程
+
+&lt;h5 id=&quot;重要的配置文件和配置项&quot;&gt;重要的配置文件和配置项&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;myid文件和server.myid 服务标识,用来注册和发现服务&lt;/li&gt;
+  &lt;li&gt;zoo.cfg文件 主配置文件&lt;/li&gt;
+  &lt;li&gt;log4j.properties文件 日志配置文件&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;zkEnv.sh&lt;/code&gt; 启动时设置的环境变量&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;zkCleanup.sh&lt;/code&gt; &lt;strong&gt;对于事务日志要定期清理&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  官方提供的清理脚本
+java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;dataDir&amp;gt;&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;snapDir&amp;gt;&lt;/code&gt; -n &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;count&amp;gt;&lt;/code&gt;
+也可以直接使用自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;zkCleanup.sh&lt;/code&gt;脚本,将&lt;code class=&quot;highlighter-rouge&quot;&gt;$*&lt;/code&gt; 改成指定数字&lt;code class=&quot;highlighter-rouge&quot;&gt;-n 5&lt;/code&gt;(保留多少个快照日志,官方建议是3个,为了安全我们改成5)
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# use POSTIX interface, symlink is followed automatically&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BASH_SOURCE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;dirname &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;; &lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -e &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/../libexec/zkEnv.sh&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+  . &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/../libexec/zkEnv.sh
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+  . &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/zkEnv.sh
+&lt;span class=&quot;k&quot;&gt;fi
+
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOODATADIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;grep &lt;span class=&quot;s2&quot;&gt;&quot;^[[:space:]]*dataDir=&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOCFG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | sed -e &lt;span class=&quot;s1&quot;&gt;'s/.*=//'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;grep &lt;span class=&quot;s2&quot;&gt;&quot;^[[:space:]]*dataLogDir=&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOCFG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | sed -e &lt;span class=&quot;s1&quot;&gt;'s/.*=//'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;x&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;x&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.log.dir=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.root.logger=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG4J_PROP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     -cp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLASSPATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$JVMFLAGS&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     org.apache.zookeeper.server.PurgeTxnLog &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATADIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -n 5
+&lt;span class=&quot;k&quot;&gt;else
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.log.dir=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.root.logger=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG4J_PROP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     -cp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLASSPATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$JVMFLAGS&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     org.apache.zookeeper.server.PurgeTxnLog &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATADIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -n 5
+
+&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.log.dir=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.root.logger=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG4J_PROP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     -cp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLASSPATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$JVMFLAGS&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     org.apache.zookeeper.server.PurgeTxnLog &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATADIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -n 5
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  创建定时任务自动执行脚本清理工作
+minute hour day month dayofweek command
+  minute - 从0到59的整数
+  hour - 从0到23的整数
+  day - 从1到31的整数 (必须是指定月份的有效日期)
+  month - 从1到12的整数 (或如Jan或Feb简写的月份)
+  dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示)
+  command - 需要执行的命令(可用as ls /proc » /tmp/proc或 执行自定义脚本的命令)
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#查看以后的定时任务&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;crontab -l
+&lt;span class=&quot;c&quot;&gt;#编辑一个定时任务&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;crontab -e
+&lt;span class=&quot;c&quot;&gt;#每周日0点执行&lt;/span&gt;
+0 0 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 0 sh /home/roc/fabric/zookeeper-3.4.10/bin/zkCleanup.sh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>

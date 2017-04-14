@@ -52,9 +52,11 @@ $ vi zoo.cfg
 tickTime=2000
 # The number of ticks that the initial
 # synchronization phase can take
+# 总花费时间为2000*10
 initLimit=10
 # The number of ticks that can pass between
 # sending a request and getting an acknowledgement
+# 总花费时间为2000*5
 syncLimit=5
 # the directory where the snapshot is stored.
 # do not use /tmp for storage, /tmp here is just
@@ -247,4 +249,66 @@ Outstanding: 0
 Zxid: 0x40000000b
 Mode: follower
 Node count: 4
+```
+
+##### Leader的作用
+leader响应客户端的读写请求，想follower发送数据,follower从leader中同步数据,如果失败则从新选择一个leader, leader停机后会从follower中重新选择一个服务器作为新的leader
+通过`jps`命令查看主进程
+
+
+##### 重要的配置文件和配置项
+
+* myid文件和server.myid 服务标识,用来注册和发现服务
+* zoo.cfg文件 主配置文件
+* log4j.properties文件 日志配置文件
+* `zkEnv.sh` 启动时设置的环境变量
+* `zkCleanup.sh` **对于事务日志要定期清理**
+
+>官方提供的清理脚本
+java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog `<dataDir>` `<snapDir>` -n `<count>`
+也可以直接使用自带的`zkCleanup.sh`脚本,将`$*` 改成指定数字`-n 5`(保留多少个快照日志,官方建议是3个,为了安全我们改成5)
+
+```shell
+# use POSTIX interface, symlink is followed automatically
+ZOOBIN="${BASH_SOURCE-$0}"
+ZOOBIN="$(dirname "${ZOOBIN}")"
+ZOOBINDIR="$(cd "${ZOOBIN}"; pwd)"
+
+if [ -e "$ZOOBIN/../libexec/zkEnv.sh" ]; then
+  . "$ZOOBINDIR"/../libexec/zkEnv.sh
+else
+  . "$ZOOBINDIR"/zkEnv.sh
+fi
+
+ZOODATADIR="$(grep "^[[:space:]]*dataDir=" "$ZOOCFG" | sed -e 's/.*=//')"
+ZOODATALOGDIR="$(grep "^[[:space:]]*dataLogDir=" "$ZOOCFG" | sed -e 's/.*=//')"
+
+if [ "x$ZOODATALOGDIR" = "x" ]
+then
+"$JAVA" "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
+     -cp "$CLASSPATH" $JVMFLAGS \
+     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATADIR" -n 5
+else
+"$JAVA" "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
+     -cp "$CLASSPATH" $JVMFLAGS \
+     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATALOGDIR" "$ZOODATADIR" -n 5
+fi
+
+```
+>创建定时任务自动执行脚本清理工作
+> minute hour day month dayofweek command
+  minute - 从0到59的整数
+  hour - 从0到23的整数
+  day - 从1到31的整数 (必须是指定月份的有效日期)
+  month - 从1到12的整数 (或如Jan或Feb简写的月份)
+  dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示)
+  command - 需要执行的命令(可用as ls /proc >> /tmp/proc或 执行自定义脚本的命令)
+
+```shell
+#查看以后的定时任务
+$ crontab -l
+#编辑一个定时任务
+$ crontab -e
+#每周日0点执行
+0 0 * * 0 sh /home/roc/fabric/zookeeper-3.4.10/bin/zkCleanup.sh
 ```
