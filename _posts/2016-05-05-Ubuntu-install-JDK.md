@@ -18,6 +18,7 @@ java -version
 ##### 安装OpenJDK
 
 ```shell
+#使用下面命令行安装,不需要额外配置环境变量
 sudo apt-get install default-jre
 sudo apt-get install default-jdk
 ```
@@ -35,14 +36,17 @@ sudo apt-cache search jdk
 >命令行安装依赖网络环境
 
 ```shell
+#使用下面命令行安装,不需要额外配置环境变量
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
 sudo apt-get install oracle-java8-set-default
+
 ```
 
 
 ##### 通过bin包安装
+>这种方式需要配置环境变量
 [从官网下载对应tar包](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 如下载后文件为`jdk-8u101-linux-x64.tar.gz`

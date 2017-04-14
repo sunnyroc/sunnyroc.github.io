@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Ubuntu安装JDK</title>
-    <meta name="description" content="  Ubuntu安装OpenJDK 或 OralceJDK          安装OpenJDK      安装Oracle JDK      通过bin包安装      Ubuntu安装OpenJDK 或 OralceJDK  打开终端后查看是否安装java -version安装OpenJDK#使用下面命令行安...">
+    <title>Ubuntu安装Zookeeper</title>
+    <meta name="description" content="  Zookeeper环境安装          创建data和log目录      修改配置文件                  从命名配置文件          修改默认配置项          添加集群通信配置项                    启动服务        Zookeeper环境安装(D...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2016/05/05/Ubuntu-install-JDK/">
+    <link rel="canonical" href="http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/">
     <link rel="alternate" type="application/rss+xml" title="Roc" href="http://localhost:4000/feed.xml ">
 
 
@@ -127,11 +127,11 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>Ubuntu安装JDK</h1>
+        <h1>Ubuntu安装Zookeeper</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2016-05-05
+                <i class="fa fa-calendar"></i>2017-04-01
             </div>
 
             <div class="label-card">
@@ -154,7 +154,7 @@
     
         <a href="/category/#Ubuntu" title="Category: Ubuntu" rel="category">Ubuntu</a>&nbsp;
     
-        <a href="/category/#java" title="Category: java" rel="category">java</a>
+        <a href="/category/#Zookeeper" title="Category: Zookeeper" rel="category">Zookeeper</a>
     
   
 
@@ -184,92 +184,143 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#ubuntu安装openjdk-或-oralcejdk" id="markdown-toc-ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</a>    <ul>
-      <li><a href="#安装openjdk" id="markdown-toc-安装openjdk">安装OpenJDK</a></li>
-      <li><a href="#安装oracle-jdk" id="markdown-toc-安装oracle-jdk">安装Oracle JDK</a></li>
-      <li><a href="#通过bin包安装" id="markdown-toc-通过bin包安装">通过bin包安装</a></li>
+  <li><a href="#zookeeper环境安装" id="markdown-toc-zookeeper环境安装">Zookeeper环境安装</a>    <ul>
+      <li><a href="#创建data和log目录" id="markdown-toc-创建data和log目录">创建data和log目录</a></li>
+      <li><a href="#修改配置文件" id="markdown-toc-修改配置文件">修改配置文件</a>        <ul>
+          <li><a href="#从命名配置文件" id="markdown-toc-从命名配置文件">从命名配置文件</a></li>
+          <li><a href="#修改默认配置项" id="markdown-toc-修改默认配置项">修改默认配置项</a></li>
+          <li><a href="#添加集群通信配置项" id="markdown-toc-添加集群通信配置项">添加集群通信配置项</a></li>
+        </ul>
+      </li>
+      <li><a href="#启动服务" id="markdown-toc-启动服务">启动服务</a></li>
     </ul>
+  </li>
+  <li><a href="#zookeeper环境安装docker" id="markdown-toc-zookeeper环境安装docker">Zookeeper环境安装(Docker)</a></li>
+</ul>
+
+<h1 id="zookeeper环境安装">Zookeeper环境安装</h1>
+
+<p>Zookeeper配置服务器集群遵循2N+1的原则,即奇数台服务器原则(因为半数服务器挂掉即停掉所有服务)</p>
+
+<p><a href="http://apache.01link.hk/zookeeper/stable/">打开最新稳定版本包下载地址</a>
+选中需要下载的包右键获取连接地址,通过命令行下载并解压如下:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
+
+tar -zxvf zookeeper-3.4.10.tar.gz
+
+<span class="nb">pwd</span>
+
+</code></pre>
+</div>
+
+<h5 id="创建data和log目录">创建data和log目录</h5>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>mkdir zkdata
+mkdir zkdataLog
+</code></pre>
+</div>
+<p>进入配置文件夹</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">cd </span>zookeeper-3.4.10/conf
+</code></pre>
+</div>
+<h5 id="修改配置文件">修改配置文件</h5>
+<p>拷贝并从新命名官方提供的样本文件zoo_sample.cfg为zoo.cfg</p>
+
+<h6 id="从命名配置文件">从命名配置文件</h6>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>cp zoo_sample.cfg zoo.cfg
+vi zoo.cfg
+</code></pre>
+</div>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># The number of milliseconds of each tick</span>
+<span class="nv">tickTime</span><span class="o">=</span>2000
+<span class="c"># The number of ticks that the initial</span>
+<span class="c"># synchronization phase can take</span>
+<span class="nv">initLimit</span><span class="o">=</span>10
+<span class="c"># The number of ticks that can pass between</span>
+<span class="c"># sending a request and getting an acknowledgement</span>
+<span class="nv">syncLimit</span><span class="o">=</span>5
+<span class="c"># the directory where the snapshot is stored.</span>
+<span class="c"># do not use /tmp for storage, /tmp here is just</span>
+<span class="c"># example sakes.</span>
+<span class="nv">dataDir</span><span class="o">=</span>/tmp/zookeeper
+<span class="c"># the port at which the clients will connect</span>
+<span class="nv">clientPort</span><span class="o">=</span>2181
+<span class="c"># the maximum number of client connections.</span>
+<span class="c"># increase this if you need to handle more clients</span>
+<span class="c">#maxClientCnxns=60</span>
+<span class="c">#</span>
+<span class="c"># Be sure to read the maintenance section of the</span>
+<span class="c"># administrator guide before turning on autopurge.</span>
+<span class="c">#</span>
+<span class="c"># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</span>
+<span class="c">#</span>
+<span class="c"># The number of snapshots to retain in dataDir</span>
+<span class="c">#autopurge.snapRetainCount=3</span>
+<span class="c"># Purge task interval in hours</span>
+<span class="c"># Set to "0" to disable auto purge feature</span>
+<span class="c">#autopurge.purgeInterval=1</span>
+</code></pre>
+</div>
+<h6 id="修改默认配置项">修改默认配置项</h6>
+<ul>
+  <li>修改<code class="highlighter-rouge">dataDir</code>为我们刚刚创建的zkdata路径(快照日志目录)</li>
+  <li>添加新的配置项<code class="highlighter-rouge">dataLogDir</code>在<code class="highlighter-rouge">dataDir</code>下方,路径为刚刚创建的<code class="highlighter-rouge">zkdataLog</code>路径.(事务目录,如果不配置讲放入到<code class="highlighter-rouge">dataDir</code>目录,造成性能下降)</li>
+  <li>修改端口为任意不冲突端口
+如下
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nv">dataDir</span><span class="o">=</span>/home/roc/fabric/zkdata
+<span class="nv">dataLogDir</span><span class="o">=</span>/home/roc/fabric/zkdataLog
+<span class="nv">clientPort</span><span class="o">=</span>21811
+</code></pre>
+    </div>
+    <h6 id="添加集群通信配置项">添加集群通信配置项</h6>
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#机器标识为1的ip地址,通信端口默认2888:选举端口3888</span>
+server.1<span class="o">=</span>192.168.186.40:2888:3888
+server.2<span class="o">=</span>192.168.186.41:2888:3888
+server.3<span class="o">=</span>192.168.186.42:2888:3888
+</code></pre>
+    </div>
+    <p>在对应服务器中,转到<code class="highlighter-rouge">dataDir</code>目录,创建一个<strong>对应的</strong>标识文件<code class="highlighter-rouge">myid</code>,内容为“1”(可以命名其他标识，为了便于记忆我们用数字编号作为标识)</p>
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> /home/roc/fabric/zkdata
+<span class="nb">echo</span> <span class="s2">"1"</span> &gt; myid
+</code></pre>
+    </div>
+    <blockquote>
+      <p>在例子中我配置了三台服务器,那么我需要在这三台服务器上面分别执行上面操作,为了方便可以直接copy配置文件,但是需要手动创建对应标识文件<code class="highlighter-rouge">myid</code>文件</p>
+    </blockquote>
   </li>
 </ul>
 
-<h1 id="ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</h1>
+<h5 id="启动服务">启动服务</h5>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#进入`bin`目录,执行脚本zkServer.sh</span>
+<span class="nb">cd</span> /home/roc/fabric/zookeeper-3.4.10/bin
+<span class="c">#查看命令</span>
+./zkServer.sh
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Usage: ./zkServer.sh <span class="o">{</span>start|start-foreground|stop|restart|status|upgrade|print-cmd<span class="o">}</span>
+
+./zkServer.sh start
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Starting zookeeper ... STARTED
+
+<span class="c">#查看集群状态</span>
+
+</code></pre>
+</div>
 
 <blockquote>
-  <p>打开终端后查看是否安装
-java -version</p>
+  <p>对其他服务器做同样的操作</p>
 </blockquote>
 
-<h5 id="安装openjdk">安装OpenJDK</h5>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#使用下面命令行安装,不需要额外配置环境变量</span>
-sudo apt-get install default-jre
-sudo apt-get install default-jdk
-</code></pre>
-</div>
-<blockquote>
-  <p>更多软件版本用下列查询命令</p>
-</blockquote>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-cache search jre
-sudo apt-cache search jdk
-</code></pre>
-</div>
-
-<h5 id="安装oracle-jdk">安装Oracle JDK</h5>
-
-<blockquote>
-  <p>如果想安装java7,替换掉命令中java8即可
-命令行安装依赖网络环境</p>
-</blockquote>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#使用下面命令行安装,不需要额外配置环境变量</span>
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-sudo apt-get install oracle-java8-set-default
-
-</code></pre>
-</div>
-
-<h5 id="通过bin包安装">通过bin包安装</h5>
-<blockquote>
-  <p>这种方式需要配置环境变量
-<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">从官网下载对应tar包</a></p>
-</blockquote>
-
-<p>如下载后文件为<code class="highlighter-rouge">jdk-8u101-linux-x64.tar.gz</code>
-使用如下命令解压:</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
-</code></pre>
-</div>
-<p>为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
-例如:<code class="highlighter-rouge">/usr/java/jdk1.8/</code></p>
-
-<p>编辑文件 <code class="highlighter-rouge">~/.bashrc</code> 配置java环境变量</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/jdk1.8/
-<span class="nv">JRE_HOME</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/jre
-<span class="nv">JAVA_BIN</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin
-<span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib/dt.jar:<span class="nv">$JAVA_HOME</span>/lib/tools.jar:<span class="nv">$JRE_HOME</span>/lib
-<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$JRE_HOME</span>/bin
-<span class="nb">export </span>JAVA_HOME JRE_HOME PATH CLASSPATH
-</code></pre>
-</div>
-
-<p>如果使用命令行源安装,默认安装路径为<code class="highlighter-rouge">/usr/lib/jvm/xxxxx</code>
-修改JAVA_HOME路径为对应路径即可</p>
-
-<p>使用下面命令使配置及时生效</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc
-</code></pre>
-</div>
-<p>最后再次使用下面命令验证配置是否生效</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>java -version
-</code></pre>
-</div>
+<h1 id="zookeeper环境安装docker">Zookeeper环境安装(Docker)</h1>
+<p><a href="&quot;https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/&quot;">安装docker</a></p>
 
         </article>
         <hr>
@@ -280,24 +331,24 @@ sudo apt-get install oracle-java8-set-default
             
                 
                     
-                        
-                        <h2 id="similar_posts">Similar Posts</h2>
-                        <ul>
-                        
-                        <li class="relatedPost">
-                            <a href="http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/">Ubuntu安装Zookeeper
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
                 
             
         
             
             
                 
+                    
+                        
+                        <h2 id="similar_posts">Similar Posts</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="http://localhost:4000/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK
+                            
+                            </a>
+                        </li>
+                        
+                        
                     
                 
             
@@ -325,13 +376,11 @@ sudo apt-get install oracle-java8-set-default
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2015/06/01/Ubuntu-install-docker/">Ubuntu安装Docker</a></p>
+        <p><strong>上一篇</strong> <a href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a></p>
         
     </div>
     <div class="nex">
 
-        
-        <p><strong>下一篇</strong> <a href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a></p>
         
     </div>
 </div>
@@ -349,8 +398,8 @@ sudo apt-get install oracle-java8-set-default
      */
 
     var disqus_config = function() {
-        this.page.url = 'http://localhost:4000/2016/05/05/Ubuntu-install-JDK/'; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://localhost:4000/2016/05/05/Ubuntu-install-JDK/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

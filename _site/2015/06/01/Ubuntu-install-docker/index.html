@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>How to write a count down</title>
-    <meta name="description" content="  CodeThere are 2 ways for count down in javascript  setTimeout  setIntervalBut them are not accurate for long time count down and sometimes not works well i...">
+    <title>Ubuntu安装Docker</title>
+    <meta name="description" content="  Ubuntu安装Docker          安装最新稳定版      开机启动      常用命令      Ubuntu安装Docker容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说,非常吸引人.安装最新稳定版#安装依赖包su...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2016/07/01/how-to-write-a-count-down/">
+    <link rel="canonical" href="http://localhost:4000/2015/06/01/Ubuntu-install-docker/">
     <link rel="alternate" type="application/rss+xml" title="Roc" href="http://localhost:4000/feed.xml ">
 
 
@@ -127,11 +127,11 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>How to write a count down</h1>
+        <h1>Ubuntu安装Docker</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2016-07-01
+                <i class="fa fa-calendar"></i>2015-06-01
             </div>
 
             <div class="label-card">
@@ -152,7 +152,9 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#javascript" title="Category: javascript" rel="category">javascript</a>
+        <a href="/category/#Ubuntu" title="Category: Ubuntu" rel="category">Ubuntu</a>&nbsp;
+    
+        <a href="/category/#Docker" title="Category: Docker" rel="category">Docker</a>
     
   
 
@@ -169,8 +171,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#issues" title="Tag: issues" rel="tag">issues</a-->
-        <a href="/tag/#issues" title="Tag: issues" rel="tag">issues</a>
+        <!--a href="/tag/#Guide" title="Tag: Guide" rel="tag">Guide</a-->
+        <a href="/tag/#Guide" title="Tag: Guide" rel="tag">Guide</a>
     
   
 
@@ -182,60 +184,73 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#code" id="markdown-toc-code">Code</a></li>
+  <li><a href="#ubuntu安装docker" id="markdown-toc-ubuntu安装docker">Ubuntu安装Docker</a>    <ul>
+      <li><a href="#安装最新稳定版" id="markdown-toc-安装最新稳定版">安装最新稳定版</a></li>
+      <li><a href="#开机启动" id="markdown-toc-开机启动">开机启动</a></li>
+      <li><a href="#常用命令" id="markdown-toc-常用命令">常用命令</a></li>
+    </ul>
+  </li>
 </ul>
 
-<p>There are 2 ways for count down in javascript</p>
+<h1 id="ubuntu安装docker">Ubuntu安装Docker</h1>
+<p>容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说,非常吸引人.</p>
 
-<ul>
-  <li>setTimeout</li>
-  <li>setInterval</li>
-</ul>
+<h4 id="安装最新稳定版">安装最新稳定版</h4>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#安装依赖包</span>
+sudo apt-get -y install apt-transport-https  ca-certificates curl
 
-<p>But them are not accurate for long time count down and sometimes not works well if the user update their PC time.</p>
+<span class="c">#下面两行为一个命令</span>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-<p>Below is the accurate implementation which from author <code class="highlighter-rouge">Gaohaoyang</code> the guy works at T-mall.</p>
+sudo add-apt-repository <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable"</span>
 
-<h2 id="code">Code</h2>
+sudo apt-get update
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
- * @param  {Number} endTime
- * @param  {Number} deviceTime
- * @param  {Number} serverTime
- * @return {Object}
- */</span>
-<span class="kd">let</span> <span class="nx">getRemainTime</span> <span class="o">=</span> <span class="p">(</span><span class="nx">endTime</span><span class="p">,</span> <span class="nx">deviceTime</span><span class="p">,</span> <span class="nx">serverTime</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">endTime</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">-</span> <span class="nx">serverTime</span> <span class="o">+</span> <span class="nx">deviceTime</span>
-    <span class="kd">let</span> <span class="nx">seconds</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="kd">let</span> <span class="nx">minutes</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="kd">let</span> <span class="nx">hours</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">t</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">))</span> <span class="o">%</span> <span class="mi">24</span><span class="p">)</span>
-    <span class="kd">let</span> <span class="nx">days</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">t</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">'total'</span><span class="p">:</span> <span class="nx">t</span><span class="p">,</span>
-        <span class="s1">'days'</span><span class="p">:</span> <span class="nx">days</span><span class="p">,</span>
-        <span class="s1">'hours'</span><span class="p">:</span> <span class="nx">hours</span><span class="p">,</span>
-        <span class="s1">'minutes'</span><span class="p">:</span> <span class="nx">minutes</span><span class="p">,</span>
-        <span class="s1">'seconds'</span><span class="p">:</span> <span class="nx">seconds</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+sudo apt-get -y install docker-ce
+
+<span class="c">#测试是否安装成功</span>
+sudo docker run hello-world
 </code></pre>
 </div>
+<p>如果上面命令无效,请参考<a href="https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description">官网最新命令</a>安装CE版本</p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">getServerTime</span><span class="p">((</span><span class="nx">serverTime</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<h4 id="开机启动">开机启动</h4>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo systemctl <span class="nb">enable </span>docker
+<span class="c">#关闭</span>
+sudo systemctl disable docker
 
-    <span class="kd">let</span> <span class="nx">intervalTimer</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="c">#切换手动启动</span>
+<span class="nb">echo </span>manual | sudo tee /etc/init/docker.override
+<span class="c">#切换自动自动</span>
+<span class="nb">echo </span>upstart | sudo tee /etc/init/docker.override
+</code></pre>
+</div>
+<h4 id="常用命令">常用命令</h4>
 
-        <span class="kd">let</span> <span class="nx">remainTime</span> <span class="o">=</span> <span class="nx">getRemainTime</span><span class="p">(</span><span class="nx">endTime</span><span class="p">,</span> <span class="nx">deviceTime</span><span class="p">,</span> <span class="nx">serverTime</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&lt;=</span> <span class="mi">7200000</span> <span class="o">&amp;&amp;</span> <span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// do something</span>
-
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">remainTime</span><span class="p">.</span><span class="nx">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalTimer</span><span class="p">);</span>
-            <span class="c1">// do something</span>
-        <span class="p">}</span>
-    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="p">})</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#查看容器日志</span>
+docker logs -f &lt;容器名orID&gt;
+<span class="c">#查看正在运行的容器</span>
+docker ps
+docker ps -a为查看所有的容器，包括已经停止的
+<span class="c">#删除所有容器</span>
+docker rm <span class="k">$(</span>docker ps -a -q<span class="k">)</span>
+<span class="c">#删除单个容器</span>
+docker rm &lt;容器名orID&gt;
+<span class="c">#停止、启动、杀死一个容器</span>
+docker stop &lt;容器名orID&gt;
+docker start &lt;容器名orID&gt;
+docker <span class="nb">kill</span> &lt;容器名orID&gt;
+<span class="c">#查看所有镜像</span>
+docker images
+<span class="c">#删除所有镜像</span>
+docker rmi <span class="k">$(</span>docker images | grep none | awk <span class="s1">'{print $3}'</span> | sort -r<span class="k">)</span>
+<span class="c">#拉取镜像</span>
+docker pull &lt;镜像名:tag&gt;
+<span class="c">#镜像迁移</span>
+<span class="c">#机器A</span>
+docker save busybox-1 &gt; /home/save.tar
+<span class="c">#机器B</span>
+docker load &lt; /home/save.tar
 </code></pre>
 </div>
 
@@ -248,12 +263,17 @@
             
                 
                     
-                
-            
-        
-            
-            
-                
+                        
+                        <h2 id="similar_posts">Similar Posts</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/">Ubuntu安装Zookeeper
+                            
+                            </a>
+                        </li>
+                        
+                        
                     
                 
             
@@ -265,18 +285,34 @@
                 
             
         
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="http://localhost:4000/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+        
+            </ul>
         
 
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK</a></p>
-        
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/04/01/Ubuntu-install-Zookeeper/">Ubuntu安装Zookeeper</a></p>
+        <p><strong>下一篇</strong> <a href="/2016/05/05/Ubuntu-install-JDK/">Ubuntu安装JDK</a></p>
         
     </div>
 </div>
@@ -294,8 +330,8 @@
      */
 
     var disqus_config = function() {
-        this.page.url = 'http://localhost:4000/2016/07/01/how-to-write-a-count-down/'; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://localhost:4000/2016/07/01/how-to-write-a-count-down/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://localhost:4000/2015/06/01/Ubuntu-install-docker/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://localhost:4000/2015/06/01/Ubuntu-install-docker/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

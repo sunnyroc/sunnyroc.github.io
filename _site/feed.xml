@@ -5,9 +5,163 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Apr 2017 10:28:05 +0800</pubDate>
-    <lastBuildDate>Fri, 14 Apr 2017 10:28:05 +0800</lastBuildDate>
+    <pubDate>Fri, 14 Apr 2017 14:57:34 +0800</pubDate>
+    <lastBuildDate>Fri, 14 Apr 2017 14:57:34 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Ubuntu安装Zookeeper</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#zookeeper环境安装&quot; id=&quot;markdown-toc-zookeeper环境安装&quot;&gt;Zookeeper环境安装&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#创建data和log目录&quot; id=&quot;markdown-toc-创建data和log目录&quot;&gt;创建data和log目录&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#修改配置文件&quot; id=&quot;markdown-toc-修改配置文件&quot;&gt;修改配置文件&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#从命名配置文件&quot; id=&quot;markdown-toc-从命名配置文件&quot;&gt;从命名配置文件&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#修改默认配置项&quot; id=&quot;markdown-toc-修改默认配置项&quot;&gt;修改默认配置项&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#添加集群通信配置项&quot; id=&quot;markdown-toc-添加集群通信配置项&quot;&gt;添加集群通信配置项&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#启动服务&quot; id=&quot;markdown-toc-启动服务&quot;&gt;启动服务&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#zookeeper环境安装docker&quot; id=&quot;markdown-toc-zookeeper环境安装docker&quot;&gt;Zookeeper环境安装(Docker)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;zookeeper环境安装&quot;&gt;Zookeeper环境安装&lt;/h1&gt;
+
+Zookeeper配置服务器集群遵循2N+1的原则,即奇数台服务器原则(因为半数服务器挂掉即停掉所有服务)
+
+&lt;a href=&quot;http://apache.01link.hk/zookeeper/stable/&quot;&gt;打开最新稳定版本包下载地址&lt;/a&gt;
+选中需要下载的包右键获取连接地址,通过命令行下载并解压如下:
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
+
+tar -zxvf zookeeper-3.4.10.tar.gz
+
+&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;创建data和log目录&quot;&gt;创建data和log目录&lt;/h5&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir zkdata
+mkdir zkdataLog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+进入配置文件夹
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;zookeeper-3.4.10/conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;修改配置文件&quot;&gt;修改配置文件&lt;/h5&gt;
+拷贝并从新命名官方提供的样本文件zoo_sample.cfg为zoo.cfg
+
+&lt;h6 id=&quot;从命名配置文件&quot;&gt;从命名配置文件&lt;/h6&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp zoo_sample.cfg zoo.cfg
+vi zoo.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# The number of milliseconds of each tick&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;tickTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2000
+&lt;span class=&quot;c&quot;&gt;# The number of ticks that the initial&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# synchronization phase can take&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;initLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
+&lt;span class=&quot;c&quot;&gt;# The number of ticks that can pass between&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# sending a request and getting an acknowledgement&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;syncLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
+&lt;span class=&quot;c&quot;&gt;# the directory where the snapshot is stored.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# do not use /tmp for storage, /tmp here is just&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# example sakes.&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;dataDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp/zookeeper
+&lt;span class=&quot;c&quot;&gt;# the port at which the clients will connect&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;clientPort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2181
+&lt;span class=&quot;c&quot;&gt;# the maximum number of client connections.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# increase this if you need to handle more clients&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#maxClientCnxns=60&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Be sure to read the maintenance section of the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# administrator guide before turning on autopurge.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# The number of snapshots to retain in dataDir&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#autopurge.snapRetainCount=3&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Purge task interval in hours&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Set to &quot;0&quot; to disable auto purge feature&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#autopurge.purgeInterval=1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h6 id=&quot;修改默认配置项&quot;&gt;修改默认配置项&lt;/h6&gt;
+&lt;ul&gt;
+  &lt;li&gt;修改&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;为我们刚刚创建的zkdata路径(快照日志目录)&lt;/li&gt;
+  &lt;li&gt;添加新的配置项&lt;code class=&quot;highlighter-rouge&quot;&gt;dataLogDir&lt;/code&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;下方,路径为刚刚创建的&lt;code class=&quot;highlighter-rouge&quot;&gt;zkdataLog&lt;/code&gt;路径.(事务目录,如果不配置讲放入到&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;目录,造成性能下降)&lt;/li&gt;
+  &lt;li&gt;修改端口为任意不冲突端口
+如下
+    &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;dataDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/roc/fabric/zkdata
+&lt;span class=&quot;nv&quot;&gt;dataLogDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/roc/fabric/zkdataLog
+&lt;span class=&quot;nv&quot;&gt;clientPort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;21811
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;h6 id=&quot;添加集群通信配置项&quot;&gt;添加集群通信配置项&lt;/h6&gt;
+    &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#机器标识为1的ip地址,通信端口默认2888:选举端口3888&lt;/span&gt;
+server.1&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.40:2888:3888
+server.2&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.41:2888:3888
+server.3&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.42:2888:3888
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    在对应服务器中,转到&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;目录,创建一个&lt;strong&gt;对应的&lt;/strong&gt;标识文件&lt;code class=&quot;highlighter-rouge&quot;&gt;myid&lt;/code&gt;,内容为“1”(可以命名其他标识，为了便于记忆我们用数字编号作为标识)
+    &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/roc/fabric/zkdata
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;1&quot;&lt;/span&gt; &amp;gt; myid
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;blockquote&gt;
+      在例子中我配置了三台服务器,那么我需要在这三台服务器上面分别执行上面操作,为了方便可以直接copy配置文件,但是需要手动创建对应标识文件&lt;code class=&quot;highlighter-rouge&quot;&gt;myid&lt;/code&gt;文件
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;启动服务&quot;&gt;启动服务&lt;/h5&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#进入`bin`目录,执行脚本zkServer.sh&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/roc/fabric/zookeeper-3.4.10/bin
+&lt;span class=&quot;c&quot;&gt;#查看命令&lt;/span&gt;
+./zkServer.sh
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Usage: ./zkServer.sh &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;start|start-foreground|stop|restart|status|upgrade|print-cmd&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+./zkServer.sh start
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Starting zookeeper ... STARTED
+
+&lt;span class=&quot;c&quot;&gt;#查看集群状态&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  对其他服务器做同样的操作
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;zookeeper环境安装docker&quot;&gt;Zookeeper环境安装(Docker)&lt;/h1&gt;
+&lt;a href=&quot;&amp;quot;https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/&amp;quot;&quot;&gt;安装docker&lt;/a&gt;
+</description>
+        <pubDate>Sat, 01 Apr 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/01/Ubuntu-install-Zookeeper/</guid>
+        
+        <category>Guide</category>
+        
+        
+        <category>Ubuntu</category>
+        
+        <category>Zookeeper</category>
+        
+      </item>
     
       <item>
         <title>How to write a count down</title>
@@ -100,7 +254,8 @@ java -version
 
 &lt;h5 id=&quot;安装openjdk&quot;&gt;安装OpenJDK&lt;/h5&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install default-jre
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
+sudo apt-get install default-jre
 sudo apt-get install default-jdk
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -120,15 +275,20 @@ sudo apt-cache search jdk
 命令行安装依赖网络环境
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo add-apt-repository ppa:webupd8team/java
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
+sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
 sudo apt-get install oracle-java8-set-default
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;通过bin包安装&quot;&gt;通过bin包安装&lt;/h5&gt;
+&lt;blockquote&gt;
+  这种方式需要配置环境变量
 &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;从官网下载对应tar包&lt;/a&gt;
+&lt;/blockquote&gt;
 
 如下载后文件为&lt;code class=&quot;highlighter-rouge&quot;&gt;jdk-8u101-linux-x64.tar.gz&lt;/code&gt;
 使用如下命令解压:
@@ -174,6 +334,92 @@ sudo apt-get install oracle-java8-set-default
         <category>Ubuntu</category>
         
         <category>java</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu安装Docker</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ubuntu安装docker&quot; id=&quot;markdown-toc-ubuntu安装docker&quot;&gt;Ubuntu安装Docker&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#安装最新稳定版&quot; id=&quot;markdown-toc-安装最新稳定版&quot;&gt;安装最新稳定版&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#开机启动&quot; id=&quot;markdown-toc-开机启动&quot;&gt;开机启动&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#常用命令&quot; id=&quot;markdown-toc-常用命令&quot;&gt;常用命令&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ubuntu安装docker&quot;&gt;Ubuntu安装Docker&lt;/h1&gt;
+容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说,非常吸引人.
+
+&lt;h4 id=&quot;安装最新稳定版&quot;&gt;安装最新稳定版&lt;/h4&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#安装依赖包&lt;/span&gt;
+sudo apt-get -y install apt-transport-https  ca-certificates curl
+
+&lt;span class=&quot;c&quot;&gt;#下面两行为一个命令&lt;/span&gt;
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stable&quot;&lt;/span&gt;
+
+sudo apt-get update
+
+sudo apt-get -y install docker-ce
+
+&lt;span class=&quot;c&quot;&gt;#测试是否安装成功&lt;/span&gt;
+sudo docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+如果上面命令无效,请参考&lt;a href=&quot;https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description&quot;&gt;官网最新命令&lt;/a&gt;安装CE版本
+
+&lt;h4 id=&quot;开机启动&quot;&gt;开机启动&lt;/h4&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;docker
+&lt;span class=&quot;c&quot;&gt;#关闭&lt;/span&gt;
+sudo systemctl disable docker
+
+&lt;span class=&quot;c&quot;&gt;#切换手动启动&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;manual | sudo tee /etc/init/docker.override
+&lt;span class=&quot;c&quot;&gt;#切换自动自动&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;upstart | sudo tee /etc/init/docker.override
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;常用命令&quot;&gt;常用命令&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#查看容器日志&lt;/span&gt;
+docker logs -f &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#查看正在运行的容器&lt;/span&gt;
+docker ps
+docker ps -a为查看所有的容器，包括已经停止的
+&lt;span class=&quot;c&quot;&gt;#删除所有容器&lt;/span&gt;
+docker rm &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;docker ps -a -q&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#删除单个容器&lt;/span&gt;
+docker rm &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#停止、启动、杀死一个容器&lt;/span&gt;
+docker stop &amp;lt;容器名orID&amp;gt;
+docker start &amp;lt;容器名orID&amp;gt;
+docker &lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#查看所有镜像&lt;/span&gt;
+docker images
+&lt;span class=&quot;c&quot;&gt;#删除所有镜像&lt;/span&gt;
+docker rmi &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;docker images | grep none | awk &lt;span class=&quot;s1&quot;&gt;'{print $3}'&lt;/span&gt; | sort -r&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#拉取镜像&lt;/span&gt;
+docker pull &amp;lt;镜像名:tag&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#镜像迁移&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#机器A&lt;/span&gt;
+docker save busybox-1 &amp;gt; /home/save.tar
+&lt;span class=&quot;c&quot;&gt;#机器B&lt;/span&gt;
+docker load &amp;lt; /home/save.tar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 01 Jun 2015 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2015/06/01/Ubuntu-install-docker/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/06/01/Ubuntu-install-docker/</guid>
+        
+        <category>Guide</category>
+        
+        
+        <category>Ubuntu</category>
+        
+        <category>Docker</category>
         
       </item>
     
