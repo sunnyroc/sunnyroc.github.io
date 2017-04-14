@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ubuntu安装JDK</title>
+    <meta name="description" content="  Ubuntu安装OpenJDK 或 OralceJDK          安装OpenJDK      安装Oracle JDK      通过bin包安装      Ubuntu安装OpenJDK 或 OralceJDK  打开终端后查看是否安装java -version安装OpenJDKsudo apt-...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2016/05/05/Ubuntu-install-JDK/">
+    <link rel="alternate" type="application/rss+xml" title="Roc" href="http://localhost:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c50c0f8c37e5feee30561f6884dbcfa9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Roc</a>
+        <small>Java Ops</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>Collections
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/demo/">
+                        
+                            <i class="fa fa-play"></i>Demo
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu安装JDK</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2016-05-05
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>Roc
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Ubuntu" title="Category: Ubuntu" rel="category">Ubuntu</a>&nbsp;
+    
+        <a href="/category/#java" title="Category: java" rel="category">java</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Guide" title="Tag: Guide" rel="tag">Guide</a-->
+        <a href="/tag/#Guide" title="Tag: Guide" rel="tag">Guide</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#ubuntu安装openjdk-或-oralcejdk" id="markdown-toc-ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</a>    <ul>
+      <li><a href="#安装openjdk" id="markdown-toc-安装openjdk">安装OpenJDK</a></li>
+      <li><a href="#安装oracle-jdk" id="markdown-toc-安装oracle-jdk">安装Oracle JDK</a></li>
+      <li><a href="#通过bin包安装" id="markdown-toc-通过bin包安装">通过bin包安装</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="ubuntu安装openjdk-或-oralcejdk">Ubuntu安装OpenJDK 或 OralceJDK</h1>
+
+<blockquote>
+  <p>打开终端后查看是否安装
+java -version</p>
+</blockquote>
+
+<h5 id="安装openjdk">安装OpenJDK</h5>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-get install default-jre
+sudo apt-get install default-jdk
+</code></pre>
+</div>
+<blockquote>
+  <p>更多软件版本用下列查询命令</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo apt-cache search jre
+sudo apt-cache search jdk
+</code></pre>
+</div>
+
+<h5 id="安装oracle-jdk">安装Oracle JDK</h5>
+
+<blockquote>
+  <p>如果想安装java7,替换掉命令中java8即可
+命令行安装依赖网络环境</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-set-default
+</code></pre>
+</div>
+
+<h5 id="通过bin包安装">通过bin包安装</h5>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">从官网下载对应tar包</a></p>
+
+<p>如下载后文件为<code class="highlighter-rouge">jdk-8u101-linux-x64.tar.gz</code>
+使用如下命令解压:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
+</code></pre>
+</div>
+<p>为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
+例如:<code class="highlighter-rouge">/usr/java/jdk1.8/</code></p>
+
+<p>编辑文件 <code class="highlighter-rouge">~/.bashrc</code> 配置java环境变量</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/jdk1.8/
+<span class="nv">JRE_HOME</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/jre
+<span class="nv">JAVA_BIN</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin
+<span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib/dt.jar:<span class="nv">$JAVA_HOME</span>/lib/tools.jar:<span class="nv">$JRE_HOME</span>/lib
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$JRE_HOME</span>/bin
+<span class="nb">export </span>JAVA_HOME JRE_HOME PATH CLASSPATH
+</code></pre>
+</div>
+
+<p>如果使用命令行源安装,默认安装路径为<code class="highlighter-rouge">/usr/lib/jvm/xxxxx</code>
+修改JAVA_HOME路径为对应路径即可</p>
+
+<p>使用下面命令使配置及时生效</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc
+</code></pre>
+</div>
+<p>最后再次使用下面命令验证配置是否生效</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>java -version
+</code></pre>
+</div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2016/07/01/how-to-write-a-count-down/">How to write a count down</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">Comments</h2>
+        
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function() {
+        this.page.url = 'http://localhost:4000/2016/05/05/Ubuntu-install-JDK/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://localhost:4000/2016/05/05/Ubuntu-install-JDK/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = '//https-sunnyroc-github-io.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             Pieces from my experience 
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/sunnyroc" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:bien.sun@hotmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>       
+            <a href="https://www.linkedin.com/in/sun-roc-7517a496" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>  
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
