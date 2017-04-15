@@ -78,3 +78,62 @@ a.project-detail:hover {
 a.project-detail:hover h3 {
   color: #62A253;
 }
+div.col-sm-2 {
+  margin-top: 100px;
+  font-size: 11px;
+  color: #666;
+
+
+}
+ul.affix {
+  position: fixed;
+  top: 100px;
+}
+ul.affix-top {
+  position: static;
+}
+ul.affix-bottom {
+  position: absolute;
+}
+
+/* First level of nav */
+.sidenav {
+font-size: 19px;
+background-color: #f7f5fa;
+border-radius: 5px;
+}
+
+/* All levels of nav */
+.sidebar .nav > li > a {
+
+color: #716b7a;
+}
+.sidebar .nav > li > a:hover,
+.sidebar .nav > li > a:focus {
+text-decoration: none;
+background-color: #e5e3e9;
+}
+.sidebar .nav > .active > a,
+.sidebar .nav > .active:hover > a,
+.sidebar .nav > .active:focus > a {
+font-weight: bold;
+color: #563d7c;
+background-color: transparent;
+}
+/* Nav: second level */
+.sidebar .nav .nav {
+display: none;
+}
+.sidebar .nav > li.active .nav {
+display:block;
+}
+.sidebar .nav .nav {
+margin-bottom: 8px;
+}
+.sidebar .nav .nav > li > a {
+  margin-left: 30px;
+  padding: 0px;
+}
+#markdown-toc{
+    display: none
+}

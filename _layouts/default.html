@@ -15,60 +15,6 @@ layout: compress
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
     <meta content="{{ site.share.fb_appid }}" property="fb:app_id">
     <meta content="{{ site.title }}" property="og:site_name">
-    <style>
-      #markdown-toc{
-          display: none
-      }
-    ul.affix {
-    	position: fixed;
-    	top: 100px;
-    }
-    ul.affix-top {
-    	position: static;
-    }
-    ul.affix-bottom {
-    	position: absolute;
-    }
-
-  /* First level of nav */
-  .sidenav {
-    font-size: 19px;
-    background-color: #f7f5fa;
-    border-radius: 5px;
-  }
-
-  /* All levels of nav */
-  .sidebar .nav > li > a {
-
-    color: #716b7a;
-  }
-  .sidebar .nav > li > a:hover,
-  .sidebar .nav > li > a:focus {
-    text-decoration: none;
-    background-color: #e5e3e9;
-  }
-  .sidebar .nav > .active > a,
-  .sidebar .nav > .active:hover > a,
-  .sidebar .nav > .active:focus > a {
-    font-weight: bold;
-    color: #563d7c;
-    background-color: transparent;
-  }
-  /* Nav: second level */
-  .sidebar .nav .nav {
-  	display: none;
-  }
-  .sidebar .nav > li.active .nav {
-  	display:block;
-  }
-  .sidebar .nav .nav {
-    margin-bottom: 8px;
-  }
-  .sidebar .nav .nav > li > a {
-      margin-left: 30px;
-      padding: 0px;
-  }
-    </style>
     {% if page.noindex %}
       <meta name="robots" content="noindex">
     {% endif %}
