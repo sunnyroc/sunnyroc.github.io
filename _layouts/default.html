@@ -15,7 +15,60 @@ layout: compress
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
     <meta content="{{ site.share.fb_appid }}" property="fb:app_id">
     <meta content="{{ site.title }}" property="og:site_name">
+    <style>
+      #markdown-toc{
+          display: none
+      }
+    ul.affix {
+    	position: fixed;
+    	top: 100px;
+    }
+    ul.affix-top {
+    	position: static;
+    }
+    ul.affix-bottom {
+    	position: absolute;
+    }
 
+  /* First level of nav */
+  .sidenav {
+    font-size: 19px;
+    background-color: #f7f5fa;
+    border-radius: 5px;
+  }
+
+  /* All levels of nav */
+  .sidebar .nav > li > a {
+
+    color: #716b7a;
+  }
+  .sidebar .nav > li > a:hover,
+  .sidebar .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #e5e3e9;
+  }
+  .sidebar .nav > .active > a,
+  .sidebar .nav > .active:hover > a,
+  .sidebar .nav > .active:focus > a {
+    font-weight: bold;
+    color: #563d7c;
+    background-color: transparent;
+  }
+  /* Nav: second level */
+  .sidebar .nav .nav {
+  	display: none;
+  }
+  .sidebar .nav > li.active .nav {
+  	display:block;
+  }
+  .sidebar .nav .nav {
+    margin-bottom: 8px;
+  }
+  .sidebar .nav .nav > li > a {
+      margin-left: 30px;
+      padding: 0px;
+  }
+    </style>
     {% if page.noindex %}
       <meta name="robots" content="noindex">
     {% endif %}
@@ -110,7 +163,7 @@ layout: compress
       ga('send', 'pageview');
     </script>
   </head>
-  <body>
+  <body data-spy="scroll" data-target="#myScrollspy">
     <div class="container">
       <div class="col-sm-3">
         <div class="fixed-condition">
@@ -143,7 +196,7 @@ layout: compress
         </div>
         <!-- end /.fixed-condition -->
       </div>
-      <div class="col-sm-8 col-offset-1 main-layout">
+      <div class="col-sm-7 main-layout">
         {{ content }}
         <!-- <footer>
           &copy; {{ site.author }}
@@ -156,17 +209,37 @@ layout: compress
           </div>
         </footer> -->
       </div>
+      <div class="col-sm-2">
+          <div class="sidebar" id="myScrollspy">
+            <ul class="nav sidenav" id="myNav">
+            </ul>
+          </div>
+      </div>
       <!-- end /.col-sm-8 -->
     </div>
     <!-- end /.container -->
 
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/super-search.js"></script>
     <script src="/static/js/thickbox-compressed.js"></script>
     <script src="/static/js/projects.js"></script>
+    <script type="text/javascript">
+      if (document.querySelector('#markdown-toc') !== null) {
+        $('#myNav').append($('#markdown-toc').html());
+        $('#myNav ul').each(function(){
+          $(this).addClass('nav');
+        });
+        $('#myNav').affix({
+            offset: {
+                top: 30
+          }
+        });
+      }
+
+    </script>
   </body>
 </html>

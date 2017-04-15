@@ -4,6 +4,9 @@ title:  "Simple bash scripting for login before open the terminal"
 date:   2016-04-19 19:19:21 +0700
 categories: [bash]
 ---
+* content
+{:toc}
+
 
 Add this in your file of `/etc/bash.bashrc`, makesure you logged in as root.
 
