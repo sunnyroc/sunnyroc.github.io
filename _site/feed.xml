@@ -5,9 +5,259 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Apr 2017 19:20:43 +0800</pubDate>
-    <lastBuildDate>Sat, 15 Apr 2017 19:20:43 +0800</lastBuildDate>
+    <pubDate>Sat, 15 Apr 2017 21:11:27 +0800</pubDate>
+    <lastBuildDate>Sat, 15 Apr 2017 21:11:27 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Kafka原理认知</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#kafka&quot; id=&quot;markdown-toc-kafka&quot;&gt;Kafka消息组织原理&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;磁盘重认识&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;提高读取速度&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;写入原理&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot; id=&quot;markdown-toc-section-3&quot;&gt;删除原理&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot; id=&quot;markdown-toc-section-4&quot;&gt;检索原理&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot; id=&quot;markdown-toc-section-5&quot;&gt;集群维护&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-6&quot; id=&quot;markdown-toc-section-6&quot;&gt;实时查看和修改&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#leader&quot; id=&quot;markdown-toc-leader&quot;&gt;Leader平衡机制&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-7&quot; id=&quot;markdown-toc-section-7&quot;&gt;集群分区日志迁移&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-8&quot; id=&quot;markdown-toc-section-8&quot;&gt;集群监控&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;kafka&quot;&gt;Kafka消息组织原理&lt;/h1&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;磁盘重认识&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;确定磁道和扇区	寻道时间&lt;/li&gt;
+  &lt;li&gt;目标扇区旋转	旋转时间&lt;/li&gt;
+  &lt;li&gt;磁盘到内存到网络	数据传输时间&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;提高读取速度&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;预读数据&lt;/li&gt;
+  &lt;li&gt;合并写-多逻辑写操作合并成一个大的物理写操作,顺序写的速度远远大于随机写.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;写入原理&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;生产生: 网络 –&amp;gt; pagecache –&amp;gt; 磁盘&lt;/li&gt;
+  &lt;li&gt;消费者: 磁盘 –&amp;gt; 网络&lt;/li&gt;
+  &lt;li&gt;目的:一次生产多次消费&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;删除原理&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;从最久的日志开始删除逐渐向前推进,直到日志段不满足条件为止.&lt;/li&gt;
+  &lt;li&gt;满足给定条件predicte,配置项log.retention.{ms, minutes, hours}和log.retention.bytes指定&lt;/li&gt;
+  &lt;li&gt;无法删除当前激活日志段,即当前使用日志文件&lt;/li&gt;
+  &lt;li&gt;删除间隔设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;log.retention.check.interval.ms&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;刷盘间隔设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;log.flush.scheduler.interval.ms&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;记录检查点间隔 &lt;code class=&quot;highlighter-rouge&quot;&gt;log.flush.offset.checkpoint.interval.ms&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;压缩 &lt;code class=&quot;highlighter-rouge&quot;&gt;log.cleaner.enable&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;检索原理&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;字段&lt;/th&gt;
+      &lt;th&gt;内容&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8字节偏移量&lt;/td&gt;
+      &lt;td&gt;表示有多少个message&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4字节消息量&lt;/td&gt;
+      &lt;td&gt;表示message的大小&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4字节CRC32&lt;/td&gt;
+      &lt;td&gt;CRC32校验消息完整度&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1字节&lt;code class=&quot;highlighter-rouge&quot;&gt;magic&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;本次kafka服务程序协议版本号&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1字节&lt;code class=&quot;highlighter-rouge&quot;&gt;attributes&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;独立版本或标识压缩类型或编码类型&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4字节key length&lt;/td&gt;
+      &lt;td&gt;当key长度为-1,k byte key不填&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;k byte key&lt;/td&gt;
+      &lt;td&gt;可选&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;value byte length&lt;/td&gt;
+      &lt;td&gt;实际消息数据&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;payload&lt;/td&gt;
+      &lt;td&gt;实际消息&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;通过偏移量二分查找可快速定位文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-5&quot;&gt;集群维护&lt;/h4&gt;
+
+&lt;h5 id=&quot;section-6&quot;&gt;实时查看和修改&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;topic工具,也可以通过配置文件修改达到同样的效果&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;列出集群所有可用的topic&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-topics.sh --list -zookeeper zookeeper_address
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看进群特定topic信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-topics.sh --describle -zookeeper zookeeper_address --topic topic_name
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;创建topic&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#replication-factor为副本数量&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-topics.sh --create -zookeeper zookeeper_address --replication-factor 1 --partitions 1 --topic topic_name
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;增减以后topic的partition已达到扩容增强并发&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#改变分区数量为4,注意无法减少分区&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-topics.sh --zookeeper zookeeper_address --alter --topic topic_name --partitions 4
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;leader&quot;&gt;Leader平衡机制&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;重新分配偏爱分区,对频繁重启服务有效&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-preffered-replica-election.sh -zookeeper zookeeper_address
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;auto.leader.rebalance.enable=true&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;section-7&quot;&gt;集群分区日志迁移&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;迁移全部数据&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;创建文件topics-to-move.json&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;topics&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;topic&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fortest1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;topic&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fortest2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;topic&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fortest3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;s2&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#3,4 为broker节点id,需要做好备份,以便失败后从新迁移&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-reassign-partitions.sh --zookeeper 192.168.103.47:2181 --topics-to-move-json-file topics-to-move.json --broker-list &lt;span class=&quot;s2&quot;&gt;&quot;3,4&quot;&lt;/span&gt; --generate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;创建文件reassignment-node.json 写入上面命令得到的json数据&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#开始迁移&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-reassign-partitions.sh --zookeeper 192.168.103.47:2181 --reassignment-json-file reassignment-node.json --execute
+
+&lt;span class=&quot;c&quot;&gt;#查看运行结果&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bin/kafka-reassign-partitions.sh --zookeeper 192.168.103.47:2181 --reassignment-json-file reassignment-node.json --verify
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;迁移分区数据&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;恩,觉得不是很实用就不下拉&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;section-8&quot;&gt;集群监控&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;kafka offset monitor 主要监控存活机器&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;存活的broker集合&lt;/li&gt;
+      &lt;li&gt;topic集合&lt;/li&gt;
+      &lt;li&gt;消费组李彪&lt;/li&gt;
+      &lt;li&gt;未消费信息&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;kafka manager 监控多集群&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;多集群管理&lt;/li&gt;
+      &lt;li&gt;检查集群状态,可以查看副本和分区的分布情况&lt;/li&gt;
+      &lt;li&gt;选择副本&lt;/li&gt;
+      &lt;li&gt;分配分区&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 05 Apr 2017 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/kafka/2017/04/05/kafka-knows.html</link>
+        <guid isPermaLink="true">http://localhost:4000/kafka/2017/04/05/kafka-knows.html</guid>
+        
+        
+        <category>kafka</category>
+        
+      </item>
     
       <item>
         <title>Zookeeper集群搭建</title>
@@ -1299,53 +1549,6 @@ Content in the first column | Content in the second column
         
         
         <category>markdown</category>
-        
-      </item>
-    
-      <item>
-        <title>Parsing JSON with Ruby</title>
-        <description>
-&lt;p&gt;Parsing JSON with Ruby is actually extremely easy. All you have to do is have the json gem installed (&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install json&lt;/code&gt;) and call the &lt;code class=&quot;highlighter-rouge&quot;&gt;JSON.parse&lt;/code&gt; method on the JSON data to convert it to ruby hashes. If you look at this small program here, you can see how I have implemented parsing JSON in Ruby.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env ruby&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'json'&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'net/http'&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'libnotify'&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parsejson&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;mode=json&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Net&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;URI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;weatherjson&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;body&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;actual&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weatherjson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# check for errors&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;has_key?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Error'&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;error with the url&quot;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;actual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;list&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listitem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;weather&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;weather&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;weather&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;main&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;temp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;273&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;%.2f&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-</description>
-        <pubDate>Mon, 23 Dec 2013 01:18:23 +0800</pubDate>
-        <link>http://localhost:4000/ruby/2013/12/23/ruby-json.html</link>
-        <guid isPermaLink="true">http://localhost:4000/ruby/2013/12/23/ruby-json.html</guid>
-        
-        
-        <category>ruby</category>
         
       </item>
     
