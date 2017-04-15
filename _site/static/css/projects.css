@@ -98,9 +98,8 @@ ul.affix-bottom {
 
 /* First level of nav */
 .sidenav {
-font-size: 19px;
+font-size: 16px;
 background-color: #f7f5fa;
-border-radius: 5px;
 }
 
 /* All levels of nav */

@@ -1,0 +1,201 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" href="/static/img/favicon.ico" /><title>Zookeeper集群搭建 - Stack Problems</title><meta name="author" content="Roc" /><meta name="description" content="Zookeeper集群搭建" /><meta name="keywords" content="Zookeeper集群搭建, Stack Problems, linux" /><link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml"><meta content="" property="fb:app_id"><meta content="Stack Problems" property="og:site_name"><meta content="Zookeeper集群搭建" property="og:title"><meta content="article" property="og:type"><meta content="My Personal Stack Problems" property="og:description"><meta content="http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html" property="og:url"><meta content="2017-04-01T16:18:23+08:00" property="article:published_time"><meta content="http://localhost:4000/about/" property="article:author"><meta content="http://localhost:4000/static/img/avatar.jpg" property="og:image"><meta content="linux" property="article:section"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@"><meta name="twitter:creator" content="@"><meta name="twitter:title" content="Zookeeper集群搭建"><meta name="twitter:url" content="http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html"><meta name="twitter:description" content="My Personal Stack Problems"><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"><link rel="stylesheet" href="/static/css/syntax.css"><link href="/static/css/bootstrap.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css"><link rel="stylesheet" href="/static/css/super-search.css"><link rel="stylesheet" href="/static/css/thickbox.css"><link rel="stylesheet" href="/static/css/projects.css"><link rel="stylesheet" href="/static/css/main.css"> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script><body data-spy="scroll" data-target="#myScrollspy"><div class="container"><div class="col-sm-3"><div class="fixed-condition"> <a href="/"><img class="profile-avatar" src="/static/img/avatar.jpg" height="75px" width="75px" /></a><h1 class="author-name">Roc</h1><div class="profile-about"> I am java developer. Currently doing more in backend, focused in Java and Jhipster.</div><div class="social"><ul><li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a><li><a href="" target="_blank"><i class="fa fa-twitter"></i></a><li><a href="" target="_blank"><i class="fa fa-linkedin"></i></a><li><a href="#" target="_blank"><i class="fa fa-stack-exchange"></i></a><li><a href="https://github.com/sunnyroc" target="_blank"><i class="fa fa-github"></i></a></ul></div><div class="search" id="js-search"> <input type="text" placeholder="Type to search" class="search__input form-control" id="js-search__input"><ul class="search__results" id="js-search__results"></ul></div><hr /><ul class="sidebar-nav"> <strong>Navigation</strong><li><a href="/">Home</a><li><a class="about" href="/about/">About Me</a><li><a class="about" href="/feed.xml">XML Feed</a></ul></div></div><div class="col-sm-7 main-layout"><header class="post-header"><h1 class="post-title">Zookeeper集群搭建</h1></header><span class="time">01 Apr 2017</span> <span class="categories"> &raquo; <a href="/category/linux">linux</a> </span><div class="content"><div class="post"><ul id="markdown-toc"><li><a href="#zookeeper" id="markdown-toc-zookeeper">Zookeeper环境安装</a><ul><li><a href="#datalog" id="markdown-toc-datalog">创建data和log目录</a><li><a href="#section" id="markdown-toc-section">修改配置文件</a><ul><li><a href="#section-1" id="markdown-toc-section-1">从命名配置文件</a></ul><li><a href="#section-2" id="markdown-toc-section-2">修改默认配置项</a><li><a href="#section-3" id="markdown-toc-section-3">添加集群通信配置项</a><li><a href="#section-4" id="markdown-toc-section-4">启动服务</a></ul><li><a href="#zookeeperdocker" id="markdown-toc-zookeeperdocker">Zookeeper环境安装(Docker)</a><ul><li><a href="#leader" id="markdown-toc-leader">Leader的作用</a><li><a href="#section-5" id="markdown-toc-section-5">重要的配置文件和配置项</a></ul></ul><h1 id="zookeeper">Zookeeper环境安装</h1><p>Zookeeper配置服务器集群遵循2N+1的原则,即奇数台服务器原则(因为半数服务器挂掉即停掉所有服务)<p><a href="http://apache.01link.hk/zookeeper/stable/">打开最新稳定版本包下载地址</a> 选中需要下载的包右键获取连接地址,通过命令行下载并解压如下:<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
+
+<span class="gp">$ </span>tar -zxvf zookeeper-3.4.10.tar.gz
+
+<span class="nb">pwd</span>
+
+</code></pre></div><h3 id="datalog">创建data和log目录</h3><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mkdir zkdata
+<span class="gp">$ </span>mkdir zkdataLog
+</code></pre></div><p>进入配置文件夹<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd </span>zookeeper-3.4.10/conf
+</code></pre></div><h3 id="section">修改配置文件</h3><p>拷贝并从新命名官方提供的样本文件zoo_sample.cfg为zoo.cfg<h4 id="section-1">从命名配置文件</h4><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp zoo_sample.cfg zoo.cfg
+<span class="gp">$ </span>vi zoo.cfg
+</code></pre></div><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># The number of milliseconds of each tick</span>
+<span class="nv">tickTime</span><span class="o">=</span>2000
+<span class="c"># The number of ticks that the initial</span>
+<span class="c"># synchronization phase can take</span>
+<span class="c"># 总花费时间为2000*10</span>
+<span class="nv">initLimit</span><span class="o">=</span>10
+<span class="c"># The number of ticks that can pass between</span>
+<span class="c"># sending a request and getting an acknowledgement</span>
+<span class="c"># 总花费时间为2000*5</span>
+<span class="nv">syncLimit</span><span class="o">=</span>5
+<span class="c"># the directory where the snapshot is stored.</span>
+<span class="c"># do not use /tmp for storage, /tmp here is just</span>
+<span class="c"># example sakes.</span>
+<span class="nv">dataDir</span><span class="o">=</span>/tmp/zookeeper
+<span class="c"># the port at which the clients will connect</span>
+<span class="nv">clientPort</span><span class="o">=</span>2181
+<span class="c"># the maximum number of client connections.</span>
+<span class="c"># increase this if you need to handle more clients</span>
+<span class="c">#maxClientCnxns=60</span>
+<span class="c">#</span>
+<span class="c"># Be sure to read the maintenance section of the</span>
+<span class="c"># administrator guide before turning on autopurge.</span>
+<span class="c">#</span>
+<span class="c"># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</span>
+<span class="c">#</span>
+<span class="c"># The number of snapshots to retain in dataDir</span>
+<span class="c">#autopurge.snapRetainCount=3</span>
+<span class="c"># Purge task interval in hours</span>
+<span class="c"># Set to "0" to disable auto purge feature</span>
+<span class="c">#autopurge.purgeInterval=1</span>
+</code></pre></div><h3 id="section-2">修改默认配置项</h3><ul><li>修改<code class="highlighter-rouge">dataDir</code>为我们刚刚创建的zkdata路径(快照日志目录)<li>添加新的配置项<code class="highlighter-rouge">dataLogDir</code>在<code class="highlighter-rouge">dataDir</code>下方,路径为刚刚创建的<code class="highlighter-rouge">zkdataLog</code>路径.(事务目录,如果不配置讲放入到<code class="highlighter-rouge">dataDir</code>目录,造成性能下降)<li>修改端口为任意不冲突端口 如下</ul><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nv">dataDir</span><span class="o">=</span>/home/roc/fabric/zkdata
+<span class="nv">dataLogDir</span><span class="o">=</span>/home/roc/fabric/zkdataLog
+<span class="nv">clientPort</span><span class="o">=</span>21811
+</code></pre></div><h3 id="section-3">添加集群通信配置项</h3><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#机器标识为1的ip地址,跟随者端口默认2888:选举端口3888</span>
+server.1<span class="o">=</span>192.168.186.40:2888:3888
+server.2<span class="o">=</span>192.168.186.41:2888:3888
+server.3<span class="o">=</span>192.168.186.42:2888:3888
+</code></pre></div><p>在对应服务器中,转到<code class="highlighter-rouge">dataDir</code>目录,创建一个<strong>对应的</strong>标识文件<code class="highlighter-rouge">myid</code>,内容为“1”(可以命名其他标识，为了便于记忆我们用数字编号作为标识) <code class="highlighter-rouge">shell $ cd /home/roc/fabric/zkdata $ echo "1" &gt; myid </code> &gt;在例子中我配置了三台服务器,那么我需要在这三台服务器上面分别执行上面操作,为了方便可以直接copy配置文件,但是需要手动创建对应标识文件<code class="highlighter-rouge">myid</code>文件<h3 id="section-4">启动服务</h3><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#进入`bin`目录,执行脚本zkServer.sh</span>
+<span class="nb">cd</span> /home/roc/fabric/zookeeper-3.4.10/bin
+<span class="c">#查看命令</span>
+./zkServer.sh
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Usage: ./zkServer.sh <span class="o">{</span>start|start-foreground|stop|restart|status|upgrade|print-cmd<span class="o">}</span>
+
+./zkServer.sh start
+
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Starting zookeeper ... STARTED
+
+<span class="c">#查看集群状态</span>
+
+</code></pre></div><blockquote><p>对其他服务器做同样的操作</blockquote><h1 id="zookeeperdocker">Zookeeper环境安装(Docker)</h1><p><a href="https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/">安装docker</a> <a href="https://hub.docker.com/r/library/zookeeper/">Zookeeper</a><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo docker pull zookeeper
+<span class="c">#进入zookeeper安装目录，创建docker-compose.yml配置文件</span>
+<span class="gp">$ </span><span class="nb">cd</span> /home/roc/fabric/zookeeper-3.4.10
+<span class="gp">$ </span>touch docker-compose.yml
+<span class="gp">$ </span>vim docker-compose.yml
+</code></pre></div><div class="language-shell highlighter-rouge"><pre class="highlight"><code>version: <span class="s1">'2'</span>
+services:
+    zoo1:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2181:2181
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+    zoo2:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2182:2181
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+    zoo3:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2183:2181
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1<span class="o">=</span>zoo1:2888:3888 server.2<span class="o">=</span>zoo2:2888:3888 server.3<span class="o">=</span>zoo3:2888:3888
+
+</code></pre></div><blockquote><p>上面配置了3个服务器,客户端端口为2888，追谁者端口为3888</blockquote><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#后台执行compose,为了避免与其他项目混淆,我们可以使用COMPOSE_PROJECT_NAME=project_name作为命令行前缀来区分不同的compose服务</span>
+<span class="c">#例如:COMPOSE_PROJECT_NAME=project_name docker-compose up -d</span>
+<span class="gp">$ </span>docker-compose up -d
+<span class="c">#查看启动容器列表</span>
+<span class="c">#例如:COMPOSE_PROJECT_NAME=project_name docker-compose ps</span>
+<span class="gp">$ </span>docker-compose ps
+
+Name                   Command               State                     Ports
+---------------------------------------------------------------------------------------------------
+zktest_zoo1_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2181-&gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo2_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2182-&gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo3_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2183-&gt;2181/tcp, 2888/tcp, 3888/tcp
+</code></pre></div><div class="language-shell highlighter-rouge"><pre class="highlight"><code>
+<span class="gp">$ </span>docker run -it -d --rm <span class="se">\</span>
+        --link zoo1:zk1 <span class="se">\</span>
+        --link zoo2:zk2 <span class="se">\</span>
+        --link zoo3:zk3 <span class="se">\</span>
+        --net zktest_default <span class="se">\</span>
+        zookeeper zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
+
+<span class="gp">$ </span>zkCLI -server localhost:2181,localhost:2182,localhost:2183
+
+<span class="c">#hostname -i查询服务器ip</span>
+<span class="gp">$ </span>hostname -i
+192.168.186.40
+
+</code></pre></div><p>切换到客户端,查看集群状态<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2181
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53356[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/6/53
+Received: 26
+Sent: 25
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000a
+Mode: follower
+Node count: 4
+
+<span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2182
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /172.18.0.5:40178[1]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>47,sent<span class="o">=</span>47<span class="o">)</span>
+ /192.168.186.27:53364[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/0/8
+Received: 49
+Sent: 48
+Connections: 2
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: leader
+Node count: 4
+
+<span class="gp">$ </span><span class="nb">echo </span>stat | nc 192.168.186.40 2183
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53365[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
+
+Latency min/avg/max: 0/2/14
+Received: 8
+Sent: 7
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: follower
+Node count: 4
+</code></pre></div><h3 id="leader">Leader的作用</h3><p>leader响应客户端的读写请求，想follower发送数据,follower从leader中同步数据,如果失败则从新选择一个leader, leader停机后会从follower中重新选择一个服务器作为新的leader 通过<code class="highlighter-rouge">jps</code>命令查看主进程<h3 id="section-5">重要的配置文件和配置项</h3><ul><li>myid文件和server.myid 服务标识,用来注册和发现服务<li>zoo.cfg文件 主配置文件<li>log4j.properties文件 日志配置文件<li><code class="highlighter-rouge">zkEnv.sh</code> 启动时设置的环境变量<li><code class="highlighter-rouge">zkCleanup.sh</code> <strong>对于事务日志要定期清理</strong></ul><blockquote><p>官方提供的清理脚本 java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog <code class="highlighter-rouge">&lt;dataDir&gt;</code> <code class="highlighter-rouge">&lt;snapDir&gt;</code> -n <code class="highlighter-rouge">&lt;count&gt;</code> 也可以直接使用自带的<code class="highlighter-rouge">zkCleanup.sh</code>脚本,将<code class="highlighter-rouge">$*</code> 改成指定数字<code class="highlighter-rouge">-n 5</code>(保留多少个快照日志,官方建议是3个,为了安全我们改成5)</blockquote><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># use POSTIX interface, symlink is followed automatically</span>
+<span class="nv">ZOOBIN</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">-</span><span class="nv">$0</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">ZOOBIN</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>dirname <span class="s2">"</span><span class="k">${</span><span class="nv">ZOOBIN</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span><span class="s2">"</span>
+<span class="nv">ZOOBINDIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="k">${</span><span class="nv">ZOOBIN</span><span class="k">}</span><span class="s2">"</span>; <span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>
+
+<span class="k">if</span> <span class="o">[</span> -e <span class="s2">"</span><span class="nv">$ZOOBIN</span><span class="s2">/../libexec/zkEnv.sh"</span> <span class="o">]</span>; <span class="k">then</span>
+  . <span class="s2">"</span><span class="nv">$ZOOBINDIR</span><span class="s2">"</span>/../libexec/zkEnv.sh
+<span class="k">else</span>
+  . <span class="s2">"</span><span class="nv">$ZOOBINDIR</span><span class="s2">"</span>/zkEnv.sh
+<span class="k">fi
+
+</span><span class="nv">ZOODATADIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>grep <span class="s2">"^[[:space:]]*dataDir="</span> <span class="s2">"</span><span class="nv">$ZOOCFG</span><span class="s2">"</span> | sed -e <span class="s1">'s/.*=//'</span><span class="k">)</span><span class="s2">"</span>
+<span class="nv">ZOODATALOGDIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>grep <span class="s2">"^[[:space:]]*dataLogDir="</span> <span class="s2">"</span><span class="nv">$ZOOCFG</span><span class="s2">"</span> | sed -e <span class="s1">'s/.*=//'</span><span class="k">)</span><span class="s2">"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"x</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"x"</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+<span class="k">else</span>
+<span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+<span class="k">fi</span>
+
+</code></pre></div><blockquote><p>创建定时任务自动执行脚本清理工作 minute hour day month dayofweek command minute - 从0到59的整数 hour - 从0到23的整数 day - 从1到31的整数 (必须是指定月份的有效日期) month - 从1到12的整数 (或如Jan或Feb简写的月份) dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示) command - 需要执行的命令(可用as ls /proc » /tmp/proc或 执行自定义脚本的命令)</blockquote><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#查看以后的定时任务</span>
+<span class="gp">$ </span>crontab -l
+<span class="c">#编辑一个定时任务</span>
+<span class="gp">$ </span>crontab -e
+<span class="c">#每周日0点执行</span>
+0 0 <span class="k">*</span> <span class="k">*</span> 0 sh /home/roc/fabric/zookeeper-3.4.10/bin/zkCleanup.sh
+</code></pre></div></div><div class="side content"><div> Content</div></div></div><div class="panel-body"><h4>Related Posts</h4><ul><li class="relatedPost"> <a href="http://localhost:4000/linux/2015/06/01/Ubuntu-install-docker.html">Ubuntu install docker</a> (Categories: <a href="/category/linux">linux</a>)<li class="relatedPost"> <a href="http://localhost:4000/linux/java/2015/05/05/Ubuntu-install-JDK.html">Ubuntu install JDK</a> (Categories: <a href="/category/linux">linux</a>, <a href="/category/java">java</a>)</ul></div><div class="PageNavigation"> <a class="prev" href="/javascript/2016/07/01/how-to-write-a-count-down.html">&laquo; How to write a count down</a></div><div class="disqus-comments"><div id="disqus_thread"></div></div></div><div class="col-sm-2"><div class="sidebar" id="myScrollspy"><ul class="nav sidenav" id="myNav"></ul></div></div></div><script src="//cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script> <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> <script src="/static/js/bootstrap.min.js"></script> <script src="/static/js/super-search.js"></script> <script src="/static/js/thickbox-compressed.js"></script> <script src="/static/js/projects.js"></script> <script type="text/javascript"> if (document.querySelector('#markdown-toc') !== null) { $('#myNav').append($('#markdown-toc').html()); $('#myNav ul').each(function(){ $(this).addClass('nav'); }); $('#myNav').affix({ offset: { top: 30 } }); } </script>

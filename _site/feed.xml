@@ -5,103 +5,430 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Apr 2017 18:27:32 +0800</pubDate>
-    <lastBuildDate>Sat, 15 Apr 2017 18:27:32 +0800</lastBuildDate>
+    <pubDate>Sat, 15 Apr 2017 19:02:21 +0800</pubDate>
+    <lastBuildDate>Sat, 15 Apr 2017 19:02:21 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
-        <title>Top 10 Python libraries of 2016</title>
+        <title>Zookeeper集群搭建</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#zappahttpswwwzappaio&quot; id=&quot;markdown-toc-zappahttpswwwzappaio&quot;&gt;1. &lt;a href=&quot;https://www.zappa.io/&quot;&gt;Zappa&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#sanichttpsgithubcomchannelcatsanic--uvloophttpsmagiciobloguvloop-blazing-fast-python-networking&quot; id=&quot;markdown-toc-sanichttpsgithubcomchannelcatsanic--uvloophttpsmagiciobloguvloop-blazing-fast-python-networking&quot;&gt;2. &lt;a href=&quot;https://github.com/channelcat/sanic&quot;&gt;Sanic&lt;/a&gt; + &lt;a href=&quot;https://magic.io/blog/uvloop-blazing-fast-python-networking/&quot;&gt;uvloop&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#asyncpghttpsgithubcommagicstackasyncpg&quot; id=&quot;markdown-toc-asyncpghttpsgithubcommagicstackasyncpg&quot;&gt;3. &lt;a href=&quot;https://github.com/MagicStack/asyncpg&quot;&gt;asyncpg&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#boto3httpsgithubcombotoboto3&quot; id=&quot;markdown-toc-boto3httpsgithubcombotoboto3&quot;&gt;4. &lt;a href=&quot;https://github.com/boto/boto3&quot;&gt;boto3&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#tensorflowhttpswwwtensorfloworg&quot; id=&quot;markdown-toc-tensorflowhttpswwwtensorfloworg&quot;&gt;5. &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;TensorFlow&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#gymhttpsgymopenaicom--universehttpsuniverseopenaicom&quot; id=&quot;markdown-toc-gymhttpsgymopenaicom--universehttpsuniverseopenaicom&quot;&gt;6. &lt;a href=&quot;https://gym.openai.com/&quot;&gt;gym&lt;/a&gt; + &lt;a href=&quot;https://universe.openai.com/&quot;&gt;universe&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#bokehhttpbokehpydataorg&quot; id=&quot;markdown-toc-bokehhttpbokehpydataorg&quot;&gt;7. &lt;a href=&quot;http://bokeh.pydata.org/&quot;&gt;Bokeh&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#blazehttpsblazereadthedocsioenlatestindexhtml&quot; id=&quot;markdown-toc-blazehttpsblazereadthedocsioenlatestindexhtml&quot;&gt;8. &lt;a href=&quot;https://blaze.readthedocs.io/en/latest/index.html&quot;&gt;Blaze&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#arrowhttpsgithubcomcrsmithdevarrow&quot; id=&quot;markdown-toc-arrowhttpsgithubcomcrsmithdevarrow&quot;&gt;9. &lt;a href=&quot;https://github.com/crsmithdev/arrow&quot;&gt;arrow&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#hughttpwwwhugrest&quot; id=&quot;markdown-toc-hughttpwwwhugrest&quot;&gt;10. &lt;a href=&quot;http://www.hug.rest/&quot;&gt;hug&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#zookeeper&quot; id=&quot;markdown-toc-zookeeper&quot;&gt;Zookeeper环境安装&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#datalog&quot; id=&quot;markdown-toc-datalog&quot;&gt;创建data和log目录&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;修改配置文件&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;从命名配置文件&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;修改默认配置项&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot; id=&quot;markdown-toc-section-3&quot;&gt;添加集群通信配置项&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot; id=&quot;markdown-toc-section-4&quot;&gt;启动服务&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#zookeeperdocker&quot; id=&quot;markdown-toc-zookeeperdocker&quot;&gt;Zookeeper环境安装(Docker)&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#leader&quot; id=&quot;markdown-toc-leader&quot;&gt;Leader的作用&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot; id=&quot;markdown-toc-section-5&quot;&gt;重要的配置文件和配置项&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Last year, we did a recap with what we thought were the &lt;a href=&quot;https://tryolabs.com/blog/2015/12/15/top-10-python-libraries-of-2015/&quot;&gt;best Python libraries of 2015&lt;/a&gt;, which was widely shared within the Python community (see post in&lt;a href=&quot;https://www.reddit.com/r/Python/comments/3wyiuv/top_10_python_libraries_of_2015/&quot;&gt;r/Python&lt;/a&gt;). A year has gone by, and again it is time to give due credit for the awesome work that has been done by the &lt;strong&gt;open source community&lt;/strong&gt; this year.&lt;/p&gt;
+&lt;h1 id=&quot;zookeeper&quot;&gt;Zookeeper环境安装&lt;/h1&gt;
 
-&lt;p&gt;Again, we try to avoid most established choices such as Django, Flask, etc. that are kind of standard nowadays. Also, some of these libraries date prior to 2016, but either they had an explosion in popularity this year or we think they are great enough to deserve the spot. Here we go!&lt;/p&gt;
+&lt;p&gt;Zookeeper配置服务器集群遵循2N+1的原则,即奇数台服务器原则(因为半数服务器挂掉即停掉所有服务)&lt;/p&gt;
 
-&lt;h2 id=&quot;zappahttpswwwzappaio&quot;&gt;1. &lt;a href=&quot;https://www.zappa.io/&quot;&gt;Zappa&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://apache.01link.hk/zookeeper/stable/&quot;&gt;打开最新稳定版本包下载地址&lt;/a&gt;
+选中需要下载的包右键获取连接地址,通过命令行下载并解压如下:&lt;/p&gt;
 
-&lt;p&gt;Since the release of &lt;a href=&quot;https://aws.amazon.com/lambda/details/&quot;&gt;AWS Lambda&lt;/a&gt; (and &lt;a href=&quot;https://cloud.google.com/functions/docs/&quot;&gt;others&lt;/a&gt; that &lt;a href=&quot;https://azure.microsoft.com/en-us/services/functions/&quot;&gt;have&lt;/a&gt; &lt;a href=&quot;https://www.ibm.com/cloud-computing/bluemix/openwhisk&quot;&gt;followed&lt;/a&gt;), all the rage has been about &lt;a href=&quot;http://martinfowler.com/articles/serverless.html&quot;&gt;serverless architectures&lt;/a&gt;. These allow microservices to be deployed in the cloud, in a fully managed environment where one doesn’t have to care about managing any server, but is assigned stateless, ephemeral &lt;em&gt;computing containers&lt;/em&gt; that are fully managed by a provider. With this paradigm, events (such as a traffic spike) can trigger the execution of more of these &lt;em&gt;containers&lt;/em&gt; and therefore give the possibility to handle “infinite” horizontal scaling.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.10.tar.gzls
 
-&lt;p&gt;Zappa is &lt;strong&gt;the serverless framework for Python&lt;/strong&gt;, although (at least for the moment) it only has support for AWS Lambda and AWS API Gateway. It makes building so-architectured apps very simple, freeing you from most of the tedious setup you would have to do through the AWS Console or API, and has all sort of commands to ease deployment and managing different environments.&lt;/p&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;tar -zxvf zookeeper-3.4.10.tar.gz
 
-&lt;h2 id=&quot;sanichttpsgithubcomchannelcatsanic--uvloophttpsmagiciobloguvloop-blazing-fast-python-networking&quot;&gt;2. &lt;a href=&quot;https://github.com/channelcat/sanic&quot;&gt;Sanic&lt;/a&gt; + &lt;a href=&quot;https://magic.io/blog/uvloop-blazing-fast-python-networking/&quot;&gt;uvloop&lt;/a&gt;&lt;/h2&gt;
+&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;
 
-&lt;p&gt;Who said Python couldn’t be fast? Apart from competing for the &lt;a href=&quot;http://knowyourmeme.com/memes/sanic-hegehog&quot;&gt;best name&lt;/a&gt; of a software library ever, Sanic also competes for the fastest Python web framework ever, and appears to be the winner by a clear margin. It is a Flask-like Python 3.5+ web server that is designed for speed. Another library, &lt;em&gt;uvloop&lt;/em&gt;, is an ultra fast drop-in replacement for &lt;em&gt;asyncio&lt;/em&gt;’s event loop that uses &lt;a href=&quot;https://github.com/libuv/libuv&quot;&gt;libuv&lt;/a&gt; under the hood. Together, these two things make a great combination!&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;According to the Sanic author’s &lt;a href=&quot;https://github.com/channelcat/sanic#benchmarks&quot;&gt;benchmark&lt;/a&gt;, &lt;em&gt;uvloop&lt;/em&gt; could power this beast to handle more than &lt;strong&gt;33k requests/s&lt;/strong&gt; which is just insane (and faster than &lt;em&gt;node.js&lt;/em&gt;). Your code can benefit from the new &lt;em&gt;async/await&lt;/em&gt; syntax so it will look neat too; besides we love the Flask-style API. Make sure to give Sanic a try, and if you are using &lt;em&gt;asyncio&lt;/em&gt;, you can surely benefit from &lt;em&gt;uvloop&lt;/em&gt; with very little change in your code!&lt;/p&gt;
+&lt;h3 id=&quot;datalog&quot;&gt;创建data和log目录&lt;/h3&gt;
 
-&lt;h2 id=&quot;asyncpghttpsgithubcommagicstackasyncpg&quot;&gt;3. &lt;a href=&quot;https://github.com/MagicStack/asyncpg&quot;&gt;asyncpg&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;mkdir zkdata
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;mkdir zkdataLog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;进入配置文件夹&lt;/p&gt;
 
-&lt;p&gt;In line with recent developments for the &lt;em&gt;asyncio&lt;/em&gt; framework, the folks from&lt;a href=&quot;https://magic.io/&quot;&gt;MagicStack&lt;/a&gt; bring us this efficient asynchronous (currently CPython 3.5 only) database interface library designed specifically for PostgreSQL. It has zero dependencies, meaning there is no need to have &lt;em&gt;libpq&lt;/em&gt; installed. In contrast with &lt;em&gt;psycopg2&lt;/em&gt; (the most popular PostgreSQL adapter for Python) which exchanges data with the database server in text format, &lt;em&gt;asyncpg&lt;/em&gt; implements PostgreSQL &lt;strong&gt;binary I/O protocol&lt;/strong&gt;, which not only allows support for generic types but also comes with numerous performance benefits.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;zookeeper-3.4.10/conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;The benchmarks are clear: &lt;em&gt;asyncpg&lt;/em&gt; is on average, at least &lt;strong&gt;3x faster&lt;/strong&gt; than &lt;em&gt;psycopg2&lt;/em&gt; (or &lt;em&gt;aiopg&lt;/em&gt;), and faster than the &lt;em&gt;node.js&lt;/em&gt; and &lt;em&gt;Go&lt;/em&gt; implementations.&lt;/p&gt;
+&lt;h3 id=&quot;section&quot;&gt;修改配置文件&lt;/h3&gt;
 
-&lt;h2 id=&quot;boto3httpsgithubcombotoboto3&quot;&gt;4. &lt;a href=&quot;https://github.com/boto/boto3&quot;&gt;boto3&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;拷贝并从新命名官方提供的样本文件zoo_sample.cfg为zoo.cfg&lt;/p&gt;
 
-&lt;p&gt;If you have your infrastructure on AWS or otherwise make use of their services (such as S3), you should be very happy that &lt;a href=&quot;https://github.com/boto/boto&quot;&gt;boto&lt;/a&gt;, the Python interface for AWS API, got a completely rewrite from the ground up. The great thing is that you don’t need to migrate your app all at once: you can use &lt;em&gt;boto3&lt;/em&gt; and &lt;em&gt;boto&lt;/em&gt; (2) &lt;em&gt;at the same time&lt;/em&gt;; for example using boto3 only for new parts of your application.&lt;/p&gt;
+&lt;h4 id=&quot;section-1&quot;&gt;从命名配置文件&lt;/h4&gt;
 
-&lt;p&gt;The new implementation is much &lt;strong&gt;more consistent&lt;/strong&gt; between different services, and since it uses a data-driven approach to generate classes at runtime from JSON description files, it will always get fast updates. No more lagging behind new Amazon API features, move to &lt;em&gt;boto3&lt;/em&gt;!&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cp zoo_sample.cfg zoo.cfg
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;vi zoo.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;h2 id=&quot;tensorflowhttpswwwtensorfloworg&quot;&gt;5. &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;TensorFlow&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# The number of milliseconds of each tick&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;tickTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2000
+&lt;span class=&quot;c&quot;&gt;# The number of ticks that the initial&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# synchronization phase can take&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 总花费时间为2000*10&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;initLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
+&lt;span class=&quot;c&quot;&gt;# The number of ticks that can pass between&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# sending a request and getting an acknowledgement&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 总花费时间为2000*5&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;syncLimit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
+&lt;span class=&quot;c&quot;&gt;# the directory where the snapshot is stored.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# do not use /tmp for storage, /tmp here is just&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# example sakes.&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;dataDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp/zookeeper
+&lt;span class=&quot;c&quot;&gt;# the port at which the clients will connect&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;clientPort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2181
+&lt;span class=&quot;c&quot;&gt;# the maximum number of client connections.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# increase this if you need to handle more clients&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#maxClientCnxns=60&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Be sure to read the maintenance section of the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# administrator guide before turning on autopurge.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# The number of snapshots to retain in dataDir&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#autopurge.snapRetainCount=3&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Purge task interval in hours&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Set to &quot;0&quot; to disable auto purge feature&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#autopurge.purgeInterval=1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Do we even need an introduction here? Since it was released by Google in November 2015, this library has gained a huge momentum and has become the #1 trendiest GitHub Python repository. In case you have been living under a rock for the past year, TensorFlow is a library for &lt;strong&gt;numerical computation&lt;/strong&gt; using data flow graphs, which can run over GPU or CPU.&lt;/p&gt;
+&lt;h3 id=&quot;section-2&quot;&gt;修改默认配置项&lt;/h3&gt;
 
-&lt;p&gt;We have quickly witnessed it become a trend in the Machine Learning community (especially Deep Learning, see our post on &lt;a href=&quot;https://tryolabs.com/blog/2016/11/18/10-main-takeaways-from-mlconf/&quot;&gt;10 main takeaways from MLconf&lt;/a&gt;), not only growing its uses in research but also being widely used in production applications. If you are doing Deep Learning and want to use it through a higher level interface, you can try using it as a backend for &lt;a href=&quot;https://keras.io/&quot;&gt;Keras&lt;/a&gt; (which made it to last years post) or the newer &lt;a href=&quot;https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim&quot;&gt;TensorFlow-Slim&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;修改&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;为我们刚刚创建的zkdata路径(快照日志目录)&lt;/li&gt;
+  &lt;li&gt;添加新的配置项&lt;code class=&quot;highlighter-rouge&quot;&gt;dataLogDir&lt;/code&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;下方,路径为刚刚创建的&lt;code class=&quot;highlighter-rouge&quot;&gt;zkdataLog&lt;/code&gt;路径.(事务目录,如果不配置讲放入到&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;目录,造成性能下降)&lt;/li&gt;
+  &lt;li&gt;修改端口为任意不冲突端口
+如下&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h2 id=&quot;gymhttpsgymopenaicom--universehttpsuniverseopenaicom&quot;&gt;6. &lt;a href=&quot;https://gym.openai.com/&quot;&gt;gym&lt;/a&gt; + &lt;a href=&quot;https://universe.openai.com/&quot;&gt;universe&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;dataDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/roc/fabric/zkdata
+&lt;span class=&quot;nv&quot;&gt;dataLogDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/roc/fabric/zkdataLog
+&lt;span class=&quot;nv&quot;&gt;clientPort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;21811
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;If you are into AI, you surely have heard about the &lt;a href=&quot;https://openai.com/&quot;&gt;OpenAI&lt;/a&gt; non-profit artificial intelligence research company (backed by Elon Musk et al.). The researchers have open sourced some Python code this year! Gym is a toolkit for developing and comparing &lt;a href=&quot;https://en.wikipedia.org/wiki/Reinforcement_learning&quot;&gt;reinforcement learning&lt;/a&gt; algorithms. It consists of an open-source library with a collection of test problems (environments) that can be used to test reinforcement learning algorithms, and a site and API that allows to compare the performance of trained algorithms (agents). Since it doesn’t care about the implementation of the agent, you can build them with the computation library of your choice: bare numpy, TensorFlow, Theano, etc.&lt;/p&gt;
+&lt;h3 id=&quot;section-3&quot;&gt;添加集群通信配置项&lt;/h3&gt;
 
-&lt;p&gt;We also have the recently released &lt;em&gt;universe&lt;/em&gt;, a software platform for researching into &lt;strong&gt;general intelligence&lt;/strong&gt; across games, websites and other applications. This fits perfectly with &lt;em&gt;gym&lt;/em&gt;, since it allows any real-world application to be turned into a &lt;em&gt;gym&lt;/em&gt; environment. Researchers hope that this limitless possibility will &lt;strong&gt;accelerate research&lt;/strong&gt; into smarter agents that can solve general purpose tasks.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#机器标识为1的ip地址,跟随者端口默认2888:选举端口3888&lt;/span&gt;
+server.1&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.40:2888:3888
+server.2&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.41:2888:3888
+server.3&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.186.42:2888:3888
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;在对应服务器中,转到&lt;code class=&quot;highlighter-rouge&quot;&gt;dataDir&lt;/code&gt;目录,创建一个&lt;strong&gt;对应的&lt;/strong&gt;标识文件&lt;code class=&quot;highlighter-rouge&quot;&gt;myid&lt;/code&gt;,内容为“1”(可以命名其他标识，为了便于记忆我们用数字编号作为标识)
+&lt;code class=&quot;highlighter-rouge&quot;&gt;shell
+$ cd /home/roc/fabric/zkdata
+$ echo &quot;1&quot; &amp;gt; myid
+&lt;/code&gt;
+&amp;gt;在例子中我配置了三台服务器,那么我需要在这三台服务器上面分别执行上面操作,为了方便可以直接copy配置文件,但是需要手动创建对应标识文件&lt;code class=&quot;highlighter-rouge&quot;&gt;myid&lt;/code&gt;文件&lt;/p&gt;
 
-&lt;h2 id=&quot;bokehhttpbokehpydataorg&quot;&gt;7. &lt;a href=&quot;http://bokeh.pydata.org/&quot;&gt;Bokeh&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;section-4&quot;&gt;启动服务&lt;/h3&gt;
 
-&lt;p&gt;You may be familiar with some of the libraries Python has to offer for data visualization; the most popular of which are &lt;a href=&quot;http://matplotlib.org/&quot;&gt;matplotlib&lt;/a&gt; and &lt;a href=&quot;http://seaborn.pydata.org/&quot;&gt;seaborn&lt;/a&gt;. Bokeh, however, is created for &lt;strong&gt;interactive visualization&lt;/strong&gt;, and targets modern web browsers for the presentation. This means Bokeh can create a plot which lets you_explore_ the data from a web browser. The great thing is that it integrates tightly with &lt;a href=&quot;https://jupyter.org/&quot;&gt;Jupyter Notebooks&lt;/a&gt;, so you can use it with your probably go-to tool for your research. There is also an optional server component, &lt;code class=&quot;highlighter-rouge&quot;&gt;bokeh-server&lt;/code&gt;, with many powerful capabilities like server-side downsampling of large dataset (no more slow network tranfers/browser!), streaming data, transformations, etc.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#进入`bin`目录,执行脚本zkServer.sh&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/roc/fabric/zookeeper-3.4.10/bin
+&lt;span class=&quot;c&quot;&gt;#查看命令&lt;/span&gt;
+./zkServer.sh
 
-&lt;p&gt;Make sure to check the &lt;a href=&quot;http://bokeh.pydata.org/en/latest/docs/gallery.html&quot;&gt;gallery&lt;/a&gt; for examples of what you can create. They look awesome!&lt;/p&gt;
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Usage: ./zkServer.sh &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;start|start-foreground|stop|restart|status|upgrade|print-cmd&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;h2 id=&quot;blazehttpsblazereadthedocsioenlatestindexhtml&quot;&gt;8. &lt;a href=&quot;https://blaze.readthedocs.io/en/latest/index.html&quot;&gt;Blaze&lt;/a&gt;&lt;/h2&gt;
+./zkServer.sh start
 
-&lt;p&gt;Sometimes, you want to run &lt;strong&gt;analytics&lt;/strong&gt; over a dataset too big to fit your computer’s RAM. If you cannot rely on numpy or Pandas, you usually turn to other tools like PostgreSQL, MongoDB, Hadoop, Spark, or many others. Depending on the use case, one or more of these tools can make sense, each with their own strengths and weaknesses. The problem? There is a big overhead here because you need to learn how each of these systems work and how to insert data in the proper form.&lt;/p&gt;
+ZooKeeper JMX enabled by default
+Using config: /home/roc/fabric/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Starting zookeeper ... STARTED
 
-&lt;p&gt;Blaze provides a &lt;strong&gt;uniform interface&lt;/strong&gt; that abstracts you away from several database technologies. At the core, the library provides a way to &lt;strong&gt;express computations&lt;/strong&gt;. Blaze itself doesn’t actually do any computation: it just knows how to instruct a specific &lt;em&gt;backend&lt;/em&gt; who will be in charge of performing it. There is so much more to Blaze (thus the ecosystem), as libraries that have come out of its development. For example, &lt;a href=&quot;http://dask.pydata.org/en/latest/&quot;&gt;Dask&lt;/a&gt; implements a drop-in replacement for NumPy array that can handle content larger than memory and leverage multiple cores, and also comes with dynamic task scheduling. Interesting stuff.&lt;/p&gt;
+&lt;span class=&quot;c&quot;&gt;#查看集群状态&lt;/span&gt;
 
-&lt;h2 id=&quot;arrowhttpsgithubcomcrsmithdevarrow&quot;&gt;9. &lt;a href=&quot;https://github.com/crsmithdev/arrow&quot;&gt;arrow&lt;/a&gt;&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;There is a famous saying that there are only two hard problems in Computer Science: cache invalidation and naming things. I think the saying is clearly missing one thing: &lt;strong&gt;managing datetimes&lt;/strong&gt;. If you have ever tried to do that in Python, you will know that the standard library has a gazillion modules and types: &lt;code class=&quot;highlighter-rouge&quot;&gt;datetime&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;date&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;calendar&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;tzinfo&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;timedelta&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;relativedelta&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pytz&lt;/code&gt;, etc. Worse, it is timezone naive by default.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;对其他服务器做同样的操作&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;Arrow is “datetime for humans”, offering a sensible approach to creating, manipulating, formatting and converting dates, times, and timestamps. It is a&lt;strong&gt;replacement&lt;/strong&gt; for the &lt;code class=&quot;highlighter-rouge&quot;&gt;datetime&lt;/code&gt; type that supports Python 2 or 3, and provides a much nicer interface as well as filling the gaps with new functionality (such as&lt;code class=&quot;highlighter-rouge&quot;&gt;humanize&lt;/code&gt;). Even if you don’t really &lt;em&gt;need&lt;/em&gt; arrow, using it can greatly reduce the boilerplate in your code.&lt;/p&gt;
+&lt;h1 id=&quot;zookeeperdocker&quot;&gt;Zookeeper环境安装(Docker)&lt;/h1&gt;
 
-&lt;h2 id=&quot;hughttpwwwhugrest&quot;&gt;10. &lt;a href=&quot;http://www.hug.rest/&quot;&gt;hug&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://sunnyroc.github.io/2015/06/01/Ubuntu-install-docker/&quot;&gt;安装docker&lt;/a&gt;
+&lt;a href=&quot;https://hub.docker.com/r/library/zookeeper/&quot;&gt;Zookeeper&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Expose your internal API externally, drastically simplifying &lt;strong&gt;Python API&lt;/strong&gt;development. Hug is a next-generation Python 3 (only) library that will provide you with the cleanest way to create HTTP REST APIs in Python. It is not a web framework per se (although that is a function it performs exceptionally well), but only focuses on exposing idiomatically correct and standard internal Python APIs externally. The idea is simple: you define logic and structure once, and you can expose your API through &lt;strong&gt;multiple means&lt;/strong&gt;. Currently, it supports exposing REST API or command line interface.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo docker pull zookeeper
+&lt;span class=&quot;c&quot;&gt;#进入zookeeper安装目录，创建docker-compose.yml配置文件&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/roc/fabric/zookeeper-3.4.10
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;touch docker-compose.yml
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;vim docker-compose.yml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;You can use type annotations that let &lt;em&gt;hug&lt;/em&gt; not only generate &lt;strong&gt;documentation&lt;/strong&gt; for your API but also provide with &lt;strong&gt;validation&lt;/strong&gt; and clean error messages that will make your life (and your API user’s) a lot easier. Hug is built on &lt;a href=&quot;https://github.com/falconry/falcon&quot;&gt;Falcon’s&lt;/a&gt; high performance HTTP library, which means you can deploy this to production using any wsgi-compatible server such as &lt;a href=&quot;http://gunicorn.org/&quot;&gt;gunicorn&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: &lt;span class=&quot;s1&quot;&gt;'2'&lt;/span&gt;
+services:
+    zoo1:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2181:2181
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo1:2888:3888 server.2&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo2:2888:3888 server.3&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo3:2888:3888
 
-&lt;p&gt;Follow the discussion of this post on: &lt;a href=&quot;https://www.reddit.com/r/Python/comments/5jf64k/top_10_python_libraries_of_2016/&quot;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
+    zoo2:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2182:2181
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo1:2888:3888 server.2&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo2:2888:3888 server.3&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo3:2888:3888
 
-&lt;hr /&gt;
+    zoo3:
+        image: zookeeper
+        restart: always
+        ports:
+            - 2183:2181
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo1:2888:3888 server.2&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo2:2888:3888 server.3&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zoo3:2888:3888
 
-&lt;p&gt;&lt;em&gt;Original source:&lt;/em&gt; &lt;a href=&quot;https://tryolabs.com/blog/2016/12/20/top-10-python-libraries-of-2016/&quot;&gt;&lt;em&gt;https://tryolabs.com/blog/2016/12/20/top-10-python…&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;上面配置了3个服务器,客户端端口为2888，追谁者端口为3888&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#后台执行compose,为了避免与其他项目混淆,我们可以使用COMPOSE_PROJECT_NAME=project_name作为命令行前缀来区分不同的compose服务&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#例如:COMPOSE_PROJECT_NAME=project_name docker-compose up -d&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker-compose up -d
+&lt;span class=&quot;c&quot;&gt;#查看启动容器列表&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#例如:COMPOSE_PROJECT_NAME=project_name docker-compose ps&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker-compose ps
+
+Name                   Command               State                     Ports
+---------------------------------------------------------------------------------------------------
+zktest_zoo1_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2181-&amp;gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo2_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2182-&amp;gt;2181/tcp, 2888/tcp, 3888/tcp
+zktest_zoo3_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2183-&amp;gt;2181/tcp, 2888/tcp, 3888/tcp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker run -it -d --rm &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        --link zoo1:zk1 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        --link zoo2:zk2 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        --link zoo3:zk3 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        --net zktest_default &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        zookeeper zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;zkCLI -server localhost:2181,localhost:2182,localhost:2183
+
+&lt;span class=&quot;c&quot;&gt;#hostname -i查询服务器ip&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;hostname -i
+192.168.186.40
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;切换到客户端,查看集群状态&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;stat | nc 127.0.0.1 2181
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53356[0]&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;queued&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0,recved&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1,sent&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Latency min/avg/max: 0/6/53
+Received: 26
+Sent: 25
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000a
+Mode: follower
+Node count: 4
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;stat | nc 127.0.0.1 2182
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /172.18.0.5:40178[1]&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;queued&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0,recved&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;47,sent&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;47&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ /192.168.186.27:53364[0]&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;queued&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0,recved&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1,sent&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Latency min/avg/max: 0/0/8
+Received: 49
+Sent: 48
+Connections: 2
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: leader
+Node count: 4
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;stat | nc 192.168.186.40 2183
+
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /192.168.186.27:53365[0]&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;queued&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0,recved&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1,sent&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Latency min/avg/max: 0/2/14
+Received: 8
+Sent: 7
+Connections: 1
+Outstanding: 0
+Zxid: 0x40000000b
+Mode: follower
+Node count: 4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;leader&quot;&gt;Leader的作用&lt;/h3&gt;
+&lt;p&gt;leader响应客户端的读写请求，想follower发送数据,follower从leader中同步数据,如果失败则从新选择一个leader, leader停机后会从follower中重新选择一个服务器作为新的leader
+通过&lt;code class=&quot;highlighter-rouge&quot;&gt;jps&lt;/code&gt;命令查看主进程&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;重要的配置文件和配置项&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;myid文件和server.myid 服务标识,用来注册和发现服务&lt;/li&gt;
+  &lt;li&gt;zoo.cfg文件 主配置文件&lt;/li&gt;
+  &lt;li&gt;log4j.properties文件 日志配置文件&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;zkEnv.sh&lt;/code&gt; 启动时设置的环境变量&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;zkCleanup.sh&lt;/code&gt; &lt;strong&gt;对于事务日志要定期清理&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;官方提供的清理脚本
+java -cp zookeeper.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.15.jar:conf org.apache.zookeeper.server.PurgeTxnLog &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;dataDir&amp;gt;&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;snapDir&amp;gt;&lt;/code&gt; -n &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;count&amp;gt;&lt;/code&gt;
+也可以直接使用自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;zkCleanup.sh&lt;/code&gt;脚本,将&lt;code class=&quot;highlighter-rouge&quot;&gt;$*&lt;/code&gt; 改成指定数字&lt;code class=&quot;highlighter-rouge&quot;&gt;-n 5&lt;/code&gt;(保留多少个快照日志,官方建议是3个,为了安全我们改成5)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# use POSTIX interface, symlink is followed automatically&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BASH_SOURCE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;dirname &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOOBIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;; &lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -e &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/../libexec/zkEnv.sh&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+  . &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/../libexec/zkEnv.sh
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+  . &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOBINDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;/zkEnv.sh
+&lt;span class=&quot;k&quot;&gt;fi
+
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOODATADIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;grep &lt;span class=&quot;s2&quot;&gt;&quot;^[[:space:]]*dataDir=&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOCFG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | sed -e &lt;span class=&quot;s1&quot;&gt;'s/.*=//'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;grep &lt;span class=&quot;s2&quot;&gt;&quot;^[[:space:]]*dataLogDir=&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOOCFG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | sed -e &lt;span class=&quot;s1&quot;&gt;'s/.*=//'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;x&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;x&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.log.dir=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.root.logger=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG4J_PROP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     -cp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLASSPATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$JVMFLAGS&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     org.apache.zookeeper.server.PurgeTxnLog &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATADIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -n 5
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.log.dir=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-Dzookeeper.root.logger=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ZOO_LOG4J_PROP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     -cp &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLASSPATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$JVMFLAGS&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     org.apache.zookeeper.server.PurgeTxnLog &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATALOGDIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZOODATADIR&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -n 5
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;创建定时任务自动执行脚本清理工作
+minute hour day month dayofweek command
+  minute - 从0到59的整数
+  hour - 从0到23的整数
+  day - 从1到31的整数 (必须是指定月份的有效日期)
+  month - 从1到12的整数 (或如Jan或Feb简写的月份)
+  dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示)
+  command - 需要执行的命令(可用as ls /proc » /tmp/proc或 执行自定义脚本的命令)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#查看以后的定时任务&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;crontab -l
+&lt;span class=&quot;c&quot;&gt;#编辑一个定时任务&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;crontab -e
+&lt;span class=&quot;c&quot;&gt;#每周日0点执行&lt;/span&gt;
+0 0 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 0 sh /home/roc/fabric/zookeeper-3.4.10/bin/zkCleanup.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
-        <pubDate>Thu, 29 Dec 2016 19:34:10 +0800</pubDate>
-        <link>http://localhost:4000/python/django/2016/12/29/top-10-python-libraries-of-2016.html</link>
-        <guid isPermaLink="true">http://localhost:4000/python/django/2016/12/29/top-10-python-libraries-of-2016.html</guid>
+        <pubDate>Sat, 01 Apr 2017 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html</guid>
         
         
-        <category>python</category>
+        <category>linux</category>
         
-        <category>django</category>
+      </item>
+    
+      <item>
+        <title>How to write a count down</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are 2 ways for count down in javascript&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;setTimeout&lt;/li&gt;
+  &lt;li&gt;setInterval&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But them are not accurate for long time count down and sometimes not works well if the user update their PC time.&lt;/p&gt;
+
+&lt;p&gt;Below is the accurate implementation which from author &lt;code class=&quot;highlighter-rouge&quot;&gt;Gaohaoyang&lt;/code&gt; the guy works at T-mall.&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * @param  {Number} endTime
+ * @param  {Number} deviceTime
+ * @param  {Number} serverTime
+ * @return {Object}
+ */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getRemainTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;endTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;deviceTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;serverTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;endTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;serverTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;deviceTime&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minutes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hours&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;days&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'total'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'days'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;days&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'hours'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'minutes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'seconds'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;getServerTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;serverTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;intervalTimer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;remainTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getRemainTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;endTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;deviceTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;serverTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remainTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7200000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;remainTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// do something&lt;/span&gt;
+
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remainTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;clearInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;intervalTimer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// do something&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 01 Jul 2016 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/javascript/2016/07/01/how-to-write-a-count-down.html</link>
+        <guid isPermaLink="true">http://localhost:4000/javascript/2016/07/01/how-to-write-a-count-down.html</guid>
+        
+        
+        <category>javascript</category>
         
       </item>
     
@@ -167,63 +494,6 @@ but if you can add it, you can following this tutorial bellow:&lt;/p&gt;
         
         
         <category>others</category>
-        
-      </item>
-    
-      <item>
-        <title>Setup Django in apache2 Raspberry Pi</title>
-        <description>
-&lt;p&gt;Setup Django in apache2 Raspberry Pi. Example in this configuration for monitoring the server raspberry pi using &lt;a href=&quot;https://github.com/k3oni/pydash/&quot;&gt;https://github.com/k3oni/pydash/&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As following this configurations &lt;a href=&quot;https://github.com/k3oni/pydash/wiki/Install-pyDash#3-setup-apache&quot;&gt;https://github.com/k3oni/pydash/wiki/Install-pyDash#3-setup-apache&lt;/a&gt;, how to setup it.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Edit in your:&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/apache2/sites-available/pydash.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;and then, add this configuration:&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Listen&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;192&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;168&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8001&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VirtualHost&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8001&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;ServerName&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;192&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;168&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;ServerAlias&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;192&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;168&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8001&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;DocumentRoot&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/var/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;WSGIDaemonProcess&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{GROUP}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/var/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;WSGIProcessGroup&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;WSGIScriptAlias&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/ /&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wsgi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;py&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;Alias&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/static /&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;static&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;Alias&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/media /&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pydash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/VirtualHost&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Now restart or reload your apache&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service apache2 restart
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And then, you can access from another client with IP: &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.1.27:8001&lt;/code&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Thanks to: &lt;em&gt;Nabil Abdat&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-        <pubDate>Wed, 20 Apr 2016 23:32:34 +0800</pubDate>
-        <link>http://localhost:4000/django/raspberry/2016/04/20/setup-django-in-apache2-raspberry-pi.html</link>
-        <guid isPermaLink="true">http://localhost:4000/django/raspberry/2016/04/20/setup-django-in-apache2-raspberry-pi.html</guid>
-        
-        
-        <category>django</category>
-        
-        <category>raspberry</category>
         
       </item>
     
@@ -354,6 +624,236 @@ but if you can add it, you can following this tutorial bellow:&lt;/p&gt;
         
         
         <category>bash</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu install docker</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ubuntudocker&quot; id=&quot;markdown-toc-ubuntudocker&quot;&gt;Ubuntu安装Docker&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;安装最新稳定版&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;开机启动&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;常用命令&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#docker-compose&quot; id=&quot;markdown-toc-docker-compose&quot;&gt;安装Docker Compose&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ubuntudocker&quot;&gt;Ubuntu安装Docker&lt;/h1&gt;
+&lt;p&gt;容器技术现在火的不得了,可移植性强,docker库中有很多成熟的官方容器可以拿来就用,对硬件条件有限切网架设多种服务的人来说,非常吸引人.&lt;/p&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;安装最新稳定版&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#安装依赖包&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo apt-get install &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    apt-transport-https &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    ca-certificates &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    curl &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    software-properties-common
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo apt-get install &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    linux-image-extra-&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;uname -r&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    linux-image-extra-virtual
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+&lt;span class=&quot;c&quot;&gt;#Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88.&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo apt-key fingerprint 0EBFCD88
+
+pub   4096R/0EBFCD88 2017-02-22
+      Key fingerprint &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CE deb&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &amp;lt;docker@docker.com&amp;gt;
+sub   4096R/F273FCD8 2017-02-22&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;amd64:&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo add-apt-repository &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+   &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+   stable&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;armhf:&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo add-apt-repository &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+   &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=armhf] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+   stable&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;卸载Docker&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;sudo apt-get purge docker-ce
+
+&lt;span class=&quot;c&quot;&gt;#Images, containers, volumes, or customized configuration files on your host are not automatically removed. To delete all images, containers, and volumes:&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo rm -rf /var/lib/docker&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果上面命令无效,请参考&lt;a href=&quot;https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description&quot;&gt;官网最新命令&lt;/a&gt;安装CE版本&lt;/p&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;开机启动&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;sudo systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;docker
+&lt;span class=&quot;c&quot;&gt;#关闭&lt;/span&gt;
+sudo systemctl disable docker
+
+&lt;span class=&quot;c&quot;&gt;#切换手动启动&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;manual | sudo tee /etc/init/docker.override
+&lt;span class=&quot;c&quot;&gt;#切换自动自动&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;upstart | sudo tee /etc/init/docker.override&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;常用命令&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#查看容器日志&lt;/span&gt;
+docker logs -f &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#查看正在运行的容器&lt;/span&gt;
+docker ps
+docker ps -a为查看所有的容器，包括已经停止的
+&lt;span class=&quot;c&quot;&gt;#删除所有容器&lt;/span&gt;
+docker rm &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;docker ps -a -q&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#删除单个容器&lt;/span&gt;
+docker rm &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#停止、启动、杀死一个容器&lt;/span&gt;
+docker stop &amp;lt;容器名orID&amp;gt;
+docker start &amp;lt;容器名orID&amp;gt;
+docker &lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; &amp;lt;容器名orID&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#查看所有镜像&lt;/span&gt;
+docker images
+&lt;span class=&quot;c&quot;&gt;#删除所有镜像&lt;/span&gt;
+docker rmi &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;docker images | grep none | awk &lt;span class=&quot;s1&quot;&gt;'{print $3}'&lt;/span&gt; | sort -r&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#拉取镜像&lt;/span&gt;
+docker pull &amp;lt;镜像名:tag&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#镜像迁移&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#机器A&lt;/span&gt;
+docker save busybox-1 &amp;gt; /home/save.tar
+&lt;span class=&quot;c&quot;&gt;#机器B&lt;/span&gt;
+docker load &amp;lt; /home/save.tar&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;docker-compose&quot;&gt;安装Docker Compose&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.docker.com/compose/install/&quot;&gt;官网地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo curl -L &lt;span class=&quot;s2&quot;&gt;&quot;https://github.com/docker/compose/releases/download/1.11.2/docker-compose-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;uname -s&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;uname -m&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -o /usr/local/bin/docker-compose
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo chmod +x /usr/local/bin/docker-compose
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker-compose --version
+
+docker-compose version 1.11.2, build dfed245
+
+&lt;span class=&quot;c&quot;&gt;#移除&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;rm /usr/local/bin/docker-compose
+
+&lt;span class=&quot;c&quot;&gt;#升级到指定版本替换下面migrate-to-labels&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker-compose migrate-to-labels&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;pip方式安装&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo pip install -U docker-compose&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Mon, 01 Jun 2015 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/linux/2015/06/01/Ubuntu-install-docker.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2015/06/01/Ubuntu-install-docker.html</guid>
+        
+        
+        <category>linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu install JDK</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ubuntuopenjdk--oralcejdk&quot; id=&quot;markdown-toc-ubuntuopenjdk--oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#openjdk&quot; id=&quot;markdown-toc-openjdk&quot;&gt;安装OpenJDK&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#oracle-jdk&quot; id=&quot;markdown-toc-oracle-jdk&quot;&gt;安装Oracle JDK&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#bin&quot; id=&quot;markdown-toc-bin&quot;&gt;通过bin包安装&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ubuntuopenjdk--oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;打开终端后查看是否安装
+java -version&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;openjdk&quot;&gt;安装OpenJDK&lt;/h5&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
+sudo apt-get install default-jre
+sudo apt-get install default-jdk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;更多软件版本用下列查询命令&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-cache search jre
+sudo apt-cache search jdk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;oracle-jdk&quot;&gt;安装Oracle JDK&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;如果想安装java7,替换掉命令中java8即可
+命令行安装依赖网络环境&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-set-default
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;bin&quot;&gt;通过bin包安装&lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;这种方式需要配置环境变量
+&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;从官网下载对应tar包&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如下载后文件为&lt;code class=&quot;highlighter-rouge&quot;&gt;jdk-8u101-linux-x64.tar.gz&lt;/code&gt;
+使用如下命令解压:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
+例如:&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/java/jdk1.8/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;编辑文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; 配置java环境变量&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;JAVA_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/java/jdk1.8/
+&lt;span class=&quot;nv&quot;&gt;JRE_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/jre
+&lt;span class=&quot;nv&quot;&gt;JAVA_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin
+&lt;span class=&quot;nv&quot;&gt;CLASSPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;.:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/dt.jar:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/tools.jar:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/lib
+&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/bin
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;JAVA_HOME JRE_HOME PATH CLASSPATH
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果使用命令行源安装,默认安装路径为&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/lib/jvm/xxxxx&lt;/code&gt;
+修改JAVA_HOME路径为对应路径即可&lt;/p&gt;
+
+&lt;p&gt;使用下面命令使配置及时生效&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;最后再次使用下面命令验证配置是否生效&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 05 May 2015 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/linux/java/2015/05/05/Ubuntu-install-JDK.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/java/2015/05/05/Ubuntu-install-JDK.html</guid>
+        
+        
+        <category>linux</category>
+        
+        <category>java</category>
         
       </item>
     
@@ -794,11 +1294,11 @@ Content in the first column | Content in the second column
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 23 Dec 2013 01:18:23 +0800</pubDate>
-        <link>http://localhost:4000/ruby/2013/12/23/markdonw-syntax.html</link>
-        <guid isPermaLink="true">http://localhost:4000/ruby/2013/12/23/markdonw-syntax.html</guid>
+        <link>http://localhost:4000/markdown/2013/12/23/markdonw-syntax.html</link>
+        <guid isPermaLink="true">http://localhost:4000/markdown/2013/12/23/markdonw-syntax.html</guid>
         
         
-        <category>ruby</category>
+        <category>markdown</category>
         
       </item>
     
