@@ -1,60 +1,55 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+title: Stack Problems
+description: My Personal Stack Problems
+author: Agus Makmun
+github: https://github.com/agusmakmun
+about: I am freelance developer. Currently doing more in backend, focused in Python and Django.
+disqus_shortname: stackproblems
+google_analytics: UA-XXXXXXXX-Y
+avatar_url: /static/img/avatar.jpg
 
-# Site settings
-title: Roc
-brief-intro: Java Ops
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://sunnyroc.github.io" # the base hostname & protocol for your site
+enableTags: true
+tagarray: []
 
-permalink: /:year/:month/:day/:title/
+collections:
+  project:
+    output: true
+    permalink: /project/:path/
 
-# other links
-twitter_username:
-facebook_username:
-github_username:  sunnyroc
-email: bien.sun@hotmail.com
-weibo_username:
-zhihu_username:
-linkedIn_username: sun-roc-7517a496
-dribbble_username:
+social:
+    - icon: fa-facebook
+      link: "#"
+    - icon: fa-twitter
+      link: "https://twitter.com/agusmakmun6"
+    - icon: fa-linkedin
+      link: "https://www.linkedin.com/in/summonagus"
+    - icon: fa-stack-exchange
+      link: "#"
+    - icon: fa-github
+      link: "https://github.com/agusmakmun"
 
-description_footer: Pieces from my experience
+share:
+  twitter_username: agusmakmun6
+  fb_appid: 1749788565247320
 
-# comments
-# two ways to comment, only choose one, and use your own short name
-# 两种评论插件，选一个就好了，使用自己的 short_name
-duoshuo_shortname: #hygblog
-disqus_shortname: https-sunnyroc-github-io
+urls:
+    - text: About Me
+      url: /about/
+    - text: My Projects
+      url: /projects/
+    - text: XML Feed
+      url: /feed.xml
 
-# statistic analysis 统计代码
-# 百度统计 id，将统计代码替换为自己的百度统计id，即
-# hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
-# xxxxx字符串
-baidu_tongji_id: c50c0f8c37e5feee30561f6884dbcfa9
-google_analytics_id:  # google 分析追踪id
-
-# Build settings
+url: "https://agusmakmun.github.io"
+baseurl: ""
+paginate: 20
+per_page: 20
+paginate_path: "/page/:num/"
 markdown: kramdown
+gems:
+  - jekyll-paginate
+  - jekyll-gist
 
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-
-# port
-# port: 1234
-
-# url
-category_dir: category/
-tag_dir: tag/
-
-# excerpt
-excerpt_separator: "\n\n\n\n"
-
-# paginate
-gems: [jekyll-paginate]
-paginate: 6
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
