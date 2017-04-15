@@ -84,18 +84,20 @@ footer {
 
 /* Left column */
 div.col-sm-3 {
-  margin-top: 100px;
+  margin-top: 80px;
   font-size: 11px;
   color: #666;
 }
 div.col-sm-3 strong {
-  font-size: 16px;
+  font-size: 14px;
   color: #4A4A4A;
   font-weight: normal;
 }
 div.col-sm-3 div.profile-about {
   margin-top: 10px;
   color: #8C8C8C;
+  font-style: italic;
+  font-size: 14px;
 }
 div.col-sm-3 img.profile-avatar {
   border-radius: 150px;

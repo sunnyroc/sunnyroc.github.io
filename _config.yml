@@ -2,11 +2,11 @@ title: Stack Problems
 description: My Personal Stack Problems
 author: Roc
 github: https://github.com/sunnyroc
-about: I am java developer. Currently doing more in backend, focused in Java and Jhipster.
+about: I am a dev-ops. Currently doing more in backend and focused in <code>Java</code>.
 disqus_shortname: #stackproblems
 google_analytics: #UA-XXXXXXXX-Y
 avatar_url: /static/img/avatar.jpg
-
+skilled: [java, python, php]
 enableTags: true
 tagarray: []
 
