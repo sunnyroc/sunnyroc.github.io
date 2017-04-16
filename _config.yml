@@ -1,7 +1,8 @@
 title: Stack Problems
 description: My Personal Stack Problems
 author: Roc
-github: https://github.com/sunnyroc
+tagline: SE DevOps
+github: github.com/sunnyroc
 about: I am a dev-ops. Currently doing more in backend and focused in <code>Java</code>.
 disqus_shortname: #stackproblems
 google_analytics: #UA-XXXXXXXX-Y
@@ -9,6 +10,11 @@ avatar_url: /static/img/avatar.jpg
 skilled: [HTML5 & CSS, Python & Django, PHP & Laravel,Node & Vue]
 enableTags: true
 tagarray: []
+style: styles-2
+email: bien.sun@hotmail.com
+phone: 13052739901
+website: sunnyroc.github.io
+linkedin: sun-roc-7517a496
 
 collections:
   project:
@@ -34,10 +40,13 @@ share:
 urls:
     - text: About Me
       url: /about/
+    - text: Resume
+      url: /resume_en/
     # - text: My Projects
     #   url: /projects/
     - text: XML Feed
       url: /feed.xml
+
 
 url: "https://sunnyroc.github.io"
 baseurl: ""

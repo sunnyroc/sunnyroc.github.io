@@ -2,6 +2,7 @@
 layout: default
 ---
 
+{% if page.url !="/resume_cn/" and page.url !="/resume_en/" %}
 <div id="home">
   <h1>{{ site.title }}</h1>
   <hr />
@@ -57,3 +58,15 @@ layout: default
     </div>
   {% endif %}
 </div><!-- end #home -->
+{% endif %}
+
+
+{% if page.url =="/resume_cn/" or page.url =="/resume_en/" %}
+  {% include career-profile.html %}
+
+  {% include experience.html %}
+
+  {% include projects.html %}
+
+  {% include skills.html %}
+{% endif %}

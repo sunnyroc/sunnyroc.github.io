@@ -1,6 +1,7 @@
 ---
 layout: compress
 ---
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -109,6 +110,8 @@ layout: compress
       ga('send', 'pageview');
     </script>
   </head>
+
+  {% if page.url !="/resume_cn/" and page.url !="/resume_en/" %}
   <body data-spy="scroll" data-target="#myScrollspy">
     <div class="container">
       <div class="col-sm-3">
@@ -207,4 +210,19 @@ layout: compress
 
     </script>
   </body>
+  {% endif %}
+
+  {% if page.url =="/resume_cn/" or page.url =="/resume_en/" %}
+    {% include head.html %}
+    <body>
+        <div class="wrapper">
+            {% include sidebar.html %}
+            <div class="main-wrapper">
+               {{content}}
+            </div>
+        </div>
+    {% include footer.html %}
+    {% include scripts.html %}
+    </body>
+  {% endif %}
 </html>
