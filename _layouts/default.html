@@ -113,16 +113,32 @@ layout: compress
     <div class="container">
       <div class="col-sm-3">
         <div class="fixed-condition">
-          <a href="/"><img class="profile-avatar" src="{{ site.avatar_url }}" height="75px" width="75px" /></a>
-          <h1 class="author-name">{{ site.author }}</h1>
+          <!-- <div>
+            <a href="/"><img class="profile-avatar" src="{{ site.avatar_url }}" height="75px" width="75px" /></a>
+            <span class="author-name">{{ site.author }}</span>
+          </div> -->
+          <div class="row">
+            <div class="col-sm-5">
+              <div style="text-align:center">
+                <a href="/"><img class="profile-avatar" src="{{ site.avatar_url }}" height="75px" width="75px" /></a>
+                <div class="m-t-xs font-bold">{{ site.author }}</div>
+                <a href="http://j.map.baidu.com/xHp9l"><i class="fa fa-map-marker"></i> Address</a>
+              </div>
+
+            </div>
+            <div class="col-sm-7">
+              <div>
+                <strong>Skills & Proficiency</strong><br>
+                {% for skill in site.skilled %}
+                <div class="item">{{skill}}</div>
+                {% endfor %}
+              </div>
+            </address>
+            </div>
+          </div>
           {% if site.about %}
             <div class="profile-about">
               <strong>{{ site.about }}</strong>
-            <br>
-              <span>Other skilled:</span>
-                {% for skill in site.skilled %}
-                <br>{{skill}}
-                {% endfor %}
             </div>
           {% endif %}
           <div class="social">
@@ -144,21 +160,19 @@ layout: compress
               <li><a class="about" href="{{ i.url }}">{{ i.text }}</a></li>
             {% endfor %}
           </ul>
+          <div>
+            &copy; {{ site.author }}
+            {% if site.github %}
+              - <a href="{{ site.github }}">{{ site.github }}</a> - Powered by Jekyll.
+            {% endif %}
+          </div>
         </div>
+
         <!-- end /.fixed-condition -->
       </div>
       <div class="col-sm-7 main-layout">
         {{ content }}
-        <!-- <footer>
-          &copy; {{ site.author }}
-          {% if site.github %}
-            - <a href="{{ site.github }}">{{ site.github }}</a> - Powered by Jekyll.
-          {% endif %}
-          <div class="btn-github" style="float:right;">
-            <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
-            <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
-          </div>
-        </footer> -->
+
       </div>
       <div class="col-sm-2">
           <div class="sidebar" id="myScrollspy">

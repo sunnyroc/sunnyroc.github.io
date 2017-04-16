@@ -84,7 +84,7 @@ footer {
 
 /* Left column */
 div.col-sm-3 {
-  margin-top: 80px;
+  margin-top: 60px;
   font-size: 11px;
   color: #666;
 }
@@ -179,4 +179,14 @@ div.col-sm-3 img.profile-avatar {
   div.col-sm-2 {
     margin-top: 30px;
   }
+}
+
+.contact-box {
+    background-color: #ffffff;
+    border: 1px solid #e7eaec;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.contact-box > a {
+    color: inherit;
 }

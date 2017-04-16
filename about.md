@@ -9,6 +9,7 @@ permalink: /about/
 
 ## 关于我
 
+
 就职于澳洲软件公司Fabricgroup 主要从事java项目的开发和技术支持
 
 凡是和互联网有关的技术我都感兴趣,前后端开发的分离趋势,让我这样一个一直藏在后端的人有机会接触和实施前端的技术,自从国内有了全栈工程师的概念,我就狂奔在这条路上，裤衩都已经跟不上我的速度.
@@ -73,3 +74,5 @@ permalink: /about/
 * GitHub：[sunnyroc](https://github.com/sunnyroc)
 * Email: bien.sun@hotmail.com
 * Office:	roc.sun@fabricgroup.com.au
+
+## Resume[English](/cv/)
