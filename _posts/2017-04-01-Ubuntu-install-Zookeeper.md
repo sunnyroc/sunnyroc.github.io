@@ -226,7 +226,7 @@ $ hostname -i
 切换到客户端,查看集群状态
 
 ```shell
-$ echo stat | nc 127.0.0.1 2181
+$ echo stat | nc 192.168.186.40 2181
 Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
 Clients:
  /192.168.186.27:53356[0](queued=0,recved=1,sent=0)
@@ -240,7 +240,7 @@ Zxid: 0x40000000a
 Mode: follower
 Node count: 4
 
-$ echo stat | nc 127.0.0.1 2182
+$ echo stat | nc 192.168.186.40 2182
 
 Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
 Clients:
@@ -308,11 +308,11 @@ if [ "x$ZOODATALOGDIR" = "x" ]
 then
 "$JAVA" "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
      -cp "$CLASSPATH" $JVMFLAGS \
-     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATADIR" -n 5
+     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATADIR" -n 5 $*
 else
 "$JAVA" "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
      -cp "$CLASSPATH" $JVMFLAGS \
-     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATALOGDIR" "$ZOODATADIR" -n 5
+     org.apache.zookeeper.server.PurgeTxnLog "$ZOODATALOGDIR" "$ZOODATADIR" -n 5 $*
 fi
 
 ```

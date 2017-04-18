@@ -123,7 +123,7 @@ zktest_zoo3_1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2183-&gt;2181/t
 <span class="gp">$ </span>hostname -i
 192.168.186.40
 
-</code></pre></div><p>切换到客户端,查看集群状态<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2181
+</code></pre></div><p>切换到客户端,查看集群状态<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo </span>stat | nc 192.168.186.40 2181
 Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
 Clients:
  /192.168.186.27:53356[0]<span class="o">(</span><span class="nv">queued</span><span class="o">=</span>0,recved<span class="o">=</span>1,sent<span class="o">=</span>0<span class="o">)</span>
@@ -137,7 +137,7 @@ Zxid: 0x40000000a
 Mode: follower
 Node count: 4
 
-<span class="gp">$ </span><span class="nb">echo </span>stat | nc 127.0.0.1 2182
+<span class="gp">$ </span><span class="nb">echo </span>stat | nc 192.168.186.40 2182
 
 Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
 Clients:
@@ -185,11 +185,11 @@ Node count: 4
 <span class="k">then</span>
 <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
-     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5 <span class="nv">$*</span>
 <span class="k">else</span>
 <span class="s2">"</span><span class="nv">$JAVA</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.log.dir=</span><span class="k">${</span><span class="nv">ZOO_LOG_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"-Dzookeeper.root.logger=</span><span class="k">${</span><span class="nv">ZOO_LOG4J_PROP</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      -cp <span class="s2">"</span><span class="nv">$CLASSPATH</span><span class="s2">"</span> <span class="nv">$JVMFLAGS</span> <span class="se">\</span>
-     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5
+     org.apache.zookeeper.server.PurgeTxnLog <span class="s2">"</span><span class="nv">$ZOODATALOGDIR</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZOODATADIR</span><span class="s2">"</span> -n 5 <span class="nv">$*</span>
 <span class="k">fi</span>
 
 </code></pre></div><blockquote><p>创建定时任务自动执行脚本清理工作 minute hour day month dayofweek command minute - 从0到59的整数 hour - 从0到23的整数 day - 从1到31的整数 (必须是指定月份的有效日期) month - 从1到12的整数 (或如Jan或Feb简写的月份) dayofweek - 从0到6的整数，0或6用来描述周日 (或用Sun或Mon简写来表示) command - 需要执行的命令(可用as ls /proc » /tmp/proc或 执行自定义脚本的命令)</blockquote><div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#查看以后的定时任务</span>
