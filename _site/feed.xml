@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Apr 2017 09:57:49 +0800</pubDate>
-    <lastBuildDate>Tue, 18 Apr 2017 09:57:49 +0800</lastBuildDate>
+    <pubDate>Tue, 18 Apr 2017 17:18:28 +0800</pubDate>
+    <lastBuildDate>Tue, 18 Apr 2017 17:18:28 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -614,6 +614,360 @@ minute hour day month dayofweek command
       </item>
     
       <item>
+        <title>Redis</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#redis--httpsredisio&quot; id=&quot;markdown-toc-redis--httpsredisio&quot;&gt;Redis 安装 &lt;a href=&quot;https://redis.io/&quot;&gt;官网&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#python-&quot; id=&quot;markdown-toc-python-&quot;&gt;Python 连接方式&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;单链接&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;连接池&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;批量操作-管道&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot; id=&quot;markdown-toc-section-3&quot;&gt;发布和订阅&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#python--1&quot; id=&quot;markdown-toc-python--1&quot;&gt;Python 常用操作&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot; id=&quot;markdown-toc-section-4&quot;&gt;字符串操作&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#hash&quot; id=&quot;markdown-toc-hash&quot;&gt;Hash操作&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#list-&quot; id=&quot;markdown-toc-list-&quot;&gt;List 操作&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#set-&quot; id=&quot;markdown-toc-set-&quot;&gt;Set 操作&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot; id=&quot;markdown-toc-section-5&quot;&gt;有序集合&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;redis--httpsredisio&quot;&gt;Redis 安装 &lt;a href=&quot;https://redis.io/&quot;&gt;官网&lt;/a&gt;&lt;/h1&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;wget http://download.redis.io/releases/redis-3.2.8.tar.gz
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;tar -xzvf redis-3.2.8.tar.gz
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;redis-3.2.8/
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;make
+&lt;span class=&quot;c&quot;&gt;#指定安装目录&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo make &lt;span class=&quot;nv&quot;&gt;PREFIX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/redis-3.2.8 install
+&lt;span class=&quot;c&quot;&gt;#创建软链接&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo ln -s redis-3.2.8 /usr/local/redis
+&lt;span class=&quot;c&quot;&gt;#添加环境变量&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'export PAHT=/usr/local/redis/bin:$PATH'&lt;/span&gt; &amp;gt;&amp;gt; ~/.bash_profile
+&lt;span class=&quot;c&quot;&gt;#刷新环境变量&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile
+&lt;span class=&quot;c&quot;&gt;#创建redis根目录&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;mkdir ~/redis
+&lt;span class=&quot;c&quot;&gt;#创建配置文件&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;touch ~/redis/redis.conf
+&lt;span class=&quot;c&quot;&gt;#编辑配置文件&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo vi ~/redis/redis.conf
+
+&lt;span class=&quot;c&quot;&gt;# 守护进程方式运行&lt;/span&gt;
+daemonize yes
+&lt;span class=&quot;c&quot;&gt;# 日志文件&lt;/span&gt;
+logfile /home/roc/redis/redis.Log
+&lt;span class=&quot;c&quot;&gt;# 数据文件夹&lt;/span&gt;
+dir /usr/local/redis
+&lt;span class=&quot;c&quot;&gt;# 默认端口6379&lt;/span&gt;
+port 6379
+
+&lt;span class=&quot;c&quot;&gt;#sudo运行redis server&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;redis-server redis/redis.conf
+
+&lt;span class=&quot;c&quot;&gt;#运行client,输入auth root获取验证&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;redis-cli
+&lt;span class=&quot;gp&quot;&gt;127.0.0.1:6379&amp;gt; &lt;/span&gt;auth root
+OK
+&lt;span class=&quot;gp&quot;&gt;127.0.0.1:6379&amp;gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;t &lt;span class=&quot;s2&quot;&gt;&quot;t&quot;&lt;/span&gt;
+OK
+&lt;span class=&quot;gp&quot;&gt;127.0.0.1:6379&amp;gt; &lt;/span&gt;get t
+&lt;span class=&quot;s2&quot;&gt;&quot;t&quot;&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;127.0.0.1:6379&amp;gt; &lt;/span&gt;quit
+
+&lt;span class=&quot;c&quot;&gt;#停掉redis服务&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;killall redis-server
+
+&lt;span class=&quot;c&quot;&gt;#监控数据&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;127.0.0.1:6379&amp;gt; &lt;/span&gt;monitor
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;python-&quot;&gt;Python 连接方式&lt;/h1&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;单链接&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;redis&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Redis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'192.168.186.40'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6379&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'root'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'roc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;连接池&lt;/h2&gt;
+
+&lt;p&gt;多实例共享连接池节省开销&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;redis&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectionPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'192.168.186.40'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6379&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'root'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Redis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connection_pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'roc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;批量操作-管道&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;redis&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectionPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'192.168.186.40'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6379&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'root'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Redis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connection_pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'roc1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'roc2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;发布和订阅&lt;/h2&gt;
+
+&lt;p&gt;创建接口类用于发布和订阅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;创建助理类并初始化频道 RedisHelper.py&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#-*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;redis&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RedisHelper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__conn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Redis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'192.168.186.40'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6379&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'root'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'chat-room'&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__conn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__conn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pubsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;创建订阅者,监听消息 Subscriber.py&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#订阅&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;RedisHelper&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RedisHelper&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;helper&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RedisHelper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;redis_sub&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;helper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redis_sub&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;创建发布者,发送消息&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#发布&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;RedisHelper&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RedisHelper&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;helper&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RedisHelper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;helper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hello'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;python--1&quot;&gt;Python 常用操作&lt;/h1&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;字符串操作&lt;/h2&gt;
+
+&lt;p&gt;name-&amp;gt;string&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;set()&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#在Redis中设置值，默认不存在则创建，存在则修改&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'roc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''参数：
+     set(name, value, ex=None, px=None, nx=False, xx=False)
+     ex，过期时间（秒）
+     px，过期时间（毫秒）
+     nx，如果设置为True，则只有name不存在时，当前set操作才执行,同setnx(name, value)
+     xx，如果设置为True，则只有name存在时，当前set操作才执行'''&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;mset()&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#批量设置值&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'roc1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'roc2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#或&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'roc1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;name2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'roc2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;get(name) 或 mget(keys, *args) 返回数组&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#批量获取&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#或&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;li&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;li&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;getset(name, value) 返回旧值设置并设置新值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#设置新值，打印原值&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;new&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#输出:old&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#输出:new&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;getrange(key, start, end) 获取字符区间 类似substring&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;c&quot;&gt;#根据字节获取子序列&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sunnyroc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#输出:sunr&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;setrange(name, offset, value) 插入字符串
+strlen(name) 获取字符长度
+incr(self, name, amount=1) 根据步长自增,多用于计数
+incrbyfloat(self, name, amount=1.0) 同上用于浮点
+decr(self, name, amount=1) 自减
+append(name, value) 追加&lt;/p&gt;
+
+&lt;h2 id=&quot;hash&quot;&gt;Hash操作&lt;/h2&gt;
+
+&lt;p&gt;name-&amp;gt;dic&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;hset(name, key, value)&lt;/li&gt;
+  &lt;li&gt;hget(name,key)&lt;/li&gt;
+  &lt;li&gt;hgetall(name) 获取字典下所有键值,等同于获取该key下的完整数据字典&lt;/li&gt;
+  &lt;li&gt;hmset(name, mapping) 以数据字典保&lt;/li&gt;
+  &lt;li&gt;hmget(name, keys, *args) 取多个key的值&lt;/li&gt;
+  &lt;li&gt;hlen(name) 字典长度&lt;/li&gt;
+  &lt;li&gt;hkeys(name) 列出所有key&lt;/li&gt;
+  &lt;li&gt;hvals(name) 列出所有value&lt;/li&gt;
+  &lt;li&gt;hexists(name, key) 判断是否存在&lt;/li&gt;
+  &lt;li&gt;hdel(name,*keys) 删除指定名字对应的键值对&lt;/li&gt;
+  &lt;li&gt;hincrby(name, key, amount=1) 对hash中的值做自增&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;list-&quot;&gt;List 操作&lt;/h2&gt;
+
+&lt;p&gt;name-&amp;gt;list&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;lpush(name,values) 左边添加数列&lt;/li&gt;
+  &lt;li&gt;rpush(name,values) 右边添加数列&lt;/li&gt;
+  &lt;li&gt;lpushx(name,value) 左边添加数®&lt;/li&gt;
+  &lt;li&gt;rpushx(name,value) 右边添加数&lt;/li&gt;
+  &lt;li&gt;llen(name) 计算数列长度&lt;/li&gt;
+  &lt;li&gt;r.lset(name, index, value) 对某索引重新赋值&lt;/li&gt;
+  &lt;li&gt;linsert(name, where, refvalue, value)) 按条件插入数据&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linsert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;list_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BEFORE&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# 在列表第二元素前插入&quot;test&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;s&quot;&gt;''' 参数:
+    name: redis的name
+     where: BEFORE（前）或AFTER（后）
+     refvalue: 列表内的值
+     value: 要插入的数据
+     '''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;r.lrem(name, value, num) 删除指定索引中的值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#删除name对应的list中的指定值&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lrem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;list_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;''' 参数：
+    name:  redis的name
+    value: 要删除的值
+    num:   num=0 删除列表中所有的指定值；
+           num=2 从前到后，删除2个；
+           num=-2 从后向前，删除2个'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;lpop(name) 移除并返回第一个元素&lt;/li&gt;
+  &lt;li&gt;lindex(name, index) 根据索引列出表内元素&lt;/li&gt;
+  &lt;li&gt;lrange(name, start, end) 分片取&lt;/li&gt;
+  &lt;li&gt;ltrim(name, start, end) 分片除&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;set-&quot;&gt;Set 操作&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;sadd(name,values)&lt;/li&gt;
+  &lt;li&gt;smembers(name) 获取name对应的所有成员&lt;/li&gt;
+  &lt;li&gt;scard(name) 获取元素个数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;有序集合&lt;/h2&gt;
+
+&lt;p&gt;元素有额外参数(分数)进行排序&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;zadd(name, *args, **kwargs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 在name对应的有序集合中添加元素&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zadd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zset_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;a3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#或&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zadd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'zset_name1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;zcard(name) 获取元素数量&lt;/li&gt;
+  &lt;li&gt;zcount(name, min, max) 获取满足区间分数的个数&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 02 Jul 2016 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/redis/2016/07/02/redis.html</link>
+        <guid isPermaLink="true">http://localhost:4000/redis/2016/07/02/redis.html</guid>
+        
+        
+        <category>redis</category>
+        
+      </item>
+    
+      <item>
         <title>How to write a count down</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
@@ -1104,451 +1458,6 @@ sudo apt-get install oracle-java8-set-default
         <category>linux</category>
         
         <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Markdown Syntax</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#markdown-syntax-guide&quot; id=&quot;markdown-toc-markdown-syntax-guide&quot;&gt;Markdown syntax guide&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#philosophy&quot; id=&quot;markdown-toc-philosophy&quot;&gt;Philosophy&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#notice&quot; id=&quot;markdown-toc-notice&quot;&gt;Notice&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#headers&quot; id=&quot;markdown-toc-headers&quot;&gt;Headers&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#this-is-an-h1-tag&quot; id=&quot;markdown-toc-this-is-an-h1-tag&quot;&gt;This is an &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; tag&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#emphasis&quot; id=&quot;markdown-toc-emphasis&quot;&gt;Emphasis&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#newlines&quot; id=&quot;markdown-toc-newlines&quot;&gt;Newlines&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#lists&quot; id=&quot;markdown-toc-lists&quot;&gt;Lists&lt;/a&gt;        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#unordered&quot; id=&quot;markdown-toc-unordered&quot;&gt;Unordered&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#ordered&quot; id=&quot;markdown-toc-ordered&quot;&gt;Ordered&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#task-lists&quot; id=&quot;markdown-toc-task-lists&quot;&gt;Task lists&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#images&quot; id=&quot;markdown-toc-images&quot;&gt;Images&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#links&quot; id=&quot;markdown-toc-links&quot;&gt;Links&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#blockquotes&quot; id=&quot;markdown-toc-blockquotes&quot;&gt;Blockquotes&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#inline-code&quot; id=&quot;markdown-toc-inline-code&quot;&gt;Inline code&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#multi-line-code&quot; id=&quot;markdown-toc-multi-line-code&quot;&gt;Multi-line code&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#sequence-and-flow-chart&quot; id=&quot;markdown-toc-sequence-and-flow-chart&quot;&gt;Sequence and Flow chart&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#tables&quot; id=&quot;markdown-toc-tables&quot;&gt;Tables&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#strikethrough&quot; id=&quot;markdown-toc-strikethrough&quot;&gt;Strikethrough&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#horizontal-rules&quot; id=&quot;markdown-toc-horizontal-rules&quot;&gt;Horizontal Rules&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#latex&quot; id=&quot;markdown-toc-latex&quot;&gt;LaTex&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#footnote&quot; id=&quot;markdown-toc-footnote&quot;&gt;Footnote&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#comment-and-read-more&quot; id=&quot;markdown-toc-comment-and-read-more&quot;&gt;Comment And Read More..&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#toc&quot; id=&quot;markdown-toc-toc&quot;&gt;TOC&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;markdown-syntax-guide&quot;&gt;Markdown syntax guide&lt;/h1&gt;
-
-&lt;h2 id=&quot;philosophy&quot;&gt;Philosophy&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Markdown is intended to be as easy-to-read and easy-to-write as is feasible.
-Readability, however, is emphasized above all else. A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.
-Markdown’s syntax is
-&lt;code class=&quot;highlighter-rouge&quot;&gt;intended
-&lt;/code&gt; for one purpose: to be used as a format for &lt;em&gt;writing&lt;/em&gt; for the web.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&quot;notice&quot;&gt;Notice&lt;/h2&gt;
-
-&lt;p&gt;You can use  &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + 4&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + R&lt;/code&gt; to preview the result.&lt;/p&gt;
-
-&lt;h2 id=&quot;headers&quot;&gt;Headers&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is an `&amp;lt;h1&amp;gt;` tag
-## This is an `&amp;lt;h2&amp;gt;` tag
-###### This is an `&amp;lt;h6&amp;gt;` tag
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;this-is-an-h1-tag&quot;&gt;This is an &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; tag&lt;/h1&gt;
-&lt;p&gt;## This is an &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;h2&amp;gt;&lt;/code&gt; tag
-###### This is an &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; tag&lt;/p&gt;
-
-&lt;h2 id=&quot;emphasis&quot;&gt;Emphasis&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-*You **can** combine them*
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + U&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + I&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + B&lt;/code&gt;
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt;
-&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;This text will be bold&lt;/strong&gt;
-&lt;strong&gt;This will also be bold&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;You &lt;strong&gt;can&lt;/strong&gt; combine them&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;newlines&quot;&gt;Newlines&lt;/h2&gt;
-
-&lt;p&gt;End a line with two or more spaces + enter.
-Just typing enter to newline,please set：&lt;code class=&quot;highlighter-rouge&quot;&gt;Preferences&lt;/code&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;Themes&lt;/code&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;Translate newlines to &amp;lt;br&amp;gt; tags&lt;/code&gt;  enable ( default is enable )&lt;/p&gt;
-
-&lt;h2 id=&quot;lists&quot;&gt;Lists&lt;/h2&gt;
-
-&lt;h3 id=&quot;unordered&quot;&gt;Unordered&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* Item 1 unordered list `* + SPACE`
-* Item 2
-* Item 2a unordered list `TAB + * + SPACE`
-* Item 2b
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;Option + U&lt;/code&gt;
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Item 1 unordered list &lt;code class=&quot;highlighter-rouge&quot;&gt;* + SPACE&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Item 2&lt;/li&gt;
-  &lt;li&gt;Item 2a unordered list &lt;code class=&quot;highlighter-rouge&quot;&gt;TAB + * + SPACE&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Item 2b&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;ordered&quot;&gt;Ordered&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. Item 1 ordered list `Number + . + SPACE`
-2. Item 2
-3. Item 3
-1. Item 3a ordered list `TAB + Number + . + SPACE`
-2. Item 3b
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Item 1 ordered list &lt;code class=&quot;highlighter-rouge&quot;&gt;Number + . + SPACE&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Item 2&lt;/li&gt;
-  &lt;li&gt;Item 3&lt;/li&gt;
-  &lt;li&gt;Item 3a ordered list &lt;code class=&quot;highlighter-rouge&quot;&gt;TAB + Number + . + SPACE&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Item 3b&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;task-lists&quot;&gt;Task lists&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- [ ] task one not finish `- + SPACE + [ ]
-- [x] task two finished `- + SPACE + [x]`
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[ ] task one not finish &lt;code class=&quot;highlighter-rouge&quot;&gt;- + SPACE + [ ]&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;[x] task two finished &lt;code class=&quot;highlighter-rouge&quot;&gt;- + SPACE + [x]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;images&quot;&gt;Images&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![GitHub set up](https://help.github.com/assets/images/site/set-up-git.gif)
-Format: ![Alt Text](url)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;Control + Shift + I&lt;/code&gt;
-The Library’s document support drag &amp;amp; drop or &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + V&lt;/code&gt; paste or &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + Option + I&lt;/code&gt; to insert  the picture.
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://help.github.com/assets/images/site/set-up-git.gif&quot; alt=&quot;GitHub set up&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In MWeb, you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;-w + Number&lt;/code&gt; to control image width, for example, set the image width 140px:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://help.github.com/assets/images/site/set-up-git.gif&quot; alt=&quot;GitHub set up-w140&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;email &amp;lt;example@example.com&amp;gt;
-[GitHub](http://github.com)
-autolink  &amp;lt;http://www.github.com/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;Control + Shift + L&lt;/code&gt;
-The Library’s document support drag &amp;amp; drop or &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + Option + I&lt;/code&gt; to insert attachment.
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;An email &lt;a href=&quot;&amp;#109;&amp;#097;&amp;#105;&amp;#108;&amp;#116;&amp;#111;:&amp;#101;&amp;#120;&amp;#097;&amp;#109;&amp;#112;&amp;#108;&amp;#101;&amp;#064;&amp;#101;&amp;#120;&amp;#097;&amp;#109;&amp;#112;&amp;#108;&amp;#101;&amp;#046;&amp;#099;&amp;#111;&amp;#109;&quot;&gt;&amp;#101;&amp;#120;&amp;#097;&amp;#109;&amp;#112;&amp;#108;&amp;#101;&amp;#064;&amp;#101;&amp;#120;&amp;#097;&amp;#109;&amp;#112;&amp;#108;&amp;#101;&amp;#046;&amp;#099;&amp;#111;&amp;#109;&lt;/a&gt; link.
-&lt;a href=&quot;http://github.com&quot;&gt;GitHub&lt;/a&gt;
-Automatic linking for URLs
-Any URL (like &lt;a href=&quot;http://www.github.com/&quot;&gt;http://www.github.com/&lt;/a&gt;) will be automatically converted into a clickable link.&lt;/p&gt;
-
-&lt;h2 id=&quot;blockquotes&quot;&gt;Blockquotes&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;As Kanye West said:
-&amp;gt; We're living the future so
-&amp;gt; the present is our past.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + Shift + B&lt;/code&gt;
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As Kanye West said:
-&amp;gt; We’re living the future so
-&amp;gt; the present is our past.&lt;/p&gt;
-
-&lt;h2 id=&quot;inline-code&quot;&gt;Inline code&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;I think you should use an
-`&amp;lt;addr&amp;gt;` `code` element here instead.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + K&lt;/code&gt;
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;I think you should use an
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;addr&amp;gt;&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt; element here instead.&lt;/p&gt;
-
-&lt;h2 id=&quot;multi-line-code&quot;&gt;Multi-line code&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```js
-function fancyAlert(arg) {
-    if(arg) {
-        $.facebox({div:'#foo'})
-    }
-
-}
-```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Shortcuts:&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + Shift + K&lt;/code&gt;
-&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fancyAlert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;facebox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'#foo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;sequence-and-flow-chart&quot;&gt;Sequence and Flow chart&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```sequence
-Andrew-&amp;gt;China: Says Hello
-Note right of China: China thinks about it
-China--&amp;gt;Andrew: How are you?
-Andrew-&amp;gt;&amp;gt;China: I am good thanks!
-```
-
-```flow
-st=&amp;gt;start: Start:&amp;gt;http://www.google.com[blank]
-e=&amp;gt;end:&amp;gt;http://www.google.com
-op1=&amp;gt;operation: My Operation
-sub1=&amp;gt;subroutine: My Subroutine
-cond=&amp;gt;condition: Yes
-or No?:&amp;gt;http://www.google.com
-io=&amp;gt;inputoutput: catch something...
-
-st-&amp;gt;op1-&amp;gt;cond
-cond(yes)-&amp;gt;io-&amp;gt;e
-cond(no)-&amp;gt;sub1(right)-&amp;gt;op1
-```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt; ( Please enable  &lt;code class=&quot;highlighter-rouge&quot;&gt;Preferences&lt;/code&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;Themes&lt;/code&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;Enable sequence &amp;amp; flow chart&lt;/code&gt;, default is enable. )&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-sequence&quot;&gt;Andrew-&amp;gt;China: Says Hello
-Note right of China: China thinks about it
-China--&amp;gt;Andrew: How are you?
-Andrew-&amp;gt;&amp;gt;China: I am good thanks!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-flow&quot;&gt;st=&amp;gt;start: Start:&amp;gt;http://www.google.com[blank]
-e=&amp;gt;end:&amp;gt;http://www.google.com
-op1=&amp;gt;operation: My Operation
-sub1=&amp;gt;subroutine: My Subroutine
-cond=&amp;gt;condition: Yes
-or No?:&amp;gt;http://www.google.com
-io=&amp;gt;inputoutput: catch something...
-
-st-&amp;gt;op1-&amp;gt;cond
-cond(yes)-&amp;gt;io-&amp;gt;e
-cond(no)-&amp;gt;sub1(right)-&amp;gt;op1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;More info: &lt;a href=&quot;http://bramp.github.io/js-sequence-diagrams/&quot;&gt;http://bramp.github.io/js-sequence-diagrams/&lt;/a&gt;, &lt;a href=&quot;http://adrai.github.io/flowchart.js/&quot;&gt;http://adrai.github.io/flowchart.js/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;tables&quot;&gt;Tables&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;You can create tables by assembling a list of words and dividing them with hyphens - (for the first row), and then separating each column with a pipe&lt;/td&gt;
-      &lt;td&gt;:&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;First Header&lt;/th&gt;
-      &lt;th&gt;Second Header&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Content from cell 1&lt;/td&gt;
-      &lt;td&gt;Content from cell 2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Content in the first column&lt;/td&gt;
-      &lt;td&gt;Content in the second column&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;strikethrough&quot;&gt;Strikethrough&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;(like &lt;del&gt;this&lt;/del&gt;)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Any word wrapped with two tildes (like &lt;del&gt;this&lt;/del&gt;) will appear crossed out.&lt;/p&gt;
-
-&lt;h2 id=&quot;horizontal-rules&quot;&gt;Horizontal Rules&lt;/h2&gt;
-
-&lt;p&gt;Following lines will produce a horizontal rule:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;***
-
-*****
-
-- - -
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;hr /&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;latex&quot;&gt;LaTex&lt;/h2&gt;
-
-&lt;p&gt;Use double US dollars sign pair for Block level Math formula, and one US dollar sign pair for Inline Level.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;For example this is a Block level $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$ formula, and this is an inline Level $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$ formula.
-
-\\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
-1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
-{1+\frac{e^{-8\pi}} {1+\ldots} } } } \\]
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;For example this is a Block level &lt;script type=&quot;math/tex&quot;&gt;x = {-b \pm \sqrt{b^2-4ac} \over 2a}&lt;/script&gt; formula, and this is an inline Level $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$ formula.&lt;/p&gt;
-
-&lt;p&gt;\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
-1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
-{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]&lt;/p&gt;
-
-&lt;h2 id=&quot;footnote&quot;&gt;Footnote&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is a footnote:[^sample_footnote]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;This is a footnote:&lt;sup id=&quot;fnref:sample_footnote&quot;&gt;&lt;a href=&quot;#fn:sample_footnote&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;comment-and-read-more&quot;&gt;Comment And Read More..&lt;/h2&gt;
-
-&lt;!-- comment --&gt;
-&lt;!-- more --&gt;
-&lt;p&gt;Actions-&amp;gt;Insert Read More Comment &lt;em&gt;OR&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;CMD + .&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;toc&quot;&gt;TOC&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[TOC]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:sample_footnote&quot;&gt;
-      &lt;p&gt;footnote text detail… &lt;a href=&quot;#fnref:sample_footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 23 Dec 2013 01:18:23 +0800</pubDate>
-        <link>http://localhost:4000/markdown/2013/12/23/markdonw-syntax.html</link>
-        <guid isPermaLink="true">http://localhost:4000/markdown/2013/12/23/markdonw-syntax.html</guid>
-        
-        
-        <category>markdown</category>
         
       </item>
     
