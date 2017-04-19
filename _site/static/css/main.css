@@ -196,7 +196,9 @@ div.col-sm-3 img.profile-avatar {
 }
 .sidenav{
   background: url(/static/img/subtle_dots.png);
-  border: 1px;
-  border-style: dotted;
   font-size: 13px;
+}
+.post-body{
+  margin-top: 0px;
+  padding: 0px 0px;
 }
