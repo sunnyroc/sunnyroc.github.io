@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Apr 2017 17:18:28 +0800</pubDate>
-    <lastBuildDate>Tue, 18 Apr 2017 17:18:28 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 14:55:34 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 14:55:34 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -1232,6 +1232,17 @@ but if you can add it, you can following this tutorial bellow:&lt;/p&gt;
       </item>
     
       <item>
+        <title>Storm</title>
+        <description>
+</description>
+        <pubDate>Wed, 17 Feb 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/02/17/storm.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/02/17/storm.html</guid>
+        
+        
+      </item>
+    
+      <item>
         <title>Ubuntu install docker</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#ubuntudocker&quot; id=&quot;markdown-toc-ubuntudocker&quot;&gt;Ubuntu安装Docker&lt;/a&gt;    &lt;ul&gt;
@@ -1357,107 +1368,6 @@ docker-compose version 1.11.2, build dfed245
         
         
         <category>linux</category>
-        
-      </item>
-    
-      <item>
-        <title>Ubuntu install JDK</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#ubuntuopenjdk--oralcejdk&quot; id=&quot;markdown-toc-ubuntuopenjdk--oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#openjdk&quot; id=&quot;markdown-toc-openjdk&quot;&gt;安装OpenJDK&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#oracle-jdk&quot; id=&quot;markdown-toc-oracle-jdk&quot;&gt;安装Oracle JDK&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#bin&quot; id=&quot;markdown-toc-bin&quot;&gt;通过bin包安装&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;ubuntuopenjdk--oralcejdk&quot;&gt;Ubuntu安装OpenJDK 或 OralceJDK&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;打开终端后查看是否安装
-java -version&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h5 id=&quot;openjdk&quot;&gt;安装OpenJDK&lt;/h5&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
-sudo apt-get install default-jre
-sudo apt-get install default-jdk
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;更多软件版本用下列查询命令&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-cache search jre
-sudo apt-cache search jdk
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;oracle-jdk&quot;&gt;安装Oracle JDK&lt;/h5&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;如果想安装java7,替换掉命令中java8即可
-命令行安装依赖网络环境&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用下面命令行安装,不需要额外配置环境变量&lt;/span&gt;
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-sudo apt-get install oracle-java8-set-default
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;bin&quot;&gt;通过bin包安装&lt;/h5&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;这种方式需要配置环境变量
-&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;从官网下载对应tar包&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;如下载后文件为&lt;code class=&quot;highlighter-rouge&quot;&gt;jdk-8u101-linux-x64.tar.gz&lt;/code&gt;
-使用如下命令解压:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo tar zxvf ./jdk-8u101-linux-x64.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;为了方便管理,请将解压后的文件夹短命名然后移至到你的统一包管理文件夹内
-例如:&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/java/jdk1.8/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;编辑文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; 配置java环境变量&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;JAVA_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/java/jdk1.8/
-&lt;span class=&quot;nv&quot;&gt;JRE_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/jre
-&lt;span class=&quot;nv&quot;&gt;JAVA_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin
-&lt;span class=&quot;nv&quot;&gt;CLASSPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;.:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/dt.jar:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/lib/tools.jar:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/lib
-&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin:&lt;span class=&quot;nv&quot;&gt;$JRE_HOME&lt;/span&gt;/bin
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;JAVA_HOME JRE_HOME PATH CLASSPATH
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;如果使用命令行源安装,默认安装路径为&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/lib/jvm/xxxxx&lt;/code&gt;
-修改JAVA_HOME路径为对应路径即可&lt;/p&gt;
-
-&lt;p&gt;使用下面命令使配置及时生效&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;最后再次使用下面命令验证配置是否生效&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -version
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Tue, 05 May 2015 16:18:23 +0800</pubDate>
-        <link>http://localhost:4000/linux/java/2015/05/05/Ubuntu-install-JDK.html</link>
-        <guid isPermaLink="true">http://localhost:4000/linux/java/2015/05/05/Ubuntu-install-JDK.html</guid>
-        
-        
-        <category>linux</category>
-        
-        <category>java</category>
         
       </item>
     
