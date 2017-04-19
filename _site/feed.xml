@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Apr 2017 15:57:57 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Apr 2017 15:57:57 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 16:01:44 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 16:01:44 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -256,6 +256,22 @@
         
         
         <category>kafka</category>
+        
+      </item>
+    
+      <item>
+        <title>Storm Cluster Building</title>
+        <description>&lt;p&gt;layout: post
+title:  “Storm cluster building”
+date:   2016-11-20 15:18:23 +0700
+categories: [storm]
+—
+* content&lt;/p&gt;
+</description>
+        <pubDate>Sun, 20 Nov 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/11/20/storm-cluster-building.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/11/20/storm-cluster-building.html</guid>
+        
         
       </item>
     
@@ -604,9 +620,9 @@ minute hour day month dayofweek command
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
-        <pubDate>Sat, 01 Apr 2017 16:18:23 +0800</pubDate>
-        <link>http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html</link>
-        <guid isPermaLink="true">http://localhost:4000/linux/2017/04/01/Ubuntu-install-Zookeeper.html</guid>
+        <pubDate>Thu, 17 Nov 2016 16:18:23 +0800</pubDate>
+        <link>http://localhost:4000/linux/2016/11/17/Ubuntu-install-Zookeeper.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2016/11/17/Ubuntu-install-Zookeeper.html</guid>
         
         
         <category>linux</category>
@@ -614,7 +630,7 @@ minute hour day month dayofweek command
       </item>
     
       <item>
-        <title>Redis</title>
+        <title>Redis installation</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#redis--httpsredisio&quot; id=&quot;markdown-toc-redis--httpsredisio&quot;&gt;Redis 安装 &lt;a href=&quot;https://redis.io/&quot;&gt;官网&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#python-&quot; id=&quot;markdown-toc-python-&quot;&gt;Python 连接方式&lt;/a&gt;    &lt;ul&gt;
@@ -1224,17 +1240,6 @@ but if you can add it, you can following this tutorial bellow:&lt;/p&gt;
         
         
         <category>bash</category>
-        
-      </item>
-    
-      <item>
-        <title>Storm</title>
-        <description>
-</description>
-        <pubDate>Wed, 17 Feb 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/02/17/storm.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/02/17/storm.html</guid>
-        
         
       </item>
     

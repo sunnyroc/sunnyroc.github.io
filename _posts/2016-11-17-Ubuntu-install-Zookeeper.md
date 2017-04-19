@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Zookeeper cluster building"
-date:   2017-04-01 15:18:23 +0700
+date:   2016-11-17 15:18:23 +0700
 categories: [linux]
 ---
 
