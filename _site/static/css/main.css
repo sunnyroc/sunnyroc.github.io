@@ -184,7 +184,7 @@ div.col-sm-3 img.profile-avatar {
 
 .contact-box {
     background-color: #ffffff;
-    border: 1px solid #e7eaec;
+    /*border: 1px solid #e7eaec;*/
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -196,4 +196,7 @@ div.col-sm-3 img.profile-avatar {
 }
 .sidenav{
   background: url(/static/img/subtle_dots.png);
+  border: 1px;
+  border-style: dotted;
+  font-size: 13px;
 }
