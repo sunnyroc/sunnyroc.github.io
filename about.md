@@ -74,5 +74,3 @@ permalink: /about/
 * GitHub：[sunnyroc](https://github.com/sunnyroc)
 * Email: bien.sun@hotmail.com
 * Office:	roc.sun@fabricgroup.com.au
-
-## Resume[English](/cv/)
