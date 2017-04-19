@@ -22,14 +22,16 @@ collections:
     permalink: /project/:path/
 
 social:
-    - icon: fa-facebook
-      link: "#"
-    - icon: fa-twitter
-      link: #"https://twitter.com/agusmakmun6"
+    # - icon: fa-facebook
+    #   link: "#"
+    # - icon: fa-qq
+    #   link: "356179"
+    # - icon: fa-twitter
+      # link: #"https://twitter.com/agusmakmun6"
     - icon: fa-linkedin
-      link: #"https://www.linkedin.com/in/summonagus"
-    - icon: fa-stack-exchange
-      link: "#"
+      link: https://in.linkedin.com/in/sun-roc-7517a496
+    # - icon: fa-stack-exchange
+    #   link: "#"
     - icon: fa-github
       link: "https://github.com/sunnyroc"
 
