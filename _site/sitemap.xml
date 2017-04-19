@@ -5,12 +5,12 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Apr 2017 14:56:45 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Apr 2017 14:56:45 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 15:00:27 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 15:00:27 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
-        <title>Kafka原理认知</title>
+        <title>Kafka understanding</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#kafka&quot; id=&quot;markdown-toc-kafka&quot;&gt;Kafka消息组织原理&lt;/a&gt;    &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;磁盘重认识&lt;/a&gt;&lt;/li&gt;
@@ -260,7 +260,7 @@
       </item>
     
       <item>
-        <title>Zookeeper集群搭建</title>
+        <title>Zookeeper cluster building</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#zookeeper&quot; id=&quot;markdown-toc-zookeeper&quot;&gt;Zookeeper环境安装&lt;/a&gt;    &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#datalog&quot; id=&quot;markdown-toc-datalog&quot;&gt;创建data和log目录&lt;/a&gt;&lt;/li&gt;
@@ -1368,7 +1368,7 @@ docker-compose version 1.11.2, build dfed245
       </item>
     
       <item>
-        <title>JavaMail发送多用户实例</title>
+        <title>JavaMail send to multiple users</title>
         <description>&lt;h1 id=&quot;javamail&quot;&gt;JavaMail支持多人发送&lt;/h1&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.mail.PasswordAuthentication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;

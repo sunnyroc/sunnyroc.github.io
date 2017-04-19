@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kafka原理认知"
+title:  "Kafka understanding"
 date:   2017-04-05 15:18:23 +0700
 categories: [kafka]
 ---
