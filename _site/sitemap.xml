@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Apr 2017 14:55:34 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Apr 2017 14:55:34 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 14:56:45 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 14:56:45 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -969,11 +969,7 @@ append(name, value) 追加&lt;/p&gt;
     
       <item>
         <title>How to write a count down</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There are 2 ways for count down in javascript&lt;/p&gt;
+        <description>&lt;p&gt;There are 2 ways for count down in javascript&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;setTimeout&lt;/li&gt;

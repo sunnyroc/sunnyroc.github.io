@@ -5,9 +5,6 @@ date:   2016-07-01 15:18:23 +0700
 categories: [javascript]
 ---
 
-* content
-{:toc}
-
 There are 2 ways for count down in javascript
 
 * setTimeout
