@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Apr 2017 16:15:57 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Apr 2017 16:15:57 +0800</lastBuildDate>
+    <pubDate>Thu, 27 Jul 2017 11:43:47 +0800</pubDate>
+    <lastBuildDate>Thu, 27 Jul 2017 11:43:47 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -1249,6 +1249,7 @@ but if you can add it, you can following this tutorial bellow:&lt;/p&gt;
       &lt;li&gt;&lt;a href=&quot;#docker-compose&quot; id=&quot;markdown-toc-docker-compose&quot;&gt;安装Docker Compose&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ip&quot; id=&quot;markdown-toc-ip&quot;&gt;为容器指定IP段&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;ubuntudocker&quot;&gt;Ubuntu安装Docker&lt;/h1&gt;
@@ -1358,6 +1359,26 @@ docker-compose version 1.11.2, build dfed245
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo pip install -U docker-compose&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;h1 id=&quot;ip&quot;&gt;为容器指定IP段&lt;/h1&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#安装网桥工具&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo apt-get install bridge-utils
+&lt;span class=&quot;c&quot;&gt;#指定docker 网段&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo ifconfig docker0 192.168.200.1 netmask 255.255.255.0
+&lt;span class=&quot;c&quot;&gt;#查看网络设备&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ifconfig
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;通过守护进程的配置修改默认网桥&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo docker network create --subnet&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;172.172.0.0/16 docker-net
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker run -d --net docker-net --ip 172.172.0.10 ubuntu:16.04
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Mon, 01 Jun 2015 16:18:23 +0800</pubDate>
         <link>http://localhost:4000/linux/2015/06/01/Ubuntu-install-docker.html</link>

@@ -123,3 +123,22 @@ pip方式安装
 {% highlight shell %}
 $ sudo pip install -U docker-compose
 {% endhighlight %}
+
+# 为容器指定IP段
+
+```shell
+#安装网桥工具
+$ sudo apt-get install bridge-utils
+#指定docker 网段
+$ sudo ifconfig docker0 192.168.200.1 netmask 255.255.255.0
+#查看网络设备
+$ ifconfig
+```
+
+>通过守护进程的配置修改默认网桥
+
+```shell
+
+$ sudo docker network create --subnet=172.172.0.0/16 docker-net
+$ docker run -d --net docker-net --ip 172.172.0.10 ubuntu:16.04
+```
