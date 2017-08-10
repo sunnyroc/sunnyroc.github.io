@@ -3,10 +3,10 @@ layout: default
 permalink: /resume_cn/
 ---
 
-{% include career-profile.html %}
+{% include career-profile-cn.html %}
 
-{% include experience.html %}
+{% include experience-cn.html %}
 
-{% include projects.html %}
+{% include projects-cn.html %}
 
-{% include skills.html %}
+{% include skills-cn.html %}
