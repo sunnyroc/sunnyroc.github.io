@@ -216,7 +216,12 @@ layout: compress
     {% include head.html %}
     <body>
         <div class="wrapper">
-            {% include sidebar.html %}
+            {% if page.url =="/resume_cn/" %}
+              {% include sidebar-cn.html %}
+            {% endif %}
+            {% if page.url =="/resume_en/" %}
+              {% include sidebar.html %}
+            {% endif %}
             <div class="main-wrapper">
                {{content}}
             </div>
