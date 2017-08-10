@@ -42,8 +42,10 @@ share:
 urls:
     - text: About Me
       url: /about/
-    - text: Resume
+    - text: Resume_en
       url: /resume_en/
+    - text: Resume_cn
+      url: /resume_cn/
     # - text: My Projects
     #   url: /projects/
     - text: XML Feed
