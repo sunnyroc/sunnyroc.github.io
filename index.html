@@ -60,12 +60,21 @@ layout: default
 {% endif %}
 
 
-{% if page.url =="/resume_cn/" or page.url =="/resume_en/" %}
-  {% include career-profile.html %}
+{% if page.url =="/resume_cn/" %}
+  {% include career-profile-cn.html %}
 
-  {% include experience.html %}
+  {% include experience-cn.html %}
 
-  {% include projects.html %}
+  {% include projects-cn.html %}
 
-  {% include skills.html %}
+  {% include skills-cn.html %}
+{% endif %}
+{% if page.url =="/resume_en/" %}
+  {% include career-profile-cn.html %}
+
+  {% include experience-cn.html %}
+
+  {% include projects-cn.html %}
+
+  {% include skills-cn.html %}
 {% endif %}
