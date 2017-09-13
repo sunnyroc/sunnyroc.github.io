@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 13 Sep 2017 09:33:15 +0800</pubDate>
-    <lastBuildDate>Wed, 13 Sep 2017 09:33:15 +0800</lastBuildDate>
+    <pubDate>Wed, 13 Sep 2017 09:46:25 +0800</pubDate>
+    <lastBuildDate>Wed, 13 Sep 2017 09:46:25 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -29,68 +29,68 @@
 &lt;p&gt;phpbrew的官方地址:https://github.com/phpbrew/phpbrew
 在安装phpbrew之前，需要预先安装一些库.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install -y php \
-	php-pear \
-	autoconf \
-	automake \
-	curl \ 
-	libcurl3-openssl-dev \
-	build-essential \
-	libxslt1-dev \
-	re2c \
-	libxml2 \
-	libxml2-dev \
-	bison \
-	libbz2-dev \
-	libreadline-dev\
-	libfreetype6 \
-	libfreetype6-dev \
-	libpng12-0 \
-	libpng12-dev \
-	libjpeg-dev \
-	libjpeg8-dev \
-	libjpeg8  \
-	libgd-dev \
-	libgd3 \
-	libxpm4 \
-	libltdl7 \
-	libltdl-dev \
-	libssl-dev \
-	openssl \
-	gettext \
-	libgettextpo-dev \
-	libgettextpo0 \
-	libicu-dev \
-	libmhash-dev \
-	libmhash2 \
-	libmcrypt-dev \
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install -y php &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	php-pear &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	autoconf &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	automake &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	curl &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;
+	libcurl3-openssl-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	build-essential &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libxslt1-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	re2c &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libxml2 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libxml2-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	bison &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libbz2-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libreadline-dev&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libfreetype6 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libfreetype6-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libpng12-0 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libpng12-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libjpeg-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libjpeg8-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libjpeg8  &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libgd-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libgd3 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libxpm4 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libltdl7 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libltdl-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libssl-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	openssl &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	gettext &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libgettextpo-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libgettextpo0 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libicu-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libmhash-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libmhash2 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	libmcrypt-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 	libmcrypt4
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;phpbrew&quot;&gt;安装phpbrew&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
 chmod +x phpbrew
 
-# Move phpbrew to somewhere can be found by your $PATH
+&lt;span class=&quot;c&quot;&gt;# Move phpbrew to somewhere can be found by your $PATH&lt;/span&gt;
 sudo mv phpbrew /usr/local/bin/phpbrew
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;phpbrew-1&quot;&gt;出初始化phpbrew&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;phpbrew init
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;phpbrew init
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;section-2&quot;&gt;配置环境变量&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 在 .bashrc中加入如下的代码
-[[ -e ~/.phpbrew/bashrc ]] &amp;amp;&amp;amp; source ~/.phpbrew/bashrc
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 在 .bashrc中加入如下的代码&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; -e ~/.phpbrew/bashrc &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.phpbrew/bashrc
 
-# 更新bashrc
-source .bashrc
+&lt;span class=&quot;c&quot;&gt;# 更新bashrc&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; .bashrc
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -99,65 +99,64 @@ source .bashrc
 &lt;p&gt;&lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04&quot;&gt;LAMP的安装教程&lt;/a&gt;
 在Ubuntu16.04的环境下，默认安装的是php7.
 安装php的命令如下：
-```&lt;/p&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;bash
+phpbrew --debug install --stdout 5.6.16  +default +mysql +gd +fpm
+&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;phpbrew –debug install –stdout 5.6.16  +default +mysql +gd +fpm&lt;/p&gt;
+&lt;p&gt;其中 –debug –stdout意思将debug信息在控制台输出，同时安装了mysql和gd,fpm的扩展库。fpm库是一定要安装的库.
+安装完毕之后，切换至5.6.16的版本，启动php-fpm&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;其中 --debug --stdout意思将debug信息在控制台输出，同时安装了mysql和gd,fpm的扩展库。fpm库是一定要安装的库.
-安装完毕之后，切换至5.6.16的版本，启动php-fpm
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;phpbrew use php-5.6.16
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;phpbrew use php-5.6.16
 phpbrew fpm start
-```
-查看sock的权限&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -ahl /home/spoock/.phpbrew/php/php-5.6.16/var/run/php-fpm.sock
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;查看sock的权限&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -ahl /home/spoock/.phpbrew/php/php-5.6.16/var/run/php-fpm.sock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;p&gt;对用户权限的修改就是在安装过程中遇到的最大的坑。
 正常情况下一般都是root权限，将其修改为当前用户的权限，比如我当前的用户是spoock,则运行&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chown -R spoock:spoock ~/.phpbrew/php/
-
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chown -R spoock:spoock ~/.phpbrew/php/
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;修改完毕之后，对应的所有的配置文件都需要进行修改
 包括/home/spoock/.phpbrew/php/php-5.5.38/etc/php-fpm.conf和/etc/nginx/nginx.conf
 对php-fpm.conf的修改：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen.owner = spoock
-listen.group = spoock
-user = spoock
-group = spoock
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen.owner &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; spoock
+listen.group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; spoock
+user &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; spoock
+group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; spoock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;对nginx.conf的修改：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+user spoock;
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;对nginx.conf的修改：
-```&lt;/p&gt;
+&lt;p&gt;nginx.conf的配置/etc/nginx/sites-available/default&lt;/p&gt;
 
-&lt;p&gt;user spoock;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-nginx.conf的配置/etc/nginx/sites-available/default
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;location ~ .php$ {
-#       # With php7.0-fpm:
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;location ~ &lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;php&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#       # With php7.0-fpm:&lt;/span&gt;
         fastcgi_index index.php;
         fastcgi_pass unix:/home/spoock/.phpbrew/php/php-5.5.38/var/run/php-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME &lt;span class=&quot;nv&quot;&gt;$document_root$fastcgi_script_name&lt;/span&gt;;
         include fastcgi_params;
-}
-```&lt;/p&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;至此，所有的配置均已完成。选择需要使用的php版本，运行下面的命令:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;phpbrew use 5.6.16
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;phpbrew use 5.6.16
 phpbrew fpm start
 sudo service nginx start
 &lt;/code&gt;&lt;/pre&gt;

@@ -1,65 +1,69 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" href="/static/img/favicon.ico" /><title>Phpbrew installation in Ubuntu16.04 - Stack Problems</title><meta name="author" content="Roc" /><meta name="description" content="Phpbrew installation in Ubuntu16.04" /><meta name="keywords" content="Phpbrew installation in Ubuntu16.04, Stack Problems, php" /><link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml"><meta content="" property="fb:app_id"><meta content="Stack Problems" property="og:site_name"><meta content="Phpbrew installation in Ubuntu16.04" property="og:title"><meta content="article" property="og:type"><meta content="My Personal Stack Problems" property="og:description"><meta content="http://localhost:4000/php/2017/08/05/ubuntu1604-phpbrew-installation.html" property="og:url"><meta content="2017-08-05T16:18:23+08:00" property="article:published_time"><meta content="http://localhost:4000/about/" property="article:author"><meta content="http://localhost:4000/static/img/avatar.jpg" property="og:image"><meta content="php" property="article:section"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@"><meta name="twitter:creator" content="@"><meta name="twitter:title" content="Phpbrew installation in Ubuntu16.04"><meta name="twitter:url" content="http://localhost:4000/php/2017/08/05/ubuntu1604-phpbrew-installation.html"><meta name="twitter:description" content="My Personal Stack Problems"><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"><link rel="stylesheet" href="/static/css/syntax.css"><link href="/static/css/bootstrap.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css"><link rel="stylesheet" href="/static/css/super-search.css"><link rel="stylesheet" href="/static/css/thickbox.css"><link rel="stylesheet" href="/static/css/projects.css"><link rel="stylesheet" href="/static/css/main.css"> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script><body data-spy="scroll" data-target="#myScrollspy"><div class="container"><div class="col-sm-3"><div class="fixed-condition"><div class="row"><div class="col-sm-5"><div style="text-align:center"> <a href="/"><img class="profile-avatar" src="/static/img/avatar.jpg" height="75px" width="75px" /></a><div class="m-t-xs font-bold">Roc</div><a target="_blank" href="http://j.map.baidu.com/xHp9l"><i class="fa fa-map-marker"></i> Address</a></div></div><div class="col-sm-7"><div> <strong>Skills & Proficiency</strong><br><div class="item">HTML5 & CSS</div><div class="item">Python & Django</div><div class="item">PHP & Laravel</div><div class="item">Node & Vue</div><div class="item">AngularJs & ReactJs</div></div></address></div></div><div class="profile-about"> <strong>I am a dev-ops. Currently doing more in backend and focused in <code>Java</code>.</strong></div><div class="social"><ul><li><a href="https://in.linkedin.com/in/sun-roc-7517a496" target="_blank"><i class="fa fa-linkedin"></i></a><li><a href="https://github.com/sunnyroc" target="_blank"><i class="fa fa-github"></i></a></ul></div><div class="search" id="js-search"> <input type="text" placeholder="Type to search" class="search__input form-control" id="js-search__input"><ul class="search__results" id="js-search__results"></ul></div><hr /><ul class="sidebar-nav"> <strong>Navigation</strong><li><a href="/">Home</a><li><a class="about" href="/about/">About Me</a><li><a class="about" href="/resume_en/">Resume_en</a><li><a class="about" href="/resume_cn/">Resume_cn</a><li><a class="about" href="/feed.xml">XML Feed</a></ul><div> &copy; Roc - <a href="github.com/sunnyroc">github.com/sunnyroc</a> - Powered by Jekyll.</div></div></div><div class="col-sm-7 main-layout"><header class="post-header"><h1 class="post-title">Phpbrew installation in Ubuntu16.04</h1></header><span class="time">05 Aug 2017</span> <span class="categories"> &raquo; <a href="/category/php">php</a> </span><div class="content"><div class="post"><ul id="markdown-toc"><li><a href="#section" id="markdown-toc-section">简介</a><li><a href="#section-1" id="markdown-toc-section-1">准备工作</a><ul><li><a href="#phpbrew" id="markdown-toc-phpbrew">安装phpbrew</a><li><a href="#phpbrew-1" id="markdown-toc-phpbrew-1">出初始化phpbrew</a><li><a href="#section-2" id="markdown-toc-section-2">配置环境变量</a></ul><li><a href="#lamp" id="markdown-toc-lamp">安装LAMP环境</a></ul><h1 id="section">简介</h1><p>针对Ubuntu16.04版本的安装尝试,自由切换php小版本.<h1 id="section-1">准备工作</h1><p>phpbrew的官方地址:https://github.com/phpbrew/phpbrew 在安装phpbrew之前，需要预先安装一些库.<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install -y php \
-	php-pear \
-	autoconf \
-	automake \
-	curl \ 
-	libcurl3-openssl-dev \
-	build-essential \
-	libxslt1-dev \
-	re2c \
-	libxml2 \
-	libxml2-dev \
-	bison \
-	libbz2-dev \
-	libreadline-dev\
-	libfreetype6 \
-	libfreetype6-dev \
-	libpng12-0 \
-	libpng12-dev \
-	libjpeg-dev \
-	libjpeg8-dev \
-	libjpeg8  \
-	libgd-dev \
-	libgd3 \
-	libxpm4 \
-	libltdl7 \
-	libltdl-dev \
-	libssl-dev \
-	openssl \
-	gettext \
-	libgettextpo-dev \
-	libgettextpo0 \
-	libicu-dev \
-	libmhash-dev \
-	libmhash2 \
-	libmcrypt-dev \
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" href="/static/img/favicon.ico" /><title>Phpbrew installation in Ubuntu16.04 - Stack Problems</title><meta name="author" content="Roc" /><meta name="description" content="Phpbrew installation in Ubuntu16.04" /><meta name="keywords" content="Phpbrew installation in Ubuntu16.04, Stack Problems, php" /><link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml"><meta content="" property="fb:app_id"><meta content="Stack Problems" property="og:site_name"><meta content="Phpbrew installation in Ubuntu16.04" property="og:title"><meta content="article" property="og:type"><meta content="My Personal Stack Problems" property="og:description"><meta content="http://localhost:4000/php/2017/08/05/ubuntu1604-phpbrew-installation.html" property="og:url"><meta content="2017-08-05T16:18:23+08:00" property="article:published_time"><meta content="http://localhost:4000/about/" property="article:author"><meta content="http://localhost:4000/static/img/avatar.jpg" property="og:image"><meta content="php" property="article:section"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@"><meta name="twitter:creator" content="@"><meta name="twitter:title" content="Phpbrew installation in Ubuntu16.04"><meta name="twitter:url" content="http://localhost:4000/php/2017/08/05/ubuntu1604-phpbrew-installation.html"><meta name="twitter:description" content="My Personal Stack Problems"><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"><link rel="stylesheet" href="/static/css/syntax.css"><link href="/static/css/bootstrap.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css"><link rel="stylesheet" href="/static/css/super-search.css"><link rel="stylesheet" href="/static/css/thickbox.css"><link rel="stylesheet" href="/static/css/projects.css"><link rel="stylesheet" href="/static/css/main.css"> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script><body data-spy="scroll" data-target="#myScrollspy"><div class="container"><div class="col-sm-3"><div class="fixed-condition"><div class="row"><div class="col-sm-5"><div style="text-align:center"> <a href="/"><img class="profile-avatar" src="/static/img/avatar.jpg" height="75px" width="75px" /></a><div class="m-t-xs font-bold">Roc</div><a target="_blank" href="http://j.map.baidu.com/xHp9l"><i class="fa fa-map-marker"></i> Address</a></div></div><div class="col-sm-7"><div> <strong>Skills & Proficiency</strong><br><div class="item">HTML5 & CSS</div><div class="item">Python & Django</div><div class="item">PHP & Laravel</div><div class="item">Node & Vue</div><div class="item">AngularJs & ReactJs</div></div></address></div></div><div class="profile-about"> <strong>I am a dev-ops. Currently doing more in backend and focused in <code>Java</code>.</strong></div><div class="social"><ul><li><a href="https://in.linkedin.com/in/sun-roc-7517a496" target="_blank"><i class="fa fa-linkedin"></i></a><li><a href="https://github.com/sunnyroc" target="_blank"><i class="fa fa-github"></i></a></ul></div><div class="search" id="js-search"> <input type="text" placeholder="Type to search" class="search__input form-control" id="js-search__input"><ul class="search__results" id="js-search__results"></ul></div><hr /><ul class="sidebar-nav"> <strong>Navigation</strong><li><a href="/">Home</a><li><a class="about" href="/about/">About Me</a><li><a class="about" href="/resume_en/">Resume_en</a><li><a class="about" href="/resume_cn/">Resume_cn</a><li><a class="about" href="/feed.xml">XML Feed</a></ul><div> &copy; Roc - <a href="github.com/sunnyroc">github.com/sunnyroc</a> - Powered by Jekyll.</div></div></div><div class="col-sm-7 main-layout"><header class="post-header"><h1 class="post-title">Phpbrew installation in Ubuntu16.04</h1></header><span class="time">05 Aug 2017</span> <span class="categories"> &raquo; <a href="/category/php">php</a> </span><div class="content"><div class="post"><ul id="markdown-toc"><li><a href="#section" id="markdown-toc-section">简介</a><li><a href="#section-1" id="markdown-toc-section-1">准备工作</a><ul><li><a href="#phpbrew" id="markdown-toc-phpbrew">安装phpbrew</a><li><a href="#phpbrew-1" id="markdown-toc-phpbrew-1">出初始化phpbrew</a><li><a href="#section-2" id="markdown-toc-section-2">配置环境变量</a></ul><li><a href="#lamp" id="markdown-toc-lamp">安装LAMP环境</a></ul><h1 id="section">简介</h1><p>针对Ubuntu16.04版本的安装尝试,自由切换php小版本.<h1 id="section-1">准备工作</h1><p>phpbrew的官方地址:https://github.com/phpbrew/phpbrew 在安装phpbrew之前，需要预先安装一些库.<div class="language-bash highlighter-rouge"><pre class="highlight"><code>apt-get install -y php <span class="se">\</span>
+	php-pear <span class="se">\</span>
+	autoconf <span class="se">\</span>
+	automake <span class="se">\</span>
+	curl <span class="se">\ </span>
+	libcurl3-openssl-dev <span class="se">\</span>
+	build-essential <span class="se">\</span>
+	libxslt1-dev <span class="se">\</span>
+	re2c <span class="se">\</span>
+	libxml2 <span class="se">\</span>
+	libxml2-dev <span class="se">\</span>
+	bison <span class="se">\</span>
+	libbz2-dev <span class="se">\</span>
+	libreadline-dev<span class="se">\</span>
+	libfreetype6 <span class="se">\</span>
+	libfreetype6-dev <span class="se">\</span>
+	libpng12-0 <span class="se">\</span>
+	libpng12-dev <span class="se">\</span>
+	libjpeg-dev <span class="se">\</span>
+	libjpeg8-dev <span class="se">\</span>
+	libjpeg8  <span class="se">\</span>
+	libgd-dev <span class="se">\</span>
+	libgd3 <span class="se">\</span>
+	libxpm4 <span class="se">\</span>
+	libltdl7 <span class="se">\</span>
+	libltdl-dev <span class="se">\</span>
+	libssl-dev <span class="se">\</span>
+	openssl <span class="se">\</span>
+	gettext <span class="se">\</span>
+	libgettextpo-dev <span class="se">\</span>
+	libgettextpo0 <span class="se">\</span>
+	libicu-dev <span class="se">\</span>
+	libmhash-dev <span class="se">\</span>
+	libmhash2 <span class="se">\</span>
+	libmcrypt-dev <span class="se">\</span>
 	libmcrypt4
-</code></pre></div><h2 id="phpbrew">安装phpbrew</h2><div class="highlighter-rouge"><pre class="highlight"><code>curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+</code></pre></div><h2 id="phpbrew">安装phpbrew</h2><div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
 chmod +x phpbrew
 
-# Move phpbrew to somewhere can be found by your $PATH
+<span class="c"># Move phpbrew to somewhere can be found by your $PATH</span>
 sudo mv phpbrew /usr/local/bin/phpbrew
-</code></pre></div><h2 id="phpbrew-1">出初始化phpbrew</h2><div class="highlighter-rouge"><pre class="highlight"><code>phpbrew init
-</code></pre></div><h2 id="section-2">配置环境变量</h2><div class="highlighter-rouge"><pre class="highlight"><code># 在 .bashrc中加入如下的代码
-[[ -e ~/.phpbrew/bashrc ]] &amp;&amp; source ~/.phpbrew/bashrc
+</code></pre></div><h2 id="phpbrew-1">出初始化phpbrew</h2><div class="language-bash highlighter-rouge"><pre class="highlight"><code>phpbrew init
+</code></pre></div><h2 id="section-2">配置环境变量</h2><div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 在 .bashrc中加入如下的代码</span>
+<span class="o">[[</span> -e ~/.phpbrew/bashrc <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.phpbrew/bashrc
 
-# 更新bashrc
-source .bashrc
-</code></pre></div><h1 id="lamp">安装LAMP环境</h1><p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04">LAMP的安装教程</a> 在Ubuntu16.04的环境下，默认安装的是php7. 安装php的命令如下： ```<p>phpbrew –debug install –stdout 5.6.16 +default +mysql +gd +fpm<div class="highlighter-rouge"><pre class="highlight"><code>其中 --debug --stdout意思将debug信息在控制台输出，同时安装了mysql和gd,fpm的扩展库。fpm库是一定要安装的库.
-安装完毕之后，切换至5.6.16的版本，启动php-fpm
+<span class="c"># 更新bashrc</span>
+<span class="nb">source</span> .bashrc
+</code></pre></div><h1 id="lamp">安装LAMP环境</h1><p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04">LAMP的安装教程</a> 在Ubuntu16.04的环境下，默认安装的是php7. 安装php的命令如下： <code class="highlighter-rouge">bash phpbrew --debug install --stdout 5.6.16 +default +mysql +gd +fpm </code><p>其中 –debug –stdout意思将debug信息在控制台输出，同时安装了mysql和gd,fpm的扩展库。fpm库是一定要安装的库. 安装完毕之后，切换至5.6.16的版本，启动php-fpm<div class="language-bash highlighter-rouge"><pre class="highlight"><code>phpbrew use php-5.6.16
+phpbrew fpm start
+</code></pre></div><p>查看sock的权限<div class="language-bash highlighter-rouge"><pre class="highlight"><code>ls -ahl /home/spoock/.phpbrew/php/php-5.6.16/var/run/php-fpm.sock
+</code></pre></div><p>对用户权限的修改就是在安装过程中遇到的最大的坑。 正常情况下一般都是root权限，将其修改为当前用户的权限，比如我当前的用户是spoock,则运行<div class="language-bash highlighter-rouge"><pre class="highlight"><code>chown -R spoock:spoock ~/.phpbrew/php/
+</code></pre></div><p>修改完毕之后，对应的所有的配置文件都需要进行修改 包括/home/spoock/.phpbrew/php/php-5.5.38/etc/php-fpm.conf和/etc/nginx/nginx.conf 对php-fpm.conf的修改：<div class="language-bash highlighter-rouge"><pre class="highlight"><code>listen.owner <span class="o">=</span> spoock
+listen.group <span class="o">=</span> spoock
+user <span class="o">=</span> spoock
+group <span class="o">=</span> spoock
+</code></pre></div><p>对nginx.conf的修改：<div class="language-bash highlighter-rouge"><pre class="highlight"><code>
+user spoock;
 
-</code></pre></div><p>phpbrew use php-5.6.16 phpbrew fpm start ``` 查看sock的权限<div class="highlighter-rouge"><pre class="highlight"><code>ls -ahl /home/spoock/.phpbrew/php/php-5.6.16/var/run/php-fpm.sock
-
-</code></pre></div><p>对用户权限的修改就是在安装过程中遇到的最大的坑。 正常情况下一般都是root权限，将其修改为当前用户的权限，比如我当前的用户是spoock,则运行<div class="highlighter-rouge"><pre class="highlight"><code>chown -R spoock:spoock ~/.phpbrew/php/
-
-</code></pre></div><p>修改完毕之后，对应的所有的配置文件都需要进行修改 包括/home/spoock/.phpbrew/php/php-5.5.38/etc/php-fpm.conf和/etc/nginx/nginx.conf 对php-fpm.conf的修改：<div class="highlighter-rouge"><pre class="highlight"><code>listen.owner = spoock
-listen.group = spoock
-user = spoock
-group = spoock
-</code></pre></div><p>对nginx.conf的修改： ```<p>user spoock;<div class="highlighter-rouge"><pre class="highlight"><code>
-nginx.conf的配置/etc/nginx/sites-available/default
-
-</code></pre></div><p>location ~ .php$ { # # With php7.0-fpm: fastcgi_index index.php; fastcgi_pass unix:/home/spoock/.phpbrew/php/php-5.5.38/var/run/php-fpm.sock; fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; include fastcgi_params; } ```<p>至此，所有的配置均已完成。选择需要使用的php版本，运行下面的命令:<div class="highlighter-rouge"><pre class="highlight"><code>phpbrew use 5.6.16
+</code></pre></div><p>nginx.conf的配置/etc/nginx/sites-available/default<div class="language-bash highlighter-rouge"><pre class="highlight"><code>location ~ <span class="se">\.</span>php<span class="nv">$ </span><span class="o">{</span>
+<span class="c">#       # With php7.0-fpm:</span>
+        fastcgi_index index.php;
+        fastcgi_pass unix:/home/spoock/.phpbrew/php/php-5.5.38/var/run/php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root$fastcgi_script_name</span>;
+        include fastcgi_params;
+<span class="o">}</span>
+</code></pre></div><p>至此，所有的配置均已完成。选择需要使用的php版本，运行下面的命令:<div class="language-bash highlighter-rouge"><pre class="highlight"><code>phpbrew use 5.6.16
 phpbrew fpm start
 sudo service nginx start
 </code></pre></div><p>就开启开启php-5.6.16的测试了。</div><div class="side content"></div></div><div class="PageNavigation"> <a class="prev" href="/kafka/2017/04/05/kafka-knows.html">&laquo; Kafka understanding</a></div><div class="disqus-comments"><div id="disqus_thread"></div></div></div><div class="col-sm-2"><div class="sidebar" id="myScrollspy"><ul class="nav sidenav" id="myNav"></ul></div></div></div><script src="/static/js/jquery.js"></script> <script src="/static/js/jquery-migrate.js"></script> <script src="/static/js/bootstrap.min.js"></script> <script src="/static/js/super-search.js"></script> <script src="/static/js/thickbox-compressed.js"></script> <script src="/static/js/projects.js"></script> <script type="text/javascript"> if (document.querySelector('#markdown-toc') !== null) { $('#myNav').append($('#markdown-toc').html()); $('#myNav ul').each(function(){ $(this).addClass('nav'); }); $('#myNav').affix({ offset: { top: 1 } }); } </script>
